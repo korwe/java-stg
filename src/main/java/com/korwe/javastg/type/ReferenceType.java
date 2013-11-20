@@ -14,4 +14,11 @@ public class ReferenceType extends TypeDefinition{
     public String getPackageName() {
         return packageName;
     }
+
+    public boolean packageEqual(ReferenceType referenceType){
+        if(referenceType == null) return false;
+        if(this.packageName == null && referenceType.packageName == null) return true;
+        if(this.packageName != null && this.packageName.equals(referenceType.packageName)) return true;
+        return false;
+    }
 }
