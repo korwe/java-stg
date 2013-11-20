@@ -1,5 +1,6 @@
 package com.korwe.javastg.type;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,6 +15,10 @@ public class Method {
     private List<Attribute> parameters;
     private boolean isAbstract;
     private boolean isStatic;
+
+    public Method(){
+        parameters = new ArrayList<>();
+    }
 
     public String getName() {
         return name;
@@ -77,5 +82,9 @@ public class Method {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public void addParamater(Attribute parameter) {
+        parameters.add(parameter);
     }
 }

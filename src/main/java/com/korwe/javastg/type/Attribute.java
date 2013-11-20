@@ -7,8 +7,6 @@ public class Attribute {
     private String name;
     private TypeDefinition type;
     private AccessModifier accessModifier;
-    private boolean hasGetter;
-    private boolean hasSetter;
     private boolean isStatic;
 
     public String getName() {
@@ -33,22 +31,6 @@ public class Attribute {
 
     public void setAccessModifier(AccessModifier accessModifier) {
         this.accessModifier = accessModifier;
-    }
-
-    public boolean isHasGetter() {
-        return hasGetter;
-    }
-
-    public void setHasGetter(boolean hasGetter) {
-        this.hasGetter = hasGetter;
-    }
-
-    public boolean isHasSetter() {
-        return hasSetter;
-    }
-
-    public void setHasSetter(boolean hasSetter) {
-        this.hasSetter = hasSetter;
     }
 
     public boolean isStatic() {
