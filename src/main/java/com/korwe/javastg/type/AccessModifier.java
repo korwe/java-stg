@@ -6,5 +6,10 @@ package com.korwe.javastg.type;
 public enum AccessModifier {
     Public,
     Private,
-    Protected
+    Protected;
+
+    @Override
+    public String toString(){
+        return this.name().toLowerCase();
+    }
 }
