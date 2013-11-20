@@ -10,6 +10,7 @@ public class Method {
     private AccessModifier accessModifier;
     private String returnType;
     private List<Attribute> parameters;
+    private boolean isAbstract;
 
     public String getName() {
         return name;
@@ -41,5 +42,13 @@ public class Method {
 
     public void setParameters(List<Attribute> parameters) {
         this.parameters = parameters;
+    }
+
+    public boolean isAbstract() {
+        return isAbstract;
+    }
+
+    public void setAbstract(boolean anAbstract) {
+        isAbstract = anAbstract;
     }
 }
