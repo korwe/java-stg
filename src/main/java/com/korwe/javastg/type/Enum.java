@@ -1,4 +1,4 @@
-package com.korwe.javastg;
+package com.korwe.javastg.type;
 
 import java.util.List;
 
