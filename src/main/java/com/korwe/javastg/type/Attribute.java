@@ -1,5 +1,7 @@
 package com.korwe.javastg.type;
 
+import com.sun.xml.internal.ws.util.StringUtils;
+
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
@@ -8,6 +10,27 @@ public class Attribute {
     private TypeDefinition type;
     private AccessModifier accessModifier;
     private boolean isStatic;
+
+    public Attribute(){}
+
+    public Attribute(TypeDefinition type, String name) {
+        this.type = type;
+        this.name = name;
+    }
+
+    public Attribute(AccessModifier accessModifier, TypeDefinition type, String name) {
+        this.accessModifier = accessModifier;
+        this.type = type;
+        this.name = name;
+    }
+
+    public Attribute(AccessModifier accessModifier, TypeDefinition type, String name, boolean isStatic) {
+        this.accessModifier = accessModifier;
+        this.type = type;
+        this.name = name;
+        this.isStatic = isStatic;
+    }
+
 
     public String getName() {
         return name;
@@ -39,5 +62,9 @@ public class Attribute {
 
     public void setStatic(boolean aStatic) {
         this.isStatic = aStatic;
+    }
+
+    public String getCapitalizedName() {
+        return StringUtils.capitalize(name);
     }
 }

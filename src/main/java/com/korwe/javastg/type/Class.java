@@ -15,7 +15,22 @@ public class Class extends ReferenceType{
     private List<Method> abstractMethods;
 
     public Class(String name) {
-        super(name);
+        super(null, name);
+        init();
+    }
+
+    public Class(String packageName, String name) {
+        super(packageName, name);
+        init();
+    }
+
+    public Class(String packageName, String name, Class superClass) {
+        super(packageName, name);
+        this.superClass = superClass;
+        init();
+    }
+
+    private void init() {
         concreteMethods = new ArrayList<>();
         abstractMethods = new ArrayList<>();
     }

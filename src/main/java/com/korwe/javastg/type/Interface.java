@@ -1,5 +1,6 @@
 package com.korwe.javastg.type;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,7 +11,17 @@ public class Interface extends ReferenceType{
     private Interface superInterface;
 
     public Interface(String name) {
-        super(name);
+        super(null, name);
+        init();
+    }
+
+    public Interface(String packageName, String name) {
+        super(packageName, name);
+        init();
+    }
+
+    private void init(){
+        methods = new ArrayList<>();
     }
 
     public List<Method> getMethods() {

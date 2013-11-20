@@ -1,5 +1,6 @@
 package com.korwe.javastg.type;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,7 +12,20 @@ public class Enum extends ReferenceType{
     private List<Method> methods;
 
     public Enum(String name) {
-        super(name);
+        super(null, name);
+        init();
+    }
+
+
+    public Enum(String packageName, String name) {
+        super(packageName, name);
+        init();
+    }
+
+    private void init(){
+        values = new ArrayList<>();
+        attributes = new ArrayList<>();
+        methods = new ArrayList<>();
     }
 
     public List<String> getValues() {

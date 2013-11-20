@@ -17,6 +17,34 @@ public class Method {
     private boolean isStatic;
 
     public Method(){
+        init();
+    }
+
+    public Method(String name){
+        this.name = name;
+        init();
+    }
+
+    public Method(AccessModifier accessModifier, String name){
+        this.accessModifier = accessModifier;
+        this.name = name;
+        init();
+    }
+
+    public Method(TypeDefinition returnType, String name){
+        this.returnType = returnType;
+        this.name = name;
+        init();
+    }
+
+    public Method(AccessModifier accessModifier, TypeDefinition returnType, String name){
+        this.accessModifier = accessModifier;
+        this.returnType = returnType;
+        this.name = name;
+        init();
+    }
+
+    private void init(){
         parameters = new ArrayList<>();
     }
 

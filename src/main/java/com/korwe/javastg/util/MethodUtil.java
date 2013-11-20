@@ -9,11 +9,8 @@ import com.korwe.javastg.type.Method;
  */
 public class MethodUtil {
     public static Method getterMethod(Attribute attribute){
-        Method method = new Method();
-        method.setAccessModifier(AccessModifier.Public);
-
-        String name = "get"+attribute.getName().substring(0,1).toUpperCase()+attribute.getName().substring(1);
-        method.setName(name);
+        String name = "get"+attribute.getCapitalizedName();
+        Method method = new Method(AccessModifier.Public, name);
 
         method.setReturnType(attribute.getType());
         method.setReturnValue("this."+attribute.getName());
@@ -21,11 +18,8 @@ public class MethodUtil {
     }
 
     public static Method setterMethod(Attribute attribute){
-        Method method = new Method();
-        method.setAccessModifier(AccessModifier.Public);
-
-        String name = "set"+attribute.getName().substring(0,1).toUpperCase()+attribute.getName().substring(1);
-        method.setName(name);
+        String name = "set"+attribute.getCapitalizedName();
+        Method method = new Method(AccessModifier.Public, name);
 
         Attribute parameter = new Attribute();
         parameter.setName(attribute.getName());
