@@ -4,8 +4,6 @@ import com.korwe.javastg.type.AccessModifier;
 import com.korwe.javastg.type.Attribute;
 import com.korwe.javastg.type.Method;
 
-import java.util.List;
-
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
