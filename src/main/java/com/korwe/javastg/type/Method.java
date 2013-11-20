@@ -11,6 +11,7 @@ public class Method {
     private TypeDefinition returnType;
     private List<Attribute> parameters;
     private boolean isAbstract;
+    private boolean isStatic;
 
     public String getName() {
         return name;
@@ -50,5 +51,13 @@ public class Method {
 
     public void setAbstract(boolean anAbstract) {
         isAbstract = anAbstract;
+    }
+
+    public boolean isStatic() {
+        return isStatic;
+    }
+
+    public void setStatic(boolean aStatic) {
+        isStatic = aStatic;
     }
 }

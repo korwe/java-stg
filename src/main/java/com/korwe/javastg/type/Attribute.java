@@ -9,6 +9,7 @@ public class Attribute {
     private AccessModifier accessModifier;
     private boolean hasGetter;
     private boolean hasSetter;
+    private boolean isStatic;
 
     public String getName() {
         return name;
@@ -22,7 +23,7 @@ public class Attribute {
         return type;
     }
 
-    public void setType(ReferenceType type) {
+    public void setType(TypeDefinition type) {
         this.type = type;
     }
 
@@ -48,5 +49,13 @@ public class Attribute {
 
     public void setHasSetter(boolean hasSetter) {
         this.hasSetter = hasSetter;
+    }
+
+    public boolean isStatic() {
+        return isStatic;
+    }
+
+    public void setStatic(boolean aStatic) {
+        this.isStatic = aStatic;
     }
 }
