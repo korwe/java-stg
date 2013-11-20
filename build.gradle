@@ -1,0 +1,21 @@
+/**
+ * @author <a href="mailto:tjad.clark@korwe.com">Tjad Clark</a>
+ */
+
+
+apply plugin: 'java'
+apply plugin: 'maven'
+
+
+baseName = 'java-stg'
+group = 'com.korwe'
+version = '1.0.0'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.antlr:stringtemplate:4.0.2'
+}
