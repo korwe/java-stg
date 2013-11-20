@@ -10,6 +10,10 @@ public class Enum extends ReferenceType{
     private List<Attribute> attributes;
     private List<Method> methods;
 
+    public Enum(String name) {
+        super(name);
+    }
+
     public List<String> getValues() {
         return values;
     }

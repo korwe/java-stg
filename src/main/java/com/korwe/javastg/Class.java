@@ -14,13 +14,15 @@ public class Class extends ReferenceType{
     private List<Method> concreteMethods;
     private List<Method> abstractMethods;
 
-    public Class(){
+    public Class(String name) {
+        super(name);
         concreteMethods = new ArrayList<>();
         abstractMethods = new ArrayList<>();
     }
 
     public AccessModifier getAccessModifier() {
         return accessModifier;
+
     }
 
     public void setAccessModifier(AccessModifier accessModifier) {

@@ -3,17 +3,11 @@ package com.korwe.javastg;
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public class ReferenceType{
-    private String name;
+public class ReferenceType extends TypeDefinition{
     private String packageName;
 
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public ReferenceType(String name) {
+        super(name);
     }
 
     public String getPackageName() {

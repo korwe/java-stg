@@ -9,6 +9,10 @@ public class Interface extends ReferenceType{
     private List<Method> methods;
     private Interface superInterface;
 
+    public Interface(String name) {
+        super(name);
+    }
+
     public List<Method> getMethods() {
         return methods;
     }

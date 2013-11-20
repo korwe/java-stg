@@ -5,7 +5,7 @@ package com.korwe.javastg;
  */
 public class Attribute {
     private String name;
-    private String type;
+    private TypeDefinition type;
     private AccessModifier accessModifier;
     private boolean hasGetter;
     private boolean hasSetter;
@@ -18,11 +18,11 @@ public class Attribute {
         this.name = name;
     }
 
-    public String getType() {
+    public TypeDefinition getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(ReferenceType type) {
         this.type = type;
     }
 
