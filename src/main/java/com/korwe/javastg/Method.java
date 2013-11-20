@@ -8,7 +8,7 @@ import java.util.List;
 public class Method {
     private String name;
     private AccessModifier accessModifier;
-    private String returnType;
+    private TypeDefinition returnType;
     private List<Attribute> parameters;
     private boolean isAbstract;
 
@@ -28,11 +28,11 @@ public class Method {
         this.accessModifier = accessModifier;
     }
 
-    public String getReturnType() {
+    public TypeDefinition getReturnType() {
         return returnType;
     }
 
-    public void setReturnType(String returnType) {
+    public void setReturnType(TypeDefinition returnType) {
         this.returnType = returnType;
     }
 
