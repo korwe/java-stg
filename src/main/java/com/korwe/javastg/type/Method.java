@@ -9,6 +9,8 @@ public class Method {
     private String name;
     private AccessModifier accessModifier;
     private TypeDefinition returnType;
+    private String returnValue;
+    private String body;
     private List<Attribute> parameters;
     private boolean isAbstract;
     private boolean isStatic;
@@ -59,5 +61,21 @@ public class Method {
 
     public void setStatic(boolean aStatic) {
         isStatic = aStatic;
+    }
+
+    public String getReturnValue() {
+        return returnValue;
+    }
+
+    public void setReturnValue(String returnValue) {
+        this.returnValue = returnValue;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
     }
 }
