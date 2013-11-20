@@ -7,9 +7,7 @@ import java.util.List;
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public class Class {
-    private String name;
-    private String packageName;
+public class Class extends ReferenceType{
     private AccessModifier accessModifier;
     private Class superClass;
     private List<Attribute> attributes;
@@ -19,22 +17,6 @@ public class Class {
     public Class(){
         concreteMethods = new ArrayList<>();
         abstractMethods = new ArrayList<>();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPackageName() {
-        return packageName;
-    }
-
-    public void setPackageName(String packageName) {
-        this.packageName = packageName;
     }
 
     public AccessModifier getAccessModifier() {
