@@ -41,6 +41,14 @@ public abstract class Method {
         init();
     }
 
+    public Method(AccessModifier accessModifier, TypeDefinition returnType, String name, boolean isStatic){
+        this.accessModifier = accessModifier;
+        this.returnType = returnType;
+        this.name = name;
+        this.isStatic = isStatic;
+        init();
+    }
+
     private void init(){
         parameters = new ArrayList<>();
     }
@@ -91,5 +99,9 @@ public abstract class Method {
 
     public boolean isAbstract() {
         return this.getClass().equals(AbstractMethod.class);
+    }
+
+    public boolean isConcrete() {
+        return this.getClass().equals(ConcreteMethod.class);
     }
 }

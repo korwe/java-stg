@@ -26,6 +26,10 @@ public class ConcreteMethod extends Method{
         super(accessModifier, returnType, name);
     }
 
+    public ConcreteMethod(AccessModifier accessModifier, TypeDefinition returnType, String name, boolean isStatic) {
+        super(accessModifier, returnType, name, isStatic);
+    }
+
     public String getReturnValue() {
         return returnValue;
     }
@@ -44,10 +48,22 @@ public class ConcreteMethod extends Method{
 
 
     public AbstractMethod getAbstractCopy(){
-        AbstractMethod abstractMethod = new AbstractMethod(this.getAccessModifier(), this.getReturnType(), this.getName());
+        AbstractMethod abstractMethod = new AbstractMethod(this.getAccessModifier(), this.getReturnType(), this.getName(), isStatic());
         for(Attribute paramater : this.getParameters()){
             abstractMethod.addParamater(new Attribute(paramater.getType(), paramater.getName()));
         }
         return abstractMethod;
+    }
+
+    public ConcreteMethod getCopy() {
+        ConcreteMethod newMethod = new ConcreteMethod(getAccessModifier(), getReturnType(), getName(), isStatic());
+
+        for(Attribute paramater : this.getParameters()){
+            newMethod.addParamater(new Attribute(paramater.getType(), paramater.getName()));
+        }
+
+        newMethod.setReturnValue(getReturnValue());
+        newMethod.setBody(getBody());
+        return newMethod;
     }
 }

@@ -24,6 +24,10 @@ public class AbstractMethod extends Method{
         super(accessModifier, returnType, name);
     }
 
+    public AbstractMethod(AccessModifier accessModifier, TypeDefinition returnType, String name, boolean isStatic) {
+        super(accessModifier, returnType, name, isStatic);
+    }
+
     public ConcreteMethod getConcreteCopy(){
         ConcreteMethod concreteMethod = new ConcreteMethod(this.getAccessModifier(), this.getReturnType(), this.getName());
         for(Attribute paramater : this.getParameters()){

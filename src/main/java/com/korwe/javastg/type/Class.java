@@ -6,12 +6,10 @@ import java.util.List;
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public class Class extends ReferenceType{
+public abstract class Class extends ReferenceType{
     private AccessModifier accessModifier;
     private Class superClass;
     private List<Attribute> attributes;
-    private List<ConcreteMethod> concreteMethods;
-    private List<AbstractMethod> abstractMethods;
     private List<Interface> interfaces;
 
     public Class(String name) {
@@ -30,10 +28,8 @@ public class Class extends ReferenceType{
         init();
     }
 
-    private void init() {
+    protected void init() {
         attributes = new ArrayList<>();
-        concreteMethods = new ArrayList<>();
-        abstractMethods = new ArrayList<>();
         interfaces = new ArrayList<>();
     }
 
@@ -62,48 +58,6 @@ public class Class extends ReferenceType{
         this.attributes = attributes;
     }
 
-    public List<ConcreteMethod> getConcreteMethods() {
-        return concreteMethods;
-    }
-
-    public void setConcreteMethods(List<ConcreteMethod> concreteMethods) {
-        this.concreteMethods = concreteMethods;
-    }
-
-    public List<AbstractMethod> getAbstractMethods() {
-        return abstractMethods;
-    }
-
-    public void setAbstractMethods(List<AbstractMethod> abstractMethods) {
-        this.abstractMethods = abstractMethods;
-    }
-
-    public void addMethod(Method method){
-        if(method.isAbstract()){
-            abstractMethods.add((AbstractMethod)method);
-        }
-        else{
-            concreteMethods.add((ConcreteMethod)method);
-        }
-    }
-
-    public void addConcreteMethod(ConcreteMethod method){
-        concreteMethods.add(method);
-    }
-
-    public void addAbstractMethod(AbstractMethod method){
-        abstractMethods.add(method);
-    }
-
-    public List<Method> getMethods(){
-        List<Method> methods = new ArrayList<>();
-
-        methods.addAll(concreteMethods);
-        methods.addAll(abstractMethods);
-
-        return methods;
-    }
-
     public List<Interface> getInterfaces() {
         return interfaces;
     }
@@ -119,4 +73,16 @@ public class Class extends ReferenceType{
     public void addAttribute(Attribute attribute) {
         this.attributes.add(attribute);
     }
+
+    public boolean isAbstract(){
+        return this.getClass().isAssignableFrom(AbstractClass.class);
+    }
+
+    public boolean isConcrete(){
+        return this.getClass().isAssignableFrom(ConcreteClass.class);
+    }
+
+    public abstract List<? extends Method> getMethods();
+
+    public abstract void addMethod(Method method);
 }

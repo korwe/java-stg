@@ -36,14 +36,14 @@ public class ImportUtil {
         addImportsForMethods(imports, classDef, classDef.getMethods());
     }
 
-    public static List<String> importsForMethods(ReferenceType referenceType, List<Method> methods){
+    public static List<String> importsForMethods(ReferenceType referenceType, List<? extends Method> methods){
         List<String> imports = new ArrayList<>();
         addImportsForMethods(imports, referenceType, methods);
         return imports;
 
     }
 
-    public static void addImportsForMethods(List<String> imports, ReferenceType referenceType, List<Method> methods){
+    public static void addImportsForMethods(List<String> imports, ReferenceType referenceType, List<? extends Method> methods){
         for(Method method : methods){
             //Check returnType
             if(method.getReturnType() != null){
