@@ -64,8 +64,8 @@ public class ConcreteClass extends Class{
             abstractClass.addMethod(concreteMethod.getCopy());
         }
 
-        for(Attribute attribute : getAttributes()){
-            abstractClass.addAttribute(new Attribute(attribute.getAccessModifier(), attribute.getType(), attribute.getName(), attribute.isStatic()));
+        for(ClassAttribute attribute : getAttributes()){
+            abstractClass.addAttribute(new ClassAttribute(attribute.getAccessModifier(), attribute.getType(), attribute.getName(), attribute.isStatic()));
         }
 
         return abstractClass;

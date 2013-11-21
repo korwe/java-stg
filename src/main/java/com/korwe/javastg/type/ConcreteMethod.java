@@ -49,8 +49,8 @@ public class ConcreteMethod extends Method{
 
     public AbstractMethod getAbstractCopy(){
         AbstractMethod abstractMethod = new AbstractMethod(this.getAccessModifier(), this.getReturnType(), this.getName(), isStatic());
-        for(Attribute paramater : this.getParameters()){
-            abstractMethod.addParamater(new Attribute(paramater.getType(), paramater.getName()));
+        for(Parameter paramater : this.getParameters()){
+            abstractMethod.addParamater(new Parameter(paramater.getType(), paramater.getName()));
         }
         return abstractMethod;
     }
@@ -58,8 +58,8 @@ public class ConcreteMethod extends Method{
     public ConcreteMethod getCopy() {
         ConcreteMethod newMethod = new ConcreteMethod(getAccessModifier(), getReturnType(), getName(), isStatic());
 
-        for(Attribute paramater : this.getParameters()){
-            newMethod.addParamater(new Attribute(paramater.getType(), paramater.getName()));
+        for(Parameter paramater : this.getParameters()){
+            newMethod.addParamater(new Parameter(paramater.getType(), paramater.getName()));
         }
 
         newMethod.setReturnValue(getReturnValue());

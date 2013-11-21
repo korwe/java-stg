@@ -51,21 +51,21 @@ public class ImportUtil {
             }
 
             //Check Parameters
-            for(Attribute parameter : method.getParameters()){
+            for(Parameter parameter : method.getParameters()){
                 addImportFor(imports, referenceType, parameter.getType());
             }
         }
 
     }
 
-    public static List<String> importsForAttributes(ReferenceType referenceType, List<Attribute> attributes){
+    public static List<String> importsForAttributes(ReferenceType referenceType, List<? extends IDDeclaration> attributes){
         List<String> imports = new ArrayList<>();
         addImportsForAttributes(imports, referenceType, attributes);
         return imports;
     }
 
-    public static void addImportsForAttributes(List<String> imports, ReferenceType referenceType, List<Attribute> attributes){
-        for (Attribute attribute : attributes) {
+    public static void addImportsForAttributes(List<String> imports, ReferenceType referenceType, List<? extends IDDeclaration> attributes){
+        for (IDDeclaration attribute : attributes) {
                 addImportFor(imports, referenceType, attribute.getType());
         }
     }

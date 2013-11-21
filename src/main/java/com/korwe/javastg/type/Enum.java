@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class Enum extends ReferenceType{
     private List<String> values;
-    private List<Attribute> attributes;
+    private List<ClassAttribute> attributes;
     private List<ConcreteMethod> methods;
 
     public Enum(String name) {
@@ -36,11 +36,11 @@ public class Enum extends ReferenceType{
         this.values = values;
     }
 
-    public List<Attribute> getAttributes() {
+    public List<ClassAttribute> getAttributes() {
         return attributes;
     }
 
-    public void setAttributes(List<Attribute> attributes) {
+    public void setAttributes(List<ClassAttribute> attributes) {
         this.attributes = attributes;
     }
 

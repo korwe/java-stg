@@ -10,7 +10,7 @@ public abstract class Method {
     private String name;
     private AccessModifier accessModifier;
     private TypeDefinition returnType;
-    private List<Attribute> parameters;
+    private List<Parameter> parameters;
     private boolean isStatic;
 
     public Method(){
@@ -77,11 +77,11 @@ public abstract class Method {
         this.returnType = returnType;
     }
 
-    public List<Attribute> getParameters() {
+    public List<Parameter> getParameters() {
         return parameters;
     }
 
-    public void setParameters(List<Attribute> parameters) {
+    public void setParameters(List<Parameter> parameters) {
         this.parameters = parameters;
     }
 
@@ -93,7 +93,7 @@ public abstract class Method {
         isStatic = aStatic;
     }
 
-    public void addParamater(Attribute parameter) {
+    public void addParamater(Parameter parameter) {
         parameters.add(parameter);
     }
 

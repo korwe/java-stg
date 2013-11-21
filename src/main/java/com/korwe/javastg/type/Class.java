@@ -9,7 +9,7 @@ import java.util.List;
 public abstract class Class extends ReferenceType{
     private AccessModifier accessModifier;
     private Class superClass;
-    private List<Attribute> attributes;
+    private List<ClassAttribute> attributes;
     private List<Interface> interfaces;
 
     public Class(String name) {
@@ -50,11 +50,11 @@ public abstract class Class extends ReferenceType{
         this.superClass = superClass;
     }
 
-    public List<Attribute> getAttributes() {
+    public List<ClassAttribute> getAttributes() {
         return attributes;
     }
 
-    public void setAttributes(List<Attribute> attributes) {
+    public void setAttributes(List<ClassAttribute> attributes) {
         this.attributes = attributes;
     }
 
@@ -70,7 +70,7 @@ public abstract class Class extends ReferenceType{
         this.interfaces.add(interfaceDef);
     }
 
-    public void addAttribute(Attribute attribute) {
+    public void addAttribute(ClassAttribute attribute) {
         this.attributes.add(attribute);
     }
 

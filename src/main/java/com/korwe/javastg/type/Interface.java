@@ -39,4 +39,8 @@ public class Interface extends ReferenceType{
     public void setSuperInterface(Interface superInterface) {
         this.superInterface = superInterface;
     }
+
+    public void addMethod(AbstractMethod method){
+        methods.add(method);
+    }
 }
