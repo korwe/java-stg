@@ -20,9 +20,7 @@ public class ImportUtil {
     public static void addImportsForClass(List<String> imports, Class classDef){
 
         //Check super class
-        if(classDef.getSuperClass()!=null && !classDef.packageEqual(classDef.getSuperClass())){
-            imports.add(classDef.getSuperClass().getPackageName());
-        }
+        addImportFor(imports, classDef, classDef.getSuperClass());
 
         //Check interfaces
         for(Interface interfaceDef : classDef.getInterfaces()){
@@ -71,7 +69,7 @@ public class ImportUtil {
     }
 
     public static void addImportFor(List<String> imports, ReferenceType referenceType, TypeDefinition typeDefinition) {
-        if (ReferenceType.class.isAssignableFrom(typeDefinition.getClass())) {
+        if (typeDefinition != null && ReferenceType.class.isAssignableFrom(typeDefinition.getClass())) {
             ReferenceType otherReferenceType = (ReferenceType) typeDefinition;
             if (referenceType != null && !referenceType.packageEqual(otherReferenceType)) {
                 //Only add if not already contained
