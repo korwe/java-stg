@@ -75,8 +75,9 @@ public class ImportUtil {
             ReferenceType otherReferenceType = (ReferenceType) typeDefinition;
             if (referenceType != null && !referenceType.packageEqual(otherReferenceType)) {
                 //Only add if not already contained
-                if(!imports.contains(otherReferenceType.getPackageName())){
-                    imports.add(otherReferenceType.getPackageName());
+                String importName = otherReferenceType.getPackageName()+"."+otherReferenceType.getName();
+                if(!imports.contains(importName)){
+                    imports.add(importName);
                 }
             }
         }
