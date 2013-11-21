@@ -24,6 +24,11 @@ public class ImportUtil {
             imports.add(classDef.getSuperClass().getPackageName());
         }
 
+        //Check interfaces
+        for(Interface interfaceDef : classDef.getInterfaces()){
+            addImportFor(imports, classDef, interfaceDef);
+        }
+
         //Check attributes
         addImportsForAttributes(imports, classDef, classDef.getAttributes());
 
@@ -41,11 +46,11 @@ public class ImportUtil {
     public static void addImportsForMethods(List<String> imports, ReferenceType referenceType, List<Method> methods){
         for(Method method : methods){
             //Check returnType
-            if(method.getReturnType() != null && ReferenceType.class.isAssignableFrom(method.getReturnType().getClass())){
+            if(method.getReturnType() != null){
                 addImportFor(imports, referenceType, method.getReturnType());
             }
 
-            //Check Paramaters
+            //Check Parameters
             for(Attribute parameter : method.getParameters()){
                 addImportFor(imports, referenceType, parameter.getType());
             }

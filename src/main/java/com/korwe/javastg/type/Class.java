@@ -13,6 +13,7 @@ public class Class extends ReferenceType{
     private List<Attribute> attributes;
     private List<Method> concreteMethods;
     private List<Method> abstractMethods;
+    private List<Interface> interfaces;
 
     public Class(String name) {
         super(null, name);
@@ -31,8 +32,10 @@ public class Class extends ReferenceType{
     }
 
     private void init() {
+        attributes = new ArrayList<>();
         concreteMethods = new ArrayList<>();
         abstractMethods = new ArrayList<>();
+        interfaces = new ArrayList<>();
     }
 
     public AccessModifier getAccessModifier() {
@@ -105,5 +108,21 @@ public class Class extends ReferenceType{
         methods.addAll(abstractMethods);
 
         return methods;
+    }
+
+    public List<Interface> getInterfaces() {
+        return interfaces;
+    }
+
+    public void setInterfaces(List<Interface> interfaces) {
+        this.interfaces = interfaces;
+    }
+
+    public void addInterface(Interface interfaceDef){
+        this.interfaces.add(interfaceDef);
+    }
+
+    public void addAttribute(Attribute attribute) {
+        this.attributes.add(attribute);
     }
 }
