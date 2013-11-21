@@ -3,13 +3,17 @@ package com.korwe.javastg.type;
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public class PrimitiveType {
-    public static final TypeDefinition BOOLEAN = new TypeDefinition("boolean");
-    public static final TypeDefinition SHORT = new TypeDefinition("short");
-    public static final TypeDefinition INT = new TypeDefinition("int");
-    public static final TypeDefinition LONG = new TypeDefinition("long");
-    public static final TypeDefinition FLOAT = new TypeDefinition("float");
-    public static final TypeDefinition DOUBLE = new TypeDefinition("double");
-    public static final TypeDefinition CHAR = new TypeDefinition("char");
-    public static final TypeDefinition BYTE = new TypeDefinition("byte");
+public class PrimitiveType extends TypeDefinition{
+    public static final PrimitiveType BOOLEAN = new PrimitiveType("boolean");
+    public static final PrimitiveType SHORT = new PrimitiveType("short");
+    public static final PrimitiveType INT = new PrimitiveType("int");
+    public static final PrimitiveType LONG = new PrimitiveType("long");
+    public static final PrimitiveType FLOAT = new PrimitiveType("float");
+    public static final PrimitiveType DOUBLE = new PrimitiveType("double");
+    public static final PrimitiveType CHAR = new PrimitiveType("char");
+    public static final PrimitiveType BYTE = new PrimitiveType("byte");
+
+    public PrimitiveType(String name) {
+        super(name);
+    }
 }
