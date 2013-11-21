@@ -7,7 +7,7 @@ import java.util.List;
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
 public class Interface extends ReferenceType{
-    private List<Method> methods;
+    private List<AbstractMethod> methods;
     private Interface superInterface;
 
     public Interface(String name) {
@@ -24,11 +24,11 @@ public class Interface extends ReferenceType{
         methods = new ArrayList<>();
     }
 
-    public List<Method> getMethods() {
+    public List<AbstractMethod> getMethods() {
         return methods;
     }
 
-    public void setMethods(List<Method> methods) {
+    public void setMethods(List<AbstractMethod> methods) {
         this.methods = methods;
     }
 

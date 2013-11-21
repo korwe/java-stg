@@ -9,7 +9,7 @@ import java.util.List;
 public class Enum extends ReferenceType{
     private List<String> values;
     private List<Attribute> attributes;
-    private List<Method> methods;
+    private List<ConcreteMethod> methods;
 
     public Enum(String name) {
         super(null, name);
@@ -44,11 +44,11 @@ public class Enum extends ReferenceType{
         this.attributes = attributes;
     }
 
-    public List<Method> getMethods() {
+    public List<ConcreteMethod> getMethods() {
         return methods;
     }
 
-    public void setMethods(List<Method> methods) {
+    public void setMethods(List<ConcreteMethod> methods) {
         this.methods = methods;
     }
 }

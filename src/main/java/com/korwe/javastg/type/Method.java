@@ -6,14 +6,11 @@ import java.util.List;
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public class Method {
+public abstract class Method {
     private String name;
     private AccessModifier accessModifier;
     private TypeDefinition returnType;
-    private String returnValue;
-    private String body;
     private List<Attribute> parameters;
-    private boolean isAbstract;
     private boolean isStatic;
 
     public Method(){
@@ -80,14 +77,6 @@ public class Method {
         this.parameters = parameters;
     }
 
-    public boolean isAbstract() {
-        return isAbstract;
-    }
-
-    public void setAbstract(boolean anAbstract) {
-        isAbstract = anAbstract;
-    }
-
     public boolean isStatic() {
         return isStatic;
     }
@@ -96,23 +85,11 @@ public class Method {
         isStatic = aStatic;
     }
 
-    public String getReturnValue() {
-        return returnValue;
-    }
-
-    public void setReturnValue(String returnValue) {
-        this.returnValue = returnValue;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
-    }
-
     public void addParamater(Attribute parameter) {
         parameters.add(parameter);
+    }
+
+    public boolean isAbstract() {
+        return this.getClass().equals(AbstractMethod.class);
     }
 }
