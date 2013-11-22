@@ -3,7 +3,7 @@ package com.korwe.javastg.type;
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public abstract class TypeDefinition {
+public abstract class TypeDefinition extends Annotatable{
     private final String name;
 
     public TypeDefinition(String name){
@@ -21,4 +21,9 @@ public abstract class TypeDefinition {
     public boolean isReferenceType(){
         return ReferenceType.class.isAssignableFrom(this.getClass());
     }
+
+    public boolean hasLiteralSupport(){
+        return isPrimitiveType();
+    }
+
 }

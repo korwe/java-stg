@@ -5,7 +5,7 @@ import com.sun.xml.internal.ws.util.StringUtils;
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public class IDDeclaration {
+public class IDDeclaration extends Annotatable{
     private TypeDefinition type;
     private String name;
 

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public abstract class Method {
+public abstract class Method extends Annotatable{
     private String name;
     private AccessModifier accessModifier;
     private TypeDefinition returnType;
