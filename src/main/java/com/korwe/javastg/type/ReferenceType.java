@@ -21,4 +21,13 @@ public class ReferenceType extends TypeDefinition{
         if(this.packageName != null && this.packageName.equals(referenceType.packageName)) return true;
         return false;
     }
+
+    public boolean isBoxableType(){
+        return BoxableType.class.isAssignableFrom(this.getClass());
+    }
+
+    @Override
+    public boolean hasLiteralSupport(){
+        return isBoxableType();
+    }
 }
