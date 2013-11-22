@@ -24,3 +24,16 @@ concrete_method(methodDef) ::= <<
 
 
 >>
+
+array_value(type, arraySize) ::= <<
+new <type>[<arraySize>]
+>>
+
+array_with_values(type, values) ::= <<
+new <type>[]{<values:{v | v.codeString};separator=", ">}
+>>
+
+constructor_value(type, args) ::= <<
+new <type>(<args:{v | v.codeString};separator=", ">)
+>>
+
