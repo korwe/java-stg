@@ -139,7 +139,7 @@ public abstract class Class extends ReferenceType{
 
     public abstract void addMethod(Method method);
 
-    public ConstructorMethod defaultConstructor() {
+    public ConstructorMethod getDefaultConstructor() {
         if(constructors.size() == 0){
             return defaultConstructor;
         }

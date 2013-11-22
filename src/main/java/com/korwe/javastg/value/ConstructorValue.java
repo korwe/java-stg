@@ -68,7 +68,7 @@ public class ConstructorValue extends TypeDefinitionValue{
         }
         else{
             //Check for default constructor
-            if(classDef.defaultConstructor() == null){
+            if(classDef.getDefaultConstructor() == null){
                 throw new NoConstructorFoundException();
             }
         }
