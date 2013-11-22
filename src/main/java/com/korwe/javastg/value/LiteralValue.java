@@ -32,18 +32,22 @@ public class LiteralValue extends TypeDefinitionValue{
         return value;
     }
 
-    public void setValue(String value) {
-        if(getTypeDefinition().hasLiteralSupport()){
-            this.value = value;
-        }
-        else{
-            throw new NoLiteralSupportException();
-        }
+    public void setValue(Object value){
+        setValue(value, false);
     }
 
-    public void setValue(Object value){
+    public void setValue(Object value, boolean isString){
+        if(!getTypeDefinition().hasLiteralSupport()){
+            throw new NoLiteralSupportException();
+        }
+
         if(String.class.isAssignableFrom(value.getClass())){
-            this.value = String.valueOf(value);
+            if(isString){
+                this.value = '"'+(String)value+'"';
+            }
+            else{
+                this.value = (String)value;
+            }
         }
         else if(Character.class.isAssignableFrom(value.getClass())){
             this.value = "'"+String.valueOf(value)+"'";
