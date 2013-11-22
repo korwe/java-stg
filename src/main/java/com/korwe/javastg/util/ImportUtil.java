@@ -22,13 +22,18 @@ public class ImportUtil {
         //Check super class
         addImportFor(imports, classDef, classDef.getSuperClass());
 
+        //Check annotations
+        for(AnnotationInstance annotationInstance : classDef.getAnnotations()){
+            addImportFor(imports, classDef, annotationInstance.getAnnotation());
+        }
+
         //Check interfaces
         for(Interface interfaceDef : classDef.getInterfaces()){
             addImportFor(imports, classDef, interfaceDef);
         }
 
         //Check attributes
-        addImportsForAttributes(imports, classDef, classDef.getAttributes());
+        addImportsForIDDeclarations(imports, classDef, classDef.getAttributes());
 
         //Check all methods
         addImportsForMethods(imports, classDef, classDef.getMethods());
@@ -49,22 +54,30 @@ public class ImportUtil {
             }
 
             //Check Parameters
-            for(Parameter parameter : method.getParameters()){
-                addImportFor(imports, referenceType, parameter.getType());
+            addImportsForIDDeclarations(imports, referenceType, method.getParameters());
+
+            //Check Annotations
+            for(AnnotationInstance annotationInstance : method.getAnnotations()){
+                addImportFor(imports, referenceType, annotationInstance.getAnnotation());
             }
         }
 
     }
 
-    public static List<String> importsForAttributes(ReferenceType referenceType, List<? extends IDDeclaration> attributes){
+    public static List<String> importsForIDDeclarations(ReferenceType referenceType, List<? extends IDDeclaration> idDeclarations){
         List<String> imports = new ArrayList<>();
-        addImportsForAttributes(imports, referenceType, attributes);
+        addImportsForIDDeclarations(imports, referenceType, idDeclarations);
         return imports;
     }
 
-    public static void addImportsForAttributes(List<String> imports, ReferenceType referenceType, List<? extends IDDeclaration> attributes){
-        for (IDDeclaration attribute : attributes) {
-                addImportFor(imports, referenceType, attribute.getType());
+    public static void addImportsForIDDeclarations(List<String> imports, ReferenceType referenceType, List<? extends IDDeclaration> idDeclarations){
+        for (IDDeclaration idDeclaration : idDeclarations) {
+            addImportFor(imports, referenceType, idDeclaration.getType());
+
+            //Check Annotations
+            for(AnnotationInstance annotationInstance : idDeclaration.getAnnotations()){
+                addImportFor(imports, referenceType, annotationInstance.getAnnotation());
+            }
         }
     }
 
