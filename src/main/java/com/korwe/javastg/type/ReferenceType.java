@@ -30,4 +30,11 @@ public class ReferenceType extends TypeDefinition{
     public boolean hasLiteralSupport(){
         return isBoxableType();
     }
+
+    @Override
+    public boolean equals(Object o){
+        if(o == null) return false;
+        ReferenceType referenceType = (ReferenceType)o;
+        return packageEqual(referenceType) && getName().equals(referenceType.getName());
+    }
 }

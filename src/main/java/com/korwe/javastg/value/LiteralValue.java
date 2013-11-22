@@ -1,6 +1,7 @@
 package com.korwe.javastg.value;
 
 import com.korwe.javastg.exception.NoLiteralSupportException;
+import com.korwe.javastg.exception.UnsupportedTypeException;
 import com.korwe.javastg.type.TypeDefinition;
 
 /**
@@ -11,6 +12,7 @@ public class LiteralValue extends TypeDefinitionValue{
 
     public LiteralValue(TypeDefinition typeDefinition) {
         super(typeDefinition);
+        checkTypeSupport();
     }
 
     @Override
@@ -20,11 +22,13 @@ public class LiteralValue extends TypeDefinitionValue{
 
     public LiteralValue(TypeDefinition typeDefinition, String value){
         super(typeDefinition);
+        checkTypeSupport();
         this.value = value;
     }
 
     public LiteralValue(TypeDefinition typeDefinition, Object value){
         super(typeDefinition);
+        checkTypeSupport();
         setValue(value);
     }
 
@@ -37,10 +41,6 @@ public class LiteralValue extends TypeDefinitionValue{
     }
 
     public void setValue(Object value, boolean isString){
-        if(!getTypeDefinition().hasLiteralSupport()){
-            throw new NoLiteralSupportException();
-        }
-
         if(String.class.isAssignableFrom(value.getClass())){
             if(isString){
                 this.value = '"'+(String)value+'"';
@@ -76,6 +76,12 @@ public class LiteralValue extends TypeDefinitionValue{
         }
         else{
             throw new NoLiteralSupportException();
+        }
+    }
+
+    private void checkTypeSupport(){
+        if(!getTypeDefinition().hasLiteralSupport()){
+            throw new UnsupportedTypeException();
         }
     }
 

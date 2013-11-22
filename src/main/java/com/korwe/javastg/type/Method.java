@@ -1,7 +1,10 @@
 package com.korwe.javastg.type;
 
+import com.korwe.javastg.value.TypeDefinitionValue;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
@@ -98,10 +101,32 @@ public abstract class Method extends Annotatable{
     }
 
     public boolean isAbstract() {
-        return this.getClass().equals(AbstractMethod.class);
+        return AbstractMethod.class.isAssignableFrom(getClass());
     }
 
     public boolean isConcrete() {
-        return this.getClass().equals(ConcreteMethod.class);
+        return ConcreteMethod.class.isAssignableFrom(getClass());
+    }
+
+    public boolean isConstructor(){
+        return ConstructorMethod.class.isAssignableFrom(getClass());
+    }
+
+    public boolean supportsArguments(TypeDefinitionValue[] arguments){
+        for(int i = 0; i < parameters.size(); i++){
+            if(!parameters.get(i).getType().isCompatibleWith(arguments[i])){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean supportsArguments(Map<String, TypeDefinitionValue> arguments){
+        for(Parameter parameter : parameters){
+            if(!arguments.containsKey(parameter.getName()) || !parameter.getType().isCompatibleWith(arguments.get(parameter.getName()))){
+              return false;
+            }
+        }
+        return true;
     }
 }
