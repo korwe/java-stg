@@ -2,6 +2,7 @@ package com.korwe.javastg.value;
 
 import com.korwe.javastg.type.TypeDefinition;
 import com.korwe.javastg.util.TemplateUtil;
+import com.korwe.javastg.type.TypeDefinition;
 import org.stringtemplate.v4.ST;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class ArrayWithValues extends TypeDefinitionValue {
     @Override
     public String getCodeString() {
         ST template = TemplateUtil.template("array_with_values");
+        template.add("type", getTypeDefinition());
         template.add("values", arrayValues);
         return template.render();
     }

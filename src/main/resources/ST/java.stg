@@ -86,7 +86,7 @@ new <type:type_definition()>[<arraySize>]
 >>
 
 array_with_values(type, values) ::= <<
-new <type>[]{<values:{v | <v>};separator=", ">}
+new <type:type_definition()>[]{<values:{v | <v>};separator=", ">}
 >>
 
 constructor_value(type, args) ::= <<
