@@ -4,7 +4,7 @@ java_file(imports, javaDef) ::= <<
 <imports:{ im | import <im>;}; separator="\n">
 
 <javaDef.annotations:annotation_instance();separator="\n">
-<if(javaDef.classType)><javaDef:class_file()><elseif(javaDef.enumType)><javaDef:enum_file()><elseif(javaDef.interfaceType)><javaDef:interface_file()><endif>
+<if(javaDef.enumType)><javaDef:enum_file()><elseif(javaDef.classType)><javaDef:class_file()><elseif(javaDef.interfaceType)><javaDef:interface_file()><endif>
 >>
 
 class_file(classDef) ::= <<

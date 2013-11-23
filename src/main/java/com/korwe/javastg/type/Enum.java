@@ -1,5 +1,6 @@
 package com.korwe.javastg.type;
 
+import com.korwe.javastg.exception.IncompatibleMethodException;
 import com.korwe.javastg.value.TypeDefinitionValue;
 
 import java.util.ArrayList;
@@ -8,9 +9,8 @@ import java.util.List;
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public class Enum extends ReferenceType{
+public class Enum extends Class{
     private List<TypeDefinitionValue> values;
-    private List<ClassAttribute> attributes;
     private List<ConcreteMethod> methods;
 
     public Enum(String name) {
@@ -23,9 +23,10 @@ public class Enum extends ReferenceType{
         init();
     }
 
-    private void init(){
+    @Override
+    protected void init(){
+        setDefaultConstructor(null);
         values = new ArrayList<>();
-        attributes = new ArrayList<>();
         methods = new ArrayList<>();
     }
 
@@ -37,16 +38,18 @@ public class Enum extends ReferenceType{
         this.values = values;
     }
 
-    public List<ClassAttribute> getAttributes() {
-        return attributes;
-    }
-
-    public void setAttributes(List<ClassAttribute> attributes) {
-        this.attributes = attributes;
-    }
-
     public List<ConcreteMethod> getMethods() {
         return methods;
+    }
+
+    @Override
+    public void addMethod(Method method) {
+        if(method.isConcrete()){
+            methods.add((ConcreteMethod)method);
+        }
+        else{
+            throw new IncompatibleMethodException();
+        }
     }
 
     public void setMethods(List<ConcreteMethod> methods) {

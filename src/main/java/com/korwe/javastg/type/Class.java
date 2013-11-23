@@ -139,6 +139,10 @@ public abstract class Class extends GenerifiableType {
 
     public abstract void addMethod(Method method);
 
+    public void setDefaultConstructor(ConstructorMethod constructor){
+        this.defaultConstructor = constructor;
+    }
+
     public ConstructorMethod getDefaultConstructor() {
         if(constructors.size() == 0){
             return defaultConstructor;

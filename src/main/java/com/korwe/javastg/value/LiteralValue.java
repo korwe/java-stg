@@ -23,7 +23,7 @@ public class LiteralValue extends TypeDefinitionValue{
     public LiteralValue(TypeDefinition typeDefinition, String value){
         super(typeDefinition);
         checkTypeSupport();
-        this.value = value;
+        setValue(value,true);
     }
 
     public LiteralValue(TypeDefinition typeDefinition, Object value){
