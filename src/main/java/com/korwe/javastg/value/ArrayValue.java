@@ -27,8 +27,8 @@ public class ArrayValue extends TypeDefinitionValue{
     @Override
     public String getCodeString() {
         ST template = TemplateUtil.template("array_value");
-        template.add("type", getTypeDefinition().getName());
-        template.add("size", arraySize);
+        template.add("type", getTypeDefinition());
+        template.add("arraySize", arraySize);
         return template.render();
     }
 }

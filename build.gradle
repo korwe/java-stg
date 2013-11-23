@@ -18,4 +18,5 @@ repositories {
 
 dependencies {
     compile 'org.antlr:stringtemplate:4.0.2'
+    compile 'junit:junit:4.11'
 }

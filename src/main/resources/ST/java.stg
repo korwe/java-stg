@@ -82,7 +82,7 @@ annotation_instance(annotationInstance) ::= <<
 >>
 
 array_value(type, arraySize) ::= <<
-new <type>[<arraySize>]
+new <type:type_definition()>[<arraySize>]
 >>
 
 array_with_values(type, values) ::= <<
