@@ -17,6 +17,9 @@ public class BoxableType extends ConcreteClass{
 
     public BoxableType(String packageName, String name, PrimitiveType primitiveType) {
         super(packageName, name);
+        if(primitiveType != null){
+            primitiveType.setBoxableType(this);
+        }
         this.primitiveType = primitiveType;
     }
 

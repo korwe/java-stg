@@ -16,6 +16,10 @@ public class PrimitiveType extends TypeDefinition{
 
     public PrimitiveType(String name, BoxableType boxableType) {
         super(name);
+        if(boxableType != null){
+            boxableType.setPrimitiveType(this);
+        }
+        this.boxableType = boxableType;
     }
 
     public BoxableType getBoxableType() {

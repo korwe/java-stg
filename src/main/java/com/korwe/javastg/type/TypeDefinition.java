@@ -39,13 +39,18 @@ public abstract class TypeDefinition extends Annotatable{
                 return false;
             }
             else{
-                //Check if the types are the same
-                if(value.getTypeDefinition().equals(this)){
-                    return true;
+                if(PrimitiveType.class.isAssignableFrom(value.getTypeDefinition().getClass())){
+                    //Check if the types are the same
+                    if(value.getTypeDefinition().equals(this)){
+                        return true;
+                    }
+                    else{
+                        //Check boxable type is the same
+                        return ((PrimitiveType)this).getBoxableType().equals(((PrimitiveType)value.getTypeDefinition()).getBoxableType());
+                    }
                 }
                 else{
-                    //Check boxable type is the same
-                    return ((PrimitiveType)this).getBoxableType().equals(value.getTypeDefinition());
+                    return value.getTypeDefinition().equals(((PrimitiveType)this).getBoxableType());
                 }
             }
 
