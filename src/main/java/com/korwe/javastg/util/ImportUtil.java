@@ -20,16 +20,16 @@ public class ImportUtil {
     public static void addImportsForClass(List<String> imports, Class classDef){
 
         //Check super class
-        addImportFor(imports, classDef, classDef.getSuperClass());
+        addImportForTypeDefinition(imports, classDef, classDef.getSuperClass());
 
         //Check annotations
         for(AnnotationInstance annotationInstance : classDef.getAnnotations()){
-            addImportFor(imports, classDef, annotationInstance.getAnnotation());
+            addImportForTypeDefinition(imports, classDef, annotationInstance.getAnnotation());
         }
 
         //Check interfaces
         for(Interface interfaceDef : classDef.getInterfaces()){
-            addImportFor(imports, classDef, interfaceDef);
+            addImportForTypeDefinition(imports, classDef, interfaceDef);
         }
 
         //Check attributes
@@ -37,6 +37,27 @@ public class ImportUtil {
 
         //Check all methods
         addImportsForMethods(imports, classDef, classDef.getMethods());
+
+        //Generics
+        addImportsForTypeParameters(imports, classDef, classDef.getTypeParameters());
+    }
+
+    public static List<String> importsForTypeParameters(ReferenceType referenceType, List<TypeParameter> typeParameters){
+        List<String> imports = new ArrayList<>();
+        addImportsForTypeParameters(imports, referenceType, typeParameters);
+        return imports;
+    }
+
+    private static void addImportsForTypeParameters(List<String> imports, ReferenceType referenceType, List<TypeParameter> typeParameters) {
+        for(TypeParameter typeParameter : typeParameters){
+            addImportsForTypeDefinitions(imports, referenceType, typeParameter.getParentTypes());
+        }
+    }
+
+    private static void addImportsForTypeDefinitions(List<String> imports, ReferenceType baseType, List<TypeDefinition> typeDefinitions){
+        for(TypeDefinition typeDefinition : typeDefinitions){
+            addImportForTypeDefinition(imports, baseType, typeDefinition);
+        }
     }
 
     public static List<String> importsForMethods(ReferenceType referenceType, List<? extends Method> methods){
@@ -50,7 +71,7 @@ public class ImportUtil {
         for(Method method : methods){
             //Check returnType
             if(method.getReturnType() != null){
-                addImportFor(imports, referenceType, method.getReturnType());
+                addImportForTypeDefinition(imports, referenceType, method.getReturnType());
             }
 
             //Check Parameters
@@ -58,8 +79,11 @@ public class ImportUtil {
 
             //Check Annotations
             for(AnnotationInstance annotationInstance : method.getAnnotations()){
-                addImportFor(imports, referenceType, annotationInstance.getAnnotation());
+                addImportForTypeDefinition(imports, referenceType, annotationInstance.getAnnotation());
             }
+
+            //Generics
+            addImportsForTypeParameters(imports, referenceType, method.getTypeParameters());
         }
 
     }
@@ -72,16 +96,16 @@ public class ImportUtil {
 
     public static void addImportsForIDDeclarations(List<String> imports, ReferenceType referenceType, List<? extends IDDeclaration> idDeclarations){
         for (IDDeclaration idDeclaration : idDeclarations) {
-            addImportFor(imports, referenceType, idDeclaration.getType());
+            addImportForTypeDefinition(imports, referenceType, idDeclaration.getType());
 
             //Check Annotations
             for(AnnotationInstance annotationInstance : idDeclaration.getAnnotations()){
-                addImportFor(imports, referenceType, annotationInstance.getAnnotation());
+                addImportForTypeDefinition(imports, referenceType, annotationInstance.getAnnotation());
             }
         }
     }
 
-    public static void addImportFor(List<String> imports, ReferenceType referenceType, TypeDefinition typeDefinition) {
+    public static void addImportForTypeDefinition(List<String> imports, ReferenceType referenceType, TypeDefinition typeDefinition) {
         if (typeDefinition != null && ReferenceType.class.isAssignableFrom(typeDefinition.getClass())) {
             ReferenceType otherReferenceType = (ReferenceType) typeDefinition;
             if (referenceType != null && !referenceType.packageEqual(otherReferenceType)) {
