@@ -24,6 +24,10 @@ public abstract class TypeDefinition extends Annotatable{
         return ReferenceType.class.isAssignableFrom(this.getClass());
     }
 
+    public boolean isGenerifiedType(){
+        return GenerifiableType.class.isAssignableFrom(this.getClass());
+    }
+
     public boolean hasLiteralSupport(){
         return isPrimitiveType();
     }

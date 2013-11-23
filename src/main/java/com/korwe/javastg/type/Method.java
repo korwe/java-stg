@@ -9,11 +9,12 @@ import java.util.Map;
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public abstract class Method extends Annotatable{
+public abstract class Method extends Annotatable implements Generifiable{
     private String name;
     private AccessModifier accessModifier;
     private TypeDefinition returnType;
     private List<Parameter> parameters;
+    private List<TypeParameter> typeParameters;
     private boolean isStatic;
 
     public Method(){
@@ -54,6 +55,7 @@ public abstract class Method extends Annotatable{
 
     private void init(){
         parameters = new ArrayList<>();
+        this.typeParameters = new ArrayList<>();
     }
 
     public String getName() {
@@ -128,5 +130,20 @@ public abstract class Method extends Annotatable{
             }
         }
         return true;
+    }
+
+    @Override
+    public void setTypeParameters(List<TypeParameter> typeParameters){
+        this.typeParameters = typeParameters;
+    }
+
+    @Override
+    public void addTypeParameter(TypeParameter typeParameter){
+        this.typeParameters.add(typeParameter);
+    }
+
+    @Override
+    public List<TypeParameter> getTypeParameters(){
+        return this.typeParameters;
     }
 }

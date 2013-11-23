@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public abstract class Class extends ReferenceType{
+public abstract class Class extends GenerifiableType {
     private AccessModifier accessModifier;
     private Class superClass;
     private List<ClassAttribute> attributes;

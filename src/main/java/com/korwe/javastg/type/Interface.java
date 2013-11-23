@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public class Interface extends ReferenceType{
+public class Interface extends GenerifiableType {
     private List<AbstractMethod> methods;
     private Interface superInterface;
 
