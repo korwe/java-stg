@@ -4,17 +4,21 @@ class_file(imports, classDef) ::= <<
 <imports:{ im | import <im>;}; separator="\n">
 
 <classDef.annotations:annotation_instance();separator="\n">
-<if(classDef.accessModifier)><classDef.accessModifier> <endif><if(classDef.abstract)>abstract <endif>class <classDef.name><if(classDef.superClass)> extends <classDef.superClass.name><endif><if(classDef.interfaces)> implements <classDef.interfaces:{iface | <iface.name>};separator=", "><endif>{
+<if(classDef.accessModifier)><classDef.accessModifier> <endif><if(classDef.abstract)>abstract <endif>class <classDef.name><classDef.typeParameters:type_parameter()><if(classDef.superClass)> extends <classDef.superClass.name><endif><if(classDef.interfaces)> implements <classDef.interfaces:{iface | <iface.name>};separator=", "><endif>{
     <classDef.attributes:attribute()>
     <classDef.constructors:method()>
     <classDef.concreteMethods:method()>
 }
 >>
 
+type_parameter(typeParameter) ::= <<
+\<<typeParameter.names:{tpn | <tpn.name>};separator=","><if(typeParameter.parentTypes)> extends <typeParameter.parentTypes:{td | <td.name>};separator=" & "><endif>\>
+>>
+
 attribute(attrDef) ::= <<
 
 <attrDef.annotations:annotation_instance();separator="\n">
-<if(attrDef.accessModifier)><attrDef.accessModifier> <endif><attrDef.type.name> <attrDef.name>;
+<if(attrDef.accessModifier)><attrDef.accessModifier> <endif><attrDef:id_declaration()>;
 >>
 
 method(methodDef) ::= <<
@@ -25,24 +29,32 @@ method(methodDef) ::= <<
 >>
 
 constructor_method(methodDef) ::= <<
-<if(methodDef.accessModifier)><methodDef.accessModifier> <endif><methodDef.returnType.name>(<methodDef.parameters:method_parameters();separator=", ">){
+<if(methodDef.accessModifier)><methodDef.accessModifier> <endif><methodDef.typeParameters:type_parameter()><methodDef.returnType:type_definition()>(<methodDef.parameters:method_parameters();separator=", ">){
     <if(methodDef.body)><methodDef.body>;<endif>
 }
 >>
 
 concrete_method(methodDef) ::= <<
-<if(methodDef.accessModifier)><methodDef.accessModifier> <endif><if(methodDef.static)>static <endif><if(methodDef.returnType)><methodDef.returnType.name><else>void<endif> <methodDef.name>(<methodDef.parameters:method_parameters();separator=", ">){
+<if(methodDef.accessModifier)><methodDef.accessModifier> <endif><if(methodDef.static)>static <endif><methodDef.typeParameters:type_parameter()><if(methodDef.returnType)><methodDef.returnType:type_definition()><else>void<endif> <methodDef.name>(<methodDef.parameters:method_parameters();separator=", ">){
     <if(methodDef.body)><methodDef.body>;<endif>
     <if(methodDef.returnType)>return <if(methodDef.returnValue)><methodDef.returnValue><else>null<endif>;<endif>
 }
 >>
 
 abstract_method(methodDef) ::= <<
-<if(methodDef.accessModifier)><methodDef.accessModifier> <endif><if(methodDef.static)>static <endif>abstract <if(methodDef.returnType)><methodDef.returnType.name><else>void<endif> <methodDef.name>(<methodDef.parameters:method_parameters();separator=", ">);
+<if(methodDef.accessModifier)><methodDef.accessModifier> <endif><if(methodDef.static)>static <endif>abstract <methodDef.typeParameters:type_parameter()><if(methodDef.returnType)><methodDef.returnType:type_definition()><else>void<endif> <methodDef.name>(<methodDef.parameters:method_parameters();separator=", ">);
 >>
 
 method_parameters(parameter) ::= <<
-<if(parameter.annotations)><parameter.annotations:annotation_instance();separator=" "> <endif><parameter.type.name> <parameter.name>
+<if(parameter.annotations)><parameter.annotations:annotation_instance();separator=" "> <endif><parameter:id_declaration()>
+>>
+
+id_declaration(idDeclaration) ::= <<
+<idDeclaration.type:type_definition()> <idDeclaration.name>
+>>
+
+type_definition(typeDef) ::= <<
+<typeDef.name><if(typeDef.parameterTypes)>\<<typeDef.parameterTypes:type_definition();separator=", ">\><endif>
 >>
 
 annotation_instance(annotationInstance) ::= <<
