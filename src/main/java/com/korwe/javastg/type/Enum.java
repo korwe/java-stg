@@ -1,5 +1,7 @@
 package com.korwe.javastg.type;
 
+import com.korwe.javastg.value.TypeDefinitionValue;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +9,7 @@ import java.util.List;
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
 public class Enum extends ReferenceType{
-    private List<String> values;
+    private List<TypeDefinitionValue> values;
     private List<ClassAttribute> attributes;
     private List<ConcreteMethod> methods;
 
@@ -15,7 +17,6 @@ public class Enum extends ReferenceType{
         super(null, name);
         init();
     }
-
 
     public Enum(String packageName, String name) {
         super(packageName, name);
@@ -28,11 +29,11 @@ public class Enum extends ReferenceType{
         methods = new ArrayList<>();
     }
 
-    public List<String> getValues() {
+    public List<TypeDefinitionValue> getValues() {
         return values;
     }
 
-    public void setValues(List<String> values) {
+    public void setValues(List<TypeDefinitionValue> values) {
         this.values = values;
     }
 

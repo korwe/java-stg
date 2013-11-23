@@ -50,7 +50,7 @@ public class ConstructorValue extends TypeDefinitionValue{
         this.constructorArgMap = constructorArgMap;
     }
 
-    private TypeDefinitionValue[] constructorArguments(){
+    protected TypeDefinitionValue[] constructorArguments(){
 
         Class classDef = (Class)getTypeDefinition();
         if(constructorArgsArray != null){

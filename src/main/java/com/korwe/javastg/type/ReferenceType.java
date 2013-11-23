@@ -26,6 +26,18 @@ public class ReferenceType extends TypeDefinition{
         return BoxableType.class.isAssignableFrom(this.getClass());
     }
 
+    public boolean isClassType(){
+        return Class.class.isAssignableFrom(this.getClass());
+    }
+
+    public boolean isEnumType(){
+        return Enum.class.isAssignableFrom(this.getClass());
+    }
+
+    public boolean isInterfaceType(){
+        return Interface.class.isAssignableFrom(this.getClass());
+    }
+
     @Override
     public boolean hasLiteralSupport(){
         return isBoxableType();

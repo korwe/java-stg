@@ -1,15 +1,35 @@
-class_file(imports, classDef) ::= <<
-<if(classDef.packageName)>package <classDef.packageName>;<endif>
+java_file(imports, javaDef) ::= <<
+<if(javaDef.packageName)>package <javaDef.packageName>;<endif>
 
 <imports:{ im | import <im>;}; separator="\n">
 
-<classDef.annotations:annotation_instance();separator="\n">
+<javaDef.annotations:annotation_instance();separator="\n">
+<if(javaDef.classType)><javaDef:class_file()><elseif(javaDef.enumType)><javaDef:enum_file()><elseif(javaDef.interfaceType)><javaDef:interface_file()><endif>
+>>
+
+class_file(classDef) ::= <<
 <if(classDef.accessModifier)><classDef.accessModifier> <endif><if(classDef.abstract)>abstract <endif>class <classDef.name><classDef.typeParameters:type_parameter()><if(classDef.superClass)> extends <classDef.superClass.name><endif><if(classDef.interfaces)> implements <classDef.interfaces:{iface | <iface.name>};separator=", "><endif>{
     <classDef.attributes:attribute()>
     <classDef.constructors:method()>
     <classDef.concreteMethods:method()>
 }
 >>
+
+enum_file(enumDef) ::= <<
+<if(enumDef.accessModifier)><enumDef.accessModifier> <endif>enum <enumDef.name><if(enumDef.interfaces)> implements <enumDef.interfaces:{iface | <iface.name>};separator=", "><endif>{
+    <enumDef.values:{v | <v>};separator=",\n">;
+    <enumDef.attributes:attribute()>
+    <enumDef.constructors:method()>
+    <enumDef.concreteMethods:method()>
+}
+>>
+
+interface_file(interfaceDef) ::= <<
+<if(interfaceDef.accessModifier)><interfaceDef.accessModifier> <endif>interface <interfaceDef.name><interfaceDef.typeParameters:type_parameter()><if(interfaceDef.superInterface)> extends <interfaceDef.superInterface.name><endif><if(interfaceDef.interfaces)> implements <classDef.interfaces:{iface | <iface.name>};separator=", "><endif>{
+    <interfaceDef.abstractMethods:method()>
+>>
+
+
 
 type_parameter(typeParameter) ::= <<
 \<<typeParameter.names:{tpn | <tpn.name>};separator=","><if(typeParameter.parentTypes)> extends <typeParameter.parentTypes:{td | <td.name>};separator=" & "><endif>\>
@@ -73,3 +93,6 @@ constructor_value(type, args) ::= <<
 new <type>(<args:{v | <v>};separator=", ">)
 >>
 
+enum_constructor_value(type, args) ::= <<
+<type>(<args:{v | <v>};separator=", ">)
+>>
