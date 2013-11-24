@@ -38,11 +38,16 @@ public abstract class TypeDefinitionValue {
         return ConstructorValue.class.isAssignableFrom(getClass());
     }
 
+    public boolean isEnumConstructorValue() {
+        return EnumConstructorValue.class.isAssignableFrom(getClass());
+    }
+
     public abstract String getCodeString();
 
     @Override
     public String toString(){
         return getCodeString();
     }
+
 }
 

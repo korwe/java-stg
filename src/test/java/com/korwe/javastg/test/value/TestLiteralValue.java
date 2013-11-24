@@ -1,6 +1,5 @@
 package com.korwe.javastg.test.value;
 
-import com.korwe.javastg.type.BoxableType;
 import com.korwe.javastg.value.LiteralValue;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
