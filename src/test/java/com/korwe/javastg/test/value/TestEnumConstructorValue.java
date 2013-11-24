@@ -30,7 +30,7 @@ public class TestEnumConstructorValue {
     public void enumWithConstructorArgArray(){
         Enum enumDef = TestUtil.getEnumWithConstructor();
         String stringValue = "someString";
-        ConstructorValue constructorValue = new EnumConstructorValue(enumDef, new LiteralValue(BoxableType.String, stringValue));
+        ConstructorValue constructorValue = new EnumConstructorValue(enumDef, new LiteralValue(stringValue,true));
         assertEquals("Incorrect codeString generated for enum constructor value(enum with constructor args)", String.format("%s(\"%s\")", enumDef.getName(), stringValue), constructorValue.getCodeString());
     }
 
@@ -39,7 +39,7 @@ public class TestEnumConstructorValue {
         Enum enumDef = TestUtil.getEnumWithMultiArgConstructor();
         char charValue = 'x';
         double doubleValue = 10.0;
-        EnumConstructorValue enumConstructorValue = new EnumConstructorValue(enumDef, new LiteralValue(PrimitiveType.Char, charValue), new LiteralValue(PrimitiveType.Double, doubleValue));
+        EnumConstructorValue enumConstructorValue = new EnumConstructorValue(enumDef, new LiteralValue(charValue), new LiteralValue(doubleValue));
         assertEquals("Incorrect codeString generated for enum constructor value(enum with multiple args constructor)", String.format("%s('%s', %.1f)", enumDef.getName(), charValue, doubleValue), enumConstructorValue.getCodeString());
     }
 
@@ -49,8 +49,8 @@ public class TestEnumConstructorValue {
         char charValue = '3';
         double doubleValue = 1.633;
         Map<String, TypeDefinitionValue> values = new HashMap<>();
-        values.put("charValue", new LiteralValue(PrimitiveType.Char, charValue));
-        values.put("doubleValue", new LiteralValue(PrimitiveType.Double, doubleValue));
+        values.put("charValue", new LiteralValue(charValue));
+        values.put("doubleValue", new LiteralValue(doubleValue));
 
         ConstructorValue constructorValue = new EnumConstructorValue(enumDef, values);
         assertEquals("Incorrect codeString generated for enum constructor value(enum with multiple args constructor)", String.format("%s('%s', %.3f)", enumDef.getName(), charValue, doubleValue), constructorValue.getCodeString());

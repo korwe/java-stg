@@ -24,7 +24,7 @@ public class TestArrayWithValues {
         PrimitiveType primitiveType = PrimitiveType.Int;
         ArrayWithValues arrayWithValues = new ArrayWithValues(primitiveType);
         for(int x : arrayValues){
-            arrayWithValues.addArrayValue(new LiteralValue(PrimitiveType.Int, x));
+            arrayWithValues.addArrayValue(new LiteralValue(x));
         }
 
         assertEquals("Incorrect codeString for arrayWithValues(primitives) ", String.format("new %s[]{%d, %d, %d, %d, %d}",primitiveType.getName(), arrayValues[0], arrayValues[1], arrayValues[2], arrayValues[3], arrayValues[4]), arrayWithValues.getCodeString());

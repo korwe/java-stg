@@ -38,7 +38,7 @@ public class TestConstructorValue {
     public void testClassWithConstructorArgArray(){
         ConcreteClass concreteClass = TestUtil.getConcreteClassWithConstructor();
         int intValue = 15;
-        ConstructorValue constructorValue = new ConstructorValue(concreteClass, new LiteralValue(PrimitiveType.Int, intValue));
+        ConstructorValue constructorValue = new ConstructorValue(concreteClass, new LiteralValue(intValue));
         assertEquals("Incorrect codeString generated for constructor value(class with constructor args)", String.format("new %s(%d)", concreteClass.getName(), intValue), constructorValue.getCodeString());
     }
 
@@ -47,7 +47,7 @@ public class TestConstructorValue {
         ConcreteClass concreteClass = TestUtil.getConcreteClassWithMultiArgConstructor();
         int intValue = 5;
         long longValue = 10;
-        ConstructorValue constructorValue = new ConstructorValue(concreteClass, new LiteralValue(PrimitiveType.Int, intValue), new LiteralValue(PrimitiveType.Long, longValue));
+        ConstructorValue constructorValue = new ConstructorValue(concreteClass, new LiteralValue(intValue), new LiteralValue(longValue));
         assertEquals("Incorrect codeString generated for constructor value(class with multiple args constructor)", String.format("new %s(%d, %dL)", concreteClass.getName(), intValue, longValue), constructorValue.getCodeString());
     }
 
@@ -57,8 +57,8 @@ public class TestConstructorValue {
         int intValue = 3;
         long longValue = 1;
         Map<String, TypeDefinitionValue> values = new HashMap<>();
-        values.put("intValue", new LiteralValue(PrimitiveType.Int, intValue));
-        values.put("longValue", new LiteralValue(PrimitiveType.Long, longValue));
+        values.put("intValue", new LiteralValue(intValue));
+        values.put("longValue", new LiteralValue(longValue));
 
         ConstructorValue constructorValue = new ConstructorValue(concreteClass, values);
         assertEquals("Incorrect codeString generated for constructor value(class with multiple args constructor)", String.format("new %s(%d, %dL)", concreteClass.getName(), intValue, longValue), constructorValue.getCodeString());
@@ -70,8 +70,8 @@ public class TestConstructorValue {
         int intValue = 100;
         long longValue = 155L;
         Map<String, TypeDefinitionValue> values = new HashMap<>();
-        values.put("intValue", new LiteralValue(PrimitiveType.Int, intValue));
-        values.put("longValue", new LiteralValue(PrimitiveType.Long, longValue));
+        values.put("intValue", new LiteralValue(intValue));
+        values.put("longValue", new LiteralValue(longValue));
 
         ConstructorValue constructorValue = new ConstructorValue(concreteClass, values);
         assertEquals("Incorrect codeString generated for constructor value(class with multiple args constructor)", String.format("new %s(%d, %dL)", concreteClass.getName(), intValue, longValue), constructorValue.getCodeString());
@@ -83,8 +83,8 @@ public class TestConstructorValue {
         int intValue = 67;
         long longValue = 92L;
         Map<String, TypeDefinitionValue> values = new HashMap<>();
-        values.put("intValue", new LiteralValue(PrimitiveType.Int, intValue));
-        values.put("longValueIncorrect", new LiteralValue(PrimitiveType.Long, longValue));
+        values.put("intValue", new LiteralValue(intValue));
+        values.put("longValueIncorrect", new LiteralValue(longValue));
 
         ConstructorValue constructorValue = new ConstructorValue(concreteClass, values);
         constructorValue.getCodeString();
@@ -95,7 +95,7 @@ public class TestConstructorValue {
         ConcreteClass concreteClass = TestUtil.getConcreteClassWithMultiArgConstructor();
         int intValue = 5;
         long longValue = 10;
-        ConstructorValue constructorValue = new ConstructorValue(concreteClass, new LiteralValue(PrimitiveType.Long, longValue),new LiteralValue(PrimitiveType.Int, intValue));
+        ConstructorValue constructorValue = new ConstructorValue(concreteClass, new LiteralValue(longValue),new LiteralValue(intValue));
         constructorValue.getCodeString();
     }
 

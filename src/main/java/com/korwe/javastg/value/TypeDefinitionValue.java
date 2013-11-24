@@ -8,6 +8,8 @@ import com.korwe.javastg.type.TypeDefinition;
 public abstract class TypeDefinitionValue {
     private TypeDefinition typeDefinition;
 
+    public TypeDefinitionValue(){}
+
     public TypeDefinitionValue(TypeDefinition typeDefinition){
         this.typeDefinition = typeDefinition;
     }
