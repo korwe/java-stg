@@ -8,11 +8,11 @@ import com.korwe.javastg.type.Enum;
  */
 public class TestUtil {
     public static ConcreteClass getBasicConcreteClass(){
-        return new ConcreteClass("some.place", "SomeClass");
+        return new ConcreteClass("classes.place", "SomeClass");
     }
 
     public static ConcreteClass getConcreteClassWithConstructor(){
-        ConcreteClass concreteClass = new ConcreteClass("some.place", "ClassWithConstructor");
+        ConcreteClass concreteClass = new ConcreteClass("classes.place", "ClassWithConstructor");
         ConstructorMethod constructorMethod = new ConstructorMethod(AccessModifier.Public, concreteClass);
         constructorMethod.addParamater(new Parameter(PrimitiveType.Int, "intValue"));
         concreteClass.addConstructor(constructorMethod);
@@ -20,7 +20,7 @@ public class TestUtil {
     }
 
     public static ConcreteClass getConcreteClassWithMultiArgConstructor(){
-        ConcreteClass concreteClass = new ConcreteClass("some.place", "ClassWithMultiArgConstructor");
+        ConcreteClass concreteClass = new ConcreteClass("classes.place", "ClassWithMultiArgConstructor");
         ConstructorMethod constructorMethod = new ConstructorMethod(AccessModifier.Public, concreteClass);
         constructorMethod.addParamater(new Parameter(PrimitiveType.Int, "intValue"));
         constructorMethod.addParamater(new Parameter(PrimitiveType.Long, "longValue"));
@@ -29,11 +29,11 @@ public class TestUtil {
     }
 
     public static Enum getBasicEnum(){
-        return new Enum("some.place", "SomeEnum");
+        return new Enum("enumeration.place", "SomeEnum");
     }
 
     public static Enum getEnumWithConstructor(){
-        Enum enumDef = new Enum("some.place", "EnumWithConstructor");
+        Enum enumDef = new Enum("enumeration.place", "EnumWithConstructor");
         ConstructorMethod constructorMethod = new ConstructorMethod(AccessModifier.Public, enumDef);
         constructorMethod.addParamater(new Parameter(BoxableType.String, "stringValue"));
         enumDef.addConstructor(constructorMethod);
@@ -41,11 +41,15 @@ public class TestUtil {
     }
 
     public static Enum getEnumWithMultiArgConstructor(){
-        Enum enumDef = new Enum("some.place", "EnumWithMultiArgConstructor");
+        Enum enumDef = new Enum("enumeration.place", "EnumWithMultiArgConstructor");
         ConstructorMethod constructorMethod = new ConstructorMethod(AccessModifier.Public, enumDef);
         constructorMethod.addParamater(new Parameter(PrimitiveType.Char, "charValue"));
         constructorMethod.addParamater(new Parameter(PrimitiveType.Double, "doubleValue"));
         enumDef.addConstructor(constructorMethod);
         return enumDef;
+    }
+
+    public static Annotation getBasicAnnotation(){
+        return new Annotation("annotations.place", "BasicAnnotation");
     }
 }

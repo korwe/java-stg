@@ -23,9 +23,7 @@ public class ImportUtil {
         addImportForTypeDefinition(imports, classDef, classDef.getSuperClass());
 
         //Check annotations
-        for(AnnotationInstance annotationInstance : classDef.getAnnotations()){
-            addImportForTypeDefinition(imports, classDef, annotationInstance.getAnnotation());
-        }
+        addImportsForAnnotatable(imports, classDef, classDef);
 
         //Check interfaces
         for(Interface interfaceDef : classDef.getInterfaces()){
@@ -42,24 +40,6 @@ public class ImportUtil {
         addImportsForTypeParameters(imports, classDef, classDef.getTypeParameters());
     }
 
-    public static List<String> importsForTypeParameters(ReferenceType referenceType, List<TypeParameter> typeParameters){
-        List<String> imports = new ArrayList<>();
-        addImportsForTypeParameters(imports, referenceType, typeParameters);
-        return imports;
-    }
-
-    private static void addImportsForTypeParameters(List<String> imports, ReferenceType referenceType, List<TypeParameter> typeParameters) {
-        for(TypeParameter typeParameter : typeParameters){
-            addImportsForTypeDefinitions(imports, referenceType, typeParameter.getParentTypes());
-        }
-    }
-
-    private static void addImportsForTypeDefinitions(List<String> imports, ReferenceType baseType, List<TypeDefinition> typeDefinitions){
-        for(TypeDefinition typeDefinition : typeDefinitions){
-            addImportForTypeDefinition(imports, baseType, typeDefinition);
-        }
-    }
-
     public static List<String> importsForMethods(ReferenceType referenceType, List<? extends Method> methods){
         List<String> imports = new ArrayList<>();
         addImportsForMethods(imports, referenceType, methods);
@@ -67,54 +47,131 @@ public class ImportUtil {
 
     }
 
-    public static void addImportsForMethods(List<String> imports, ReferenceType referenceType, List<? extends Method> methods){
+    public static void addImportsForMethods(List<String> imports, ReferenceType baseType, List<? extends Method> methods){
         for(Method method : methods){
             //Check returnType
             if(method.getReturnType() != null){
-                addImportForTypeDefinition(imports, referenceType, method.getReturnType());
+                addImportForTypeDefinition(imports, baseType, method.getReturnType());
             }
 
             //Check Parameters
-            addImportsForIDDeclarations(imports, referenceType, method.getParameters());
+            addImportsForIDDeclarations(imports, baseType, method.getParameters());
 
             //Check Annotations
-            for(AnnotationInstance annotationInstance : method.getAnnotations()){
-                addImportForTypeDefinition(imports, referenceType, annotationInstance.getAnnotation());
-            }
+            addImportsForAnnotatable(imports, baseType, method);
 
             //Generics
-            addImportsForTypeParameters(imports, referenceType, method.getTypeParameters());
+            addImportsForTypeParameters(imports, baseType, method.getTypeParameters());
         }
 
     }
 
-    public static List<String> importsForIDDeclarations(ReferenceType referenceType, List<? extends IDDeclaration> idDeclarations){
+    public static List<String> importsForTypeParameters(ReferenceType baseType, List<TypeParameter> typeParameters){
         List<String> imports = new ArrayList<>();
-        addImportsForIDDeclarations(imports, referenceType, idDeclarations);
+        addImportsForTypeParameters(imports, baseType, typeParameters);
         return imports;
     }
 
-    public static void addImportsForIDDeclarations(List<String> imports, ReferenceType referenceType, List<? extends IDDeclaration> idDeclarations){
-        for (IDDeclaration idDeclaration : idDeclarations) {
-            addImportForTypeDefinition(imports, referenceType, idDeclaration.getType());
+    private static void addImportsForTypeParameters(List<String> imports, ReferenceType baseType, List<TypeParameter> typeParameters) {
+        for(TypeParameter typeParameter : typeParameters){
+            addImportsForTypeParameter(imports, baseType, typeParameter);
+        }
+    }
 
-            //Check Annotations
-            for(AnnotationInstance annotationInstance : idDeclaration.getAnnotations()){
-                addImportForTypeDefinition(imports, referenceType, annotationInstance.getAnnotation());
-            }
+    public static List<String> importsForTypeParameter(ReferenceType baseType, TypeParameter typeParameter) {
+        List<String> imports = new ArrayList<>();
+        addImportsForTypeDefinitions(imports, baseType, typeParameter.getParentTypes());
+        return imports;
+    }
+
+    public static void addImportsForTypeParameter(List<String> imports, ReferenceType baseType, TypeParameter typeParameter) {
+        addImportsForTypeDefinitions(imports, baseType, typeParameter.getParentTypes());
+    }
+
+    public static List<String> importsForIDDeclarations(ReferenceType baseType, List<? extends IDDeclaration> idDeclarations){
+        List<String> imports = new ArrayList<>();
+        addImportsForIDDeclarations(imports, baseType, idDeclarations);
+        return imports;
+    }
+
+    public static void addImportsForIDDeclarations(List<String> imports, ReferenceType baseType, List<? extends IDDeclaration> idDeclarations){
+        for (IDDeclaration idDeclaration : idDeclarations) {
+            addImportsForIDDeclaration(imports, baseType, idDeclaration);
+        }
+    }
+
+    public static List<String> importsForIDDeclaration(ReferenceType baseType, IDDeclaration idDeclaration){
+        List<String> imports = new ArrayList<>();
+        addImportsForIDDeclaration(imports, baseType, idDeclaration);
+        return imports;
+    }
+
+    public static void addImportsForIDDeclaration(List<String> imports, ReferenceType baseType, IDDeclaration idDeclaration){
+        addImportForTypeDefinition(imports, baseType, idDeclaration.getType());
+
+        //Check Annotations
+        addImportsForAnnotatable(imports, baseType, idDeclaration);
+    }
+
+    public static List<String> importsForAnnotatables(ReferenceType baseType, List<? extends Annotatable> annotatables){
+        List<String> imports = new ArrayList<>();
+        addImportsForAnnotatables(imports, baseType, annotatables);
+        return imports;
+    }
+
+    public static void addImportsForAnnotatables(List<String> imports, ReferenceType baseType, List<? extends Annotatable> annotatables){
+        for(Annotatable annotatable : annotatables){
+            addImportsForAnnotatable(imports, baseType, annotatable);
+        }
+    }
+
+    public static List<String> importsForAnnotatable(ReferenceType baseType, Annotatable annotatable){
+        List<String> imports = new ArrayList<>();
+        addImportsForAnnotatable(imports, baseType, annotatable);
+        return imports;
+    }
+
+    public static void addImportsForAnnotatable(List<String> imports, ReferenceType baseType, Annotatable annotatable){
+        for(AnnotationInstance annotationInstance : annotatable.getAnnotations()){
+            addImportForTypeDefinition(imports, baseType, annotationInstance.getAnnotation());
+        }
+    }
+
+    public static List<String> importsForTypeDefinitions(ReferenceType baseType, List<? extends TypeDefinition> typeDefinitions){
+        ArrayList<String> imports = new ArrayList<>();
+        for(TypeDefinition typeDefinition : typeDefinitions){
+            addImportForTypeDefinition(imports, baseType, typeDefinition);
+        }
+        return imports;
+    }
+
+    public static void addImportsForTypeDefinitions(List<String> imports, ReferenceType baseType, List<? extends TypeDefinition> typeDefinitions){
+        for(TypeDefinition typeDefinition : typeDefinitions){
+            addImportForTypeDefinition(imports, baseType, typeDefinition);
         }
     }
 
     public static void addImportForTypeDefinition(List<String> imports, ReferenceType referenceType, TypeDefinition typeDefinition) {
-        if (typeDefinition != null && ReferenceType.class.isAssignableFrom(typeDefinition.getClass())) {
-            ReferenceType otherReferenceType = (ReferenceType) typeDefinition;
-            if (referenceType != null && !referenceType.packageEqual(otherReferenceType)) {
-                //Only add if not already contained
-                String importName = otherReferenceType.getPackageName()+"."+otherReferenceType.getName();
-                if(!imports.contains(importName)){
-                    imports.add(importName);
-                }
+        //Only add if not already contained
+        String importName = importForTypeDefinition(referenceType, typeDefinition);
+        if(importName != null){
+            if(!imports.contains(importName)){
+                imports.add(importName);
             }
         }
     }
+
+    public static String importForTypeDefinition(ReferenceType referenceType, TypeDefinition typeDefinition) {
+        if (typeDefinition != null && ReferenceType.class.isAssignableFrom(typeDefinition.getClass())) {
+            ReferenceType otherReferenceType = (ReferenceType) typeDefinition;
+            if (referenceType != null && otherReferenceType.getPackageName()!=null && !referenceType.packageEqual(otherReferenceType)) {
+                //Only add if not already contained
+                return String.format("%s.%s", otherReferenceType.getPackageName(),otherReferenceType.getName());
+
+            }
+        }
+        return null;
+    }
+
+
 }
