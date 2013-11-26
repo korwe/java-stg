@@ -393,9 +393,8 @@ public class TestImportUtil {
 
     }
 
-
     @Test
-    public void importForTypeDefinition_Parameterized(){
+    public void importsForTypeDefinition_Parameterized(){
         ReferenceType baseType = TestUtil.getBasicConcreteClass();
         ParameterizedType parameterizedType = TestUtil.getBasicParameterizedType();
 
@@ -416,8 +415,199 @@ public class TestImportUtil {
             assertTrue(String.format("Import not added or added incorrectly for parameter type(%s.%s)", referenceType.getPackageName(), referenceType.getName()), imports.contains(String.format("%s.%s", referenceType.getPackageName(), referenceType.getName())));
         }
 
+    }
 
+    /**
+     * This test checks only whether all components of the method are being checked for imports
+     */
+    @Test
+    public void importsForMethod(){
+        ReferenceType baseType = TestUtil.getBasicConcreteClass();
+        Method method = TestUtil.getPrivateAnnotatedParameterizedConcreteMethodWithParameterizedParameter();
+
+        List<ReferenceType> uniqueReferences = new ArrayList<>();
+
+        assertTrue("Method is required to have at least 1 ReferenceType parameter and 1 ParameterizedType parameter", method.getParameters().size() > 1);
+        boolean methodHasReferenceTypeParameter = false;
+        boolean methodHasParameterizedParameter = false;
+        for(Parameter parameter : method.getParameters()){
+            if(parameter.getType().isReferenceType()){
+                ReferenceType paramReferenceType = (ReferenceType)parameter.getType();
+                assertFalse("ReferenceType Parameter shouldn't be same as baseType", baseType.equals(paramReferenceType));
+                assertFalse("ReferenceType Parameter should be in different package from baseType", baseType.packageEqual(paramReferenceType));
+                if((paramReferenceType).isParameterized()){
+                    //ParameterizedType parameters
+                    ParameterizedType parameterizedType = (ParameterizedType)paramReferenceType;
+                    assertFalse("Parameterized Parameter's type should have at least 1 ParentType", parameterizedType.getParameterTypes().isEmpty());
+                    for(ReferenceType referenceType : parameterizedType.getParameterTypes()){
+                        assertFalse("Paramterized Parameter's parameterTypes' package should be different to baseType", baseType.packageEqual(referenceType));
+                        assertFalse("All reference types should be unique", uniqueReferences.contains(referenceType));
+                        uniqueReferences.add(referenceType);
+                    }
+                    assertTrue("Parameterized Parameter's generifiable should be a referenceType", ReferenceType.class.isAssignableFrom(parameterizedType.getGenerifiable().getClass()));
+                    ReferenceType generifiableReferece = (ReferenceType) parameterizedType.getGenerifiable();
+                    assertFalse("Paramterized Parameter's type's package should be different to baseType", baseType.packageEqual(generifiableReferece));
+                    assertFalse("All reference types should be unique", uniqueReferences.contains(generifiableReferece));
+                    uniqueReferences.add(generifiableReferece);
+
+                    methodHasParameterizedParameter = true;
+
+                }
+                else{
+                    //ReferenceType parameters
+                    assertFalse("ReferenceType parameter's type's package should be different from base package", baseType.packageEqual(paramReferenceType));
+                    assertFalse("All reference types should be unique", uniqueReferences.contains(paramReferenceType));
+                    uniqueReferences.add(paramReferenceType);
+                    methodHasReferenceTypeParameter = true;
+                }
+            }
+        }
+
+        assertTrue("Method is required to have at least 1 ReferenceType parameter", methodHasReferenceTypeParameter);
+        assertTrue("Method is required to have at least 1 ParameterizedType parameter", methodHasParameterizedParameter);
+
+        //Annotations
+        assertFalse("Method is required to have at least 1 annotation", method.getAnnotations().isEmpty());
+        for(AnnotationInstance annotationInstance : method.getAnnotations()){
+            assertFalse("Annotation's type's package should be different from base package", baseType.packageEqual(annotationInstance.getAnnotation()));
+            assertFalse("All reference types should be unique", uniqueReferences.contains(annotationInstance.getAnnotation()));
+            uniqueReferences.add(annotationInstance.getAnnotation());
+        }
+
+
+        //TypeParameters
+        assertFalse("Method is required to have at least 1 TypeParameter", method.getTypeParameters().isEmpty());
+        for(TypeParameter typeParameter : method.getTypeParameters()){
+            for(ReferenceType referenceType : typeParameter.getParentTypes()){
+                assertFalse("TypeParameter's parents' type's package should be different from base package", baseType.packageEqual(referenceType));
+                assertFalse("All reference types should be unique", uniqueReferences.contains(referenceType));
+                uniqueReferences.add(referenceType);
+            }
+        }
+
+        //ReturnType
+        assertNotNull("Method is required to have a returnType", method.getReturnType());
+        assertTrue("Method's returnType is required to be a ReferenceType", method.getReturnType().isReferenceType());
+        assertFalse("Method's returnType type is required to be in a different package from the base package", baseType.packageEqual((ReferenceType) method.getReturnType()));
+        assertFalse("All reference types should be unique", uniqueReferences.contains(method.getReturnType()));
+        uniqueReferences.add((ReferenceType)method.getReturnType());
+
+
+
+        List<String> imports = new ArrayList<>();
+        ImportUtil.addImportsForMethod(imports, baseType, method);
+
+        assertEquals("Incorrect number of imports added", uniqueReferences.size(), imports.size());
+        for(ReferenceType referenceType : uniqueReferences){
+            assertTrue(String.format("Import not added or added incorrectly for (%s.%s)", referenceType.getPackageName(), referenceType.getName()), imports.contains(String.format("%s.%s", referenceType.getPackageName(), referenceType.getName())));
+        }
+
+        imports = ImportUtil.importsForMethod(baseType, method);
+
+        assertEquals("Incorrect number of imports added", uniqueReferences.size(), imports.size());
+        for(ReferenceType referenceType : uniqueReferences){
+            assertTrue(String.format("Import not added or added incorrectly for (%s.%s)", referenceType.getPackageName(), referenceType.getName()), imports.contains(String.format("%s.%s", referenceType.getPackageName(), referenceType.getName())));
+        }
 
     }
 
+    /**
+     * This test checks only whether all components of the methods are being checked for imports (wrapper methods for importsForMethod)
+     */
+    @Test
+    public void importsForMethods(){
+        ReferenceType baseType = TestUtil.getBasicConcreteClass();
+        List<Method> methods = new ArrayList<>();
+        methods.add(TestUtil.getPrivateAnnotatedParameterizedConcreteMethodWithParameterizedParameter());
+        methods.add(TestUtil.getPrivateAnnotatedParameterizedAbstractMethodWithParameterizedParameter());
+
+
+        List<ReferenceType> uniqueReferences = new ArrayList<>();
+
+        for(Method method : methods){
+            assertTrue("Method is required to have at least 1 ReferenceType parameter and 1 ParameterizedType parameter", method.getParameters().size() > 1);
+            boolean methodHasReferenceTypeParameter = false;
+            boolean methodHasParameterizedParameter = false;
+            for(Parameter parameter : method.getParameters()){
+                if(parameter.getType().isReferenceType()){
+                    ReferenceType paramReferenceType = (ReferenceType)parameter.getType();
+                    assertFalse("ReferenceType Parameter shouldn't be same as baseType", baseType.equals(paramReferenceType));
+                    assertFalse("ReferenceType Parameter should be in different package from baseType", baseType.packageEqual(paramReferenceType));
+                    if((paramReferenceType).isParameterized()){
+                        //ParameterizedType parameters
+                        ParameterizedType parameterizedType = (ParameterizedType)paramReferenceType;
+                        assertFalse("Parameterized Parameter's type should have at least 1 ParentType", parameterizedType.getParameterTypes().isEmpty());
+                        for(ReferenceType referenceType : parameterizedType.getParameterTypes()){
+                            assertFalse("Paramterized Parameter's parameterTypes' package should be different to baseType", baseType.packageEqual(referenceType));
+                            assertFalse("All reference types should be unique", uniqueReferences.contains(referenceType));
+                            uniqueReferences.add(referenceType);
+                        }
+                        assertTrue("Parameterized Parameter's generifiable should be a referenceType", ReferenceType.class.isAssignableFrom(parameterizedType.getGenerifiable().getClass()));
+                        ReferenceType generifiableReferece = (ReferenceType) parameterizedType.getGenerifiable();
+                        assertFalse("Paramterized Parameter's type's package should be different to baseType", baseType.packageEqual(generifiableReferece));
+                        assertFalse("All reference types should be unique", uniqueReferences.contains(generifiableReferece));
+                        uniqueReferences.add(generifiableReferece);
+
+                        methodHasParameterizedParameter = true;
+
+                    }
+                    else{
+                        //ReferenceType parameters
+                        assertFalse("ReferenceType parameter's type's package should be different from base package", baseType.packageEqual(paramReferenceType));
+                        assertFalse("All reference types should be unique", uniqueReferences.contains(paramReferenceType));
+                        uniqueReferences.add(paramReferenceType);
+                        methodHasReferenceTypeParameter = true;
+                    }
+                }
+            }
+
+            assertTrue("Method is required to have at least 1 ReferenceType parameter", methodHasReferenceTypeParameter);
+            assertTrue("Method is required to have at least 1 ParameterizedType parameter", methodHasParameterizedParameter);
+
+            //Annotations
+            assertFalse("Method is required to have at least 1 annotation", method.getAnnotations().isEmpty());
+            for(AnnotationInstance annotationInstance : method.getAnnotations()){
+                assertFalse("Annotation's type's package should be different from base package", baseType.packageEqual(annotationInstance.getAnnotation()));
+                assertFalse("All reference types should be unique", uniqueReferences.contains(annotationInstance.getAnnotation()));
+                uniqueReferences.add(annotationInstance.getAnnotation());
+            }
+
+
+            //TypeParameters
+            assertFalse("Method is required to have at least 1 TypeParameter", method.getTypeParameters().isEmpty());
+            for(TypeParameter typeParameter : method.getTypeParameters()){
+                for(ReferenceType referenceType : typeParameter.getParentTypes()){
+                    assertFalse("TypeParameter's parents' type's package should be different from base package", baseType.packageEqual(referenceType));
+                    assertFalse("All reference types should be unique", uniqueReferences.contains(referenceType));
+                    uniqueReferences.add(referenceType);
+                }
+            }
+
+            //ReturnType
+            assertNotNull("Method is required to have a returnType", method.getReturnType());
+            assertTrue("Method's returnType is required to be a ReferenceType", method.getReturnType().isReferenceType());
+            assertFalse("Method's returnType type is required to be in a different package from the base package", baseType.packageEqual((ReferenceType) method.getReturnType()));
+            assertFalse("All reference types should be unique", uniqueReferences.contains(method.getReturnType()));
+            uniqueReferences.add((ReferenceType)method.getReturnType());
+
+        }
+
+
+
+        List<String> imports = new ArrayList<>();
+        ImportUtil.addImportsForMethods(imports, baseType, methods);
+
+        assertEquals("Incorrect number of imports added", uniqueReferences.size(), imports.size());
+        for(ReferenceType referenceType : uniqueReferences){
+            assertTrue(String.format("Import not added or added incorrectly for (%s.%s)", referenceType.getPackageName(), referenceType.getName()), imports.contains(String.format("%s.%s", referenceType.getPackageName(), referenceType.getName())));
+        }
+
+        imports = ImportUtil.importsForMethods(baseType, methods);
+
+        assertEquals("Incorrect number of imports added", uniqueReferences.size(), imports.size());
+        for(ReferenceType referenceType : uniqueReferences){
+            assertTrue(String.format("Import not added or added incorrectly for (%s.%s)", referenceType.getPackageName(), referenceType.getName()), imports.contains(String.format("%s.%s", referenceType.getPackageName(), referenceType.getName())));
+        }
+
+    }
 }

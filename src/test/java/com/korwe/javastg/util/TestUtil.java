@@ -103,7 +103,59 @@ public class TestUtil {
         ParameterizedType parameterizedType = new ParameterizedType(getMultiBoundGenerifiableType());
         TypeParameter typeParameter = parameterizedType.getGenerifiable().getTypeParameters().get(0);
         parameterizedType.addParameterType(new ConcreteClass("typeParameter.place", "ExtendedType2", (ConcreteClass)typeParameter.getParentTypes().get(0)));
-        parameterizedType.addParameterType(new ConcreteClass("typeParameter.place", "ExtendedType3", (ConcreteClass)typeParameter.getParentTypes().get(1)));
+        parameterizedType.addParameterType(new ConcreteClass("typeParameter.place", "ExtendedType3", (ConcreteClass) typeParameter.getParentTypes().get(1)));
         return parameterizedType;
+    }
+
+    public static ConcreteMethod getPrivateAnnotatedParameterizedConcreteMethodWithParameterizedParameter(){
+        ConcreteMethod method = new ConcreteMethod(AccessModifier.Private, new ConcreteClass("method.classes","MethodReturnType"), "testPrivateMethod");
+        method.addParamater(new Parameter(new ConcreteClass("method.classes", "MethodParam1"), "param1"));
+
+        TypeParameter parameterTypeParameter = new TypeParameter();
+        parameterTypeParameter.addTypeName("S");
+        ConcreteClass methodParameterType1 = new ConcreteClass("method.classes", "MethodParameterType1");
+        parameterTypeParameter.addParentType(methodParameterType1);
+        ConcreteClass parameterizedClass = new ConcreteClass("method.classes", "MethodParameterizedClass");
+        parameterizedClass.addTypeParameter(parameterTypeParameter);
+        ParameterizedType parameterizedType = new ParameterizedType(parameterizedClass);
+        parameterizedType.addParameterType(new ConcreteClass("method.classes", "ExtendedMethodParameterType1", methodParameterType1));
+
+
+        TypeParameter parameterType = new TypeParameter();
+        parameterType.addTypeName("X");
+        parameterType.addParentType(new ConcreteClass("method.classes", "MethodParameterType2"));
+        method.addParamater(new Parameter(parameterizedType, "param2"));
+        method.addTypeParameter(parameterType);
+
+        method.addAnnotation(new AnnotationInstance(new Annotation("method.annotations", "MethodAnnotation1")));
+
+
+        return method;
+    }
+
+    public static AbstractMethod getPrivateAnnotatedParameterizedAbstractMethodWithParameterizedParameter(){
+        AbstractMethod method = new AbstractMethod(AccessModifier.Private, new ConcreteClass("method.classes","MethodReturnType2"), "testPublicMethod");
+        method.addParamater(new Parameter(new ConcreteClass("method.classes", "AbstractMethodParam1"), "param1"));
+
+        TypeParameter parameterTypeParameter = new TypeParameter();
+        parameterTypeParameter.addTypeName("S");
+        ConcreteClass methodParameterType1 = new ConcreteClass("method.classes", "AbstractMethodParameterType1");
+        parameterTypeParameter.addParentType(methodParameterType1);
+        ConcreteClass parameterizedClass = new ConcreteClass("method.classes", "AbstractMethodParameterizedClass");
+        parameterizedClass.addTypeParameter(parameterTypeParameter);
+        ParameterizedType parameterizedType = new ParameterizedType(parameterizedClass);
+        parameterizedType.addParameterType(new ConcreteClass("method.classes", "ExtendedAbstractMethodParameterType1", methodParameterType1));
+
+
+        TypeParameter parameterType = new TypeParameter();
+        parameterType.addTypeName("X");
+        parameterType.addParentType(new ConcreteClass("method.classes", "AbstractMethodParameterType2"));
+        method.addParamater(new Parameter(parameterizedType, "param2"));
+        method.addTypeParameter(parameterType);
+
+        method.addAnnotation(new AnnotationInstance(new Annotation("method.annotations", "AbstractMethodAnnotation1")));
+
+
+        return method;
     }
 }

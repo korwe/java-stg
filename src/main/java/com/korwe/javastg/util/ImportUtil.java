@@ -49,21 +49,30 @@ public class ImportUtil {
 
     public static void addImportsForMethods(List<String> imports, ReferenceType baseType, List<? extends Method> methods){
         for(Method method : methods){
-            //Check returnType
-            if(method.getReturnType() != null){
-                addImportForTypeDefinition(imports, baseType, method.getReturnType());
-            }
+            addImportsForMethod(imports, baseType, method);
+        }
+    }
 
-            //Check Parameters
-            addImportsForIDDeclarations(imports, baseType, method.getParameters());
+    public static List<String> importsForMethod(ReferenceType baseType, Method method){
+        List<String> imports = new ArrayList<>();
+        addImportsForMethod(imports, baseType, method);
+        return imports;
+    }
 
-            //Check Annotations
-            addImportsForAnnotatable(imports, baseType, method);
-
-            //Type Parameters
-            addImportsForTypeParameters(imports, baseType, method.getTypeParameters());
+    public static void addImportsForMethod(List<String> imports, ReferenceType baseType, Method method){
+        //Check returnType
+        if(method.getReturnType() != null){
+            addImportForTypeDefinition(imports, baseType, method.getReturnType());
         }
 
+        //Check Parameters
+        addImportsForIDDeclarations(imports, baseType, method.getParameters());
+
+        //Check Annotations
+        addImportsForAnnotatable(imports, baseType, method);
+
+        //Check Type Parameters
+        addImportsForTypeParameters(imports, baseType, method.getTypeParameters());
     }
 
     public static List<String> importsForParameterizedTypes(ReferenceType baseType, List<ParameterizedType> parameterizedTypes){
