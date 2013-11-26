@@ -7,7 +7,7 @@ import java.util.List;
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
 public class TypeParameter{
-    private List<TypeDefinition> parentTypes;
+    private List<ReferenceType> parentTypes;
     private List<TypeParameterName> names;
 
     public TypeParameter(){
@@ -23,7 +23,7 @@ public class TypeParameter{
         }
     }
 
-    public TypeParameter(List<String> names, List<TypeDefinition> parentTypes) {
+    public TypeParameter(List<String> names, List<ReferenceType> parentTypes) {
         this.names = new ArrayList<>();
         for(String name : names){
             addTypeName(name);
@@ -39,12 +39,16 @@ public class TypeParameter{
         this.names = names;
     }
 
-    public List<TypeDefinition> getParentTypes() {
+    public List<ReferenceType> getParentTypes() {
         return parentTypes;
     }
 
-    public void setParentTypes(List<TypeDefinition> parentTypes) {
+    public void setParentTypes(List<ReferenceType> parentTypes) {
         this.parentTypes = parentTypes;
+    }
+
+    public void addParentType(ReferenceType parentType){
+        this.parentTypes.add(parentType);
     }
 
     public void addTypeName(String name){

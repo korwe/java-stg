@@ -1,5 +1,6 @@
 package com.korwe.javastg.type;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,11 +12,17 @@ public class ParameterizedType extends ReferenceType{ //Extends reference type t
 
     public ParameterizedType() {
         super(null, null);
+        init();
     }
 
     public ParameterizedType(GenerifiableType generifiableType) {
         super(null, null);
         this.generifiable = generifiableType;
+        init();
+    }
+
+    protected void init(){
+        this.parameterTypes = new ArrayList<>();
     }
 
     public Generifiable getGenerifiable() {
@@ -32,5 +39,9 @@ public class ParameterizedType extends ReferenceType{ //Extends reference type t
 
     public void setParameterTypes(List<ReferenceType> parameterTypes) {
         this.parameterTypes = parameterTypes;
+    }
+
+    public void addParameterType(ReferenceType parameterType){
+        this.parameterTypes.add(parameterType);
     }
 }

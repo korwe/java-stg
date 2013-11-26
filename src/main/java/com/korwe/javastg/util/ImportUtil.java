@@ -60,11 +60,35 @@ public class ImportUtil {
             //Check Annotations
             addImportsForAnnotatable(imports, baseType, method);
 
-            //Generics
+            //Type Parameters
             addImportsForTypeParameters(imports, baseType, method.getTypeParameters());
         }
 
     }
+
+    public static List<String> importsForParameterizedTypes(ReferenceType baseType, List<ParameterizedType> parameterizedTypes){
+        List<String> imports = new ArrayList<>();
+        addImportsForParameterizedTypes(imports, baseType, parameterizedTypes);
+        return imports;
+    }
+
+    public static void addImportsForParameterizedTypes(List<String> imports, ReferenceType baseType, List<ParameterizedType> parameterizedTypes){
+        for(ParameterizedType parameterizedType : parameterizedTypes){
+            addImportsForParameterizedType(imports, baseType, parameterizedType);
+        }
+    }
+
+    public static List<String> importsForParameterizedType(ReferenceType baseType, ParameterizedType parameterizedType){
+        List<String> imports = new ArrayList<>();
+        addImportsForParameterizedType(imports, baseType, parameterizedType);
+        return imports;
+    }
+
+    public static void addImportsForParameterizedType(List<String> imports, ReferenceType baseType, ParameterizedType parameterizedType){
+        addImportsForTypeDefinitions(imports, baseType, parameterizedType.getParameterTypes());
+    }
+
+
 
     public static List<String> importsForTypeParameters(ReferenceType baseType, List<TypeParameter> typeParameters){
         List<String> imports = new ArrayList<>();
@@ -72,7 +96,7 @@ public class ImportUtil {
         return imports;
     }
 
-    private static void addImportsForTypeParameters(List<String> imports, ReferenceType baseType, List<TypeParameter> typeParameters) {
+    public static void addImportsForTypeParameters(List<String> imports, ReferenceType baseType, List<TypeParameter> typeParameters) {
         for(TypeParameter typeParameter : typeParameters){
             addImportsForTypeParameter(imports, baseType, typeParameter);
         }

@@ -23,7 +23,7 @@ public class TestImportUtil {
 
         String importString = ImportUtil.importForTypeDefinition(base, importedType);
 
-        assertEquals("Import created incorrectly", String.format("%s.%s",importedType.getPackageName(),importedType.getName()), importString);
+        assertEquals("Import created incorrectly", String.format("%s.%s", importedType.getPackageName(), importedType.getName()), importString);
 
 
         //Should be null for primitives
@@ -242,8 +242,148 @@ public class TestImportUtil {
             assertTrue(String.format("Import not added or added incorrectly for reference type(%s.%s)", referenceType.getPackageName(), referenceType.getName()), imports.contains(String.format("%s.%s", referenceType.getPackageName(), referenceType.getName())));
         }
 
-
     }
 
+    @Test
+    public void addImportsForTypeParameter(){
+        ReferenceType base = TestUtil.getBasicConcreteClass();
+        TypeParameter typeParameter = TestUtil.getBasicTypeParameterWithParent();
+
+        assertTrue("Type parameter should have parentTypes", typeParameter.getParentTypes().size() > 0);
+
+        //Package Uniqueness
+        for(ReferenceType referenceType : typeParameter.getParentTypes()){
+            assertNotEquals("Type parameter parents and base type should not be in same package", base.getPackageName(), referenceType.getPackageName());
+        }
+
+        List<String> imports = new ArrayList<>();
+        ImportUtil.addImportsForTypeParameter(imports, base, typeParameter);
+
+        assertEquals("Incorrect number of imports added", typeParameter.getParentTypes().size(), imports.size());
+        for(ReferenceType referenceType : typeParameter.getParentTypes()){
+            assertTrue(String.format("Import not added or added incorrectly for parent type(%s.%s)", referenceType.getPackageName(), referenceType.getName()), imports.contains(String.format("%s.%s", referenceType.getPackageName(), referenceType.getName())));
+        }
+
+        //importsForTypeParameter (wrapper for addImportsForTypeParameter)
+        imports = ImportUtil.importsForTypeParameter(base, typeParameter);
+
+        assertEquals("Incorrect number of imports added", typeParameter.getParentTypes().size(), imports.size());
+        for(ReferenceType referenceType : typeParameter.getParentTypes()){
+            assertTrue(String.format("Import not added or added incorrectly for parent type(%s.%s)", referenceType.getPackageName(), referenceType.getName()), imports.contains(String.format("%s.%s", referenceType.getPackageName(), referenceType.getName())));
+        }
+    }
+
+    @Test
+    public void addImportsForTypeParameters(){
+        ReferenceType base = TestUtil.getBasicConcreteClass();
+        TypeParameter typeParameter1 = TestUtil.getBasicTypeParameterWithParent();
+        TypeParameter typeParameter2 = TestUtil.getMultiBoundTypeParameter();
+
+        assertTrue("Type parameter should have parentTypes", typeParameter1.getParentTypes().size() > 0);
+        assertTrue("Type parameter2 should have parentTypes", typeParameter2.getParentTypes().size() > 0);
+
+        List<TypeParameter> typeParameters = new ArrayList<>();
+        typeParameters.add(typeParameter1);
+        typeParameters.add(typeParameter2);
+
+
+        List<ReferenceType> uniqueReferences = new ArrayList<>();
+        //Uniqueness of classes/packages
+        for(TypeParameter typeParameter : typeParameters){
+            for(ReferenceType referenceType : typeParameter.getParentTypes()){
+                assertNotEquals("Type parameter parents and base type should not be in same package", base.getPackageName(), referenceType.getPackageName());
+                assertFalse("All type parameter parents should be unique", uniqueReferences.contains(referenceType));
+                uniqueReferences.add(referenceType);
+            }
+        }
+
+        List<String> imports = new ArrayList<>();
+        ImportUtil.addImportsForTypeParameters(imports, base, typeParameters);
+
+        assertEquals("Incorrect number of imports added", uniqueReferences.size(), imports.size());
+        for(ReferenceType referenceType : uniqueReferences){
+            assertTrue(String.format("Import not added or added incorrectly for parent type(%s.%s)", referenceType.getPackageName(), referenceType.getName()), imports.contains(String.format("%s.%s", referenceType.getPackageName(), referenceType.getName())));
+        }
+
+        //importsForTypeParameters (wrapper for addImportsForTypeParameters)
+        imports = ImportUtil.importsForTypeParameters(base, typeParameters);
+
+        assertEquals("Incorrect number of imports added", uniqueReferences.size(), imports.size());
+        for(ReferenceType referenceType : uniqueReferences){
+            assertTrue(String.format("Import not added or added incorrectly for parent type(%s.%s)", referenceType.getPackageName(), referenceType.getName()), imports.contains(String.format("%s.%s", referenceType.getPackageName(), referenceType.getName())));
+        }
+    }
+
+
+    @Test
+    public void addImportsForParameterizedType(){
+        ReferenceType baseType = TestUtil.getBasicConcreteClass();
+        ParameterizedType parameterizedType = TestUtil.getBasicParameterizedType();
+        //Make sure there are parameterTypes
+        assertTrue("ParameterizedType does not have any parameterTypes", parameterizedType.getParameterTypes().size() > 0);
+
+        //Uniqueness
+        List<ReferenceType> uniqueReferences = new ArrayList<>();
+        for(ReferenceType parameterType : parameterizedType.getParameterTypes()){
+            assertFalse("ParameterTypes should be unique", baseType.equals(parameterType));
+            uniqueReferences.add(parameterType);
+        }
+
+        List<String> imports = new ArrayList<>();
+        ImportUtil.addImportsForParameterizedType(imports, baseType, parameterizedType);
+
+        assertEquals("Incorrect number of imports added", uniqueReferences.size(), imports.size());
+        for(ReferenceType referenceType : uniqueReferences){
+            assertTrue(String.format("Import not added or added incorrectly for parameter type(%s.%s)", referenceType.getPackageName(), referenceType.getName()), imports.contains(String.format("%s.%s", referenceType.getPackageName(), referenceType.getName())));
+        }
+
+        //importsForParameterizedType (wrapper for addImportsForParamaterizedType)
+
+        imports = ImportUtil.importsForParameterizedType(baseType, parameterizedType);
+
+        assertEquals("Incorrect number of imports added", uniqueReferences.size(), imports.size());
+        for(ReferenceType referenceType : uniqueReferences){
+            assertTrue(String.format("Import not added or added incorrectly for parameter type(%s.%s)", referenceType.getPackageName(), referenceType.getName()), imports.contains(String.format("%s.%s", referenceType.getPackageName(), referenceType.getName())));
+        }
+    }
+
+    @Test
+    public void addImportsForParamterizedTypes(){
+        ReferenceType baseType = TestUtil.getBasicConcreteClass();
+        ParameterizedType parameterizedType1 = TestUtil.getBasicParameterizedType();
+        ParameterizedType parameterizedType2 = TestUtil.getMultiBoundParameterizedType();
+
+        //Make sure there are parameterTypes
+        assertTrue("ParameterizedType does not have any parameterTypes", parameterizedType1.getParameterTypes().size() > 0);
+        assertTrue("ParameterizedType does not have any parameterTypes", parameterizedType2.getParameterTypes().size() > 0);
+
+        List<ParameterizedType> parameterizedTypes = new ArrayList<>();
+        parameterizedTypes.add(parameterizedType1);
+        parameterizedTypes.add(parameterizedType2);
+
+        //Uniqueness
+        List<ReferenceType> uniqueReferences = new ArrayList<>();
+        for(ParameterizedType parameterizedType : parameterizedTypes){
+            for(ReferenceType parameterType : parameterizedType.getParameterTypes()){
+                assertFalse("ParameterTypes should be unique", baseType.equals(parameterType));
+                uniqueReferences.add(parameterType);
+            }
+        }
+
+        List<String> imports = new ArrayList<>();
+        ImportUtil.addImportsForParameterizedTypes(imports, baseType, parameterizedTypes);
+
+        assertEquals("Incorrect number of imports added", uniqueReferences.size(), imports.size());
+        for(ReferenceType referenceType : uniqueReferences){
+            assertTrue(String.format("Import not added or added incorrectly for parameter type(%s.%s)", referenceType.getPackageName(), referenceType.getName()), imports.contains(String.format("%s.%s", referenceType.getPackageName(), referenceType.getName())));
+        }
+
+        imports = ImportUtil.importsForParameterizedTypes(baseType, parameterizedTypes);
+        assertEquals("Incorrect number of imports added", uniqueReferences.size(), imports.size());
+        for(ReferenceType referenceType : uniqueReferences){
+            assertTrue(String.format("Import not added or added incorrectly for parameter type(%s.%s)", referenceType.getPackageName(), referenceType.getName()), imports.contains(String.format("%s.%s", referenceType.getPackageName(), referenceType.getName())));
+        }
+
+    }
 
 }
