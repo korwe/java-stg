@@ -5,16 +5,16 @@ import java.util.List;
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public class GenerifiedType extends TypeDefinition{
+public class ParameterizedType extends ReferenceType{ //Extends reference type to be of the TypeDefinition family
     private Generifiable generifiable;
     private List<ReferenceType> parameterTypes;
 
-    public GenerifiedType() {
-        super(null);
+    public ParameterizedType() {
+        super(null, null);
     }
 
-    public GenerifiedType(GenerifiableType generifiableType) {
-        super(null);
+    public ParameterizedType(GenerifiableType generifiableType) {
+        super(null, null);
         this.generifiable = generifiableType;
     }
 
