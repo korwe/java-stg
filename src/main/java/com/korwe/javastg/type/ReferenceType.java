@@ -38,6 +38,10 @@ public class ReferenceType extends TypeDefinition{
         return Interface.class.isAssignableFrom(this.getClass());
     }
 
+    public boolean isParameterized(){
+        return ParameterizedType.class.isAssignableFrom(getClass());
+    }
+
     @Override
     public boolean hasLiteralSupport(){
         return isBoxableType();

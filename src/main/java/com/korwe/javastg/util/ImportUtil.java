@@ -85,9 +85,25 @@ public class ImportUtil {
     }
 
     public static void addImportsForParameterizedType(List<String> imports, ReferenceType baseType, ParameterizedType parameterizedType){
+        if(ReferenceType.class.isAssignableFrom(parameterizedType.getGenerifiable().getClass())){
+            ReferenceType otherReferenceType = (ReferenceType)parameterizedType.getGenerifiable();
+            if(otherReferenceType.getPackageName()!=null && !baseType.packageEqual(otherReferenceType)){
+                //Only add if not already contained
+                String importString = getImportString(otherReferenceType);
+                if(!imports.contains(importString)) {
+                    imports.add(importString);
+                }
+
+
+            }
+        }
+
         addImportsForTypeDefinitions(imports, baseType, parameterizedType.getParameterTypes());
     }
 
+    private static String getImportString(ReferenceType otherReferenceType) {
+        return String.format("%s.%s", otherReferenceType.getPackageName(), otherReferenceType.getName());
+    }
 
 
     public static List<String> importsForTypeParameters(ReferenceType baseType, List<TypeParameter> typeParameters){
@@ -177,24 +193,34 @@ public class ImportUtil {
 
     public static void addImportForTypeDefinition(List<String> imports, ReferenceType referenceType, TypeDefinition typeDefinition) {
         //Only add if not already contained
-        String importName = importForTypeDefinition(referenceType, typeDefinition);
-        if(importName != null){
-            if(!imports.contains(importName)){
-                imports.add(importName);
+        List<String> typeImports = importForTypeDefinition(referenceType, typeDefinition);
+        for(String importString : typeImports){
+            if(!imports.contains(importString)){
+                imports.add(importString);
             }
         }
     }
 
-    public static String importForTypeDefinition(ReferenceType referenceType, TypeDefinition typeDefinition) {
+    public static List<String> importForTypeDefinition(ReferenceType referenceType, TypeDefinition typeDefinition) {
+        List<String> imports = new ArrayList<>();
         if (typeDefinition != null && ReferenceType.class.isAssignableFrom(typeDefinition.getClass())) {
             ReferenceType otherReferenceType = (ReferenceType) typeDefinition;
-            if (referenceType != null && otherReferenceType.getPackageName()!=null && !referenceType.packageEqual(otherReferenceType)) {
-                //Only add if not already contained
-                return String.format("%s.%s", otherReferenceType.getPackageName(),otherReferenceType.getName());
+            if (referenceType != null) {
+                if(otherReferenceType.getPackageName()!=null && !referenceType.packageEqual(otherReferenceType)){
+                    String importString = getImportString(otherReferenceType);
+                    //Only add if not already contained
+                    if(!imports.contains(importString))
+                    imports.add(importString);
 
+
+                }
+
+                if(otherReferenceType.isParameterized()){
+                    addImportsForParameterizedType(imports, referenceType, (ParameterizedType)otherReferenceType);
+                }
             }
         }
-        return null;
+        return imports;
     }
 
 

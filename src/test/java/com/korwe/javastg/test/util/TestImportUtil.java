@@ -21,21 +21,23 @@ public class TestImportUtil {
         ReferenceType base = TestUtil.getBasicConcreteClass();
         ReferenceType importedType = new ReferenceType("second.package", "Super");
 
-        String importString = ImportUtil.importForTypeDefinition(base, importedType);
+        List<String> imports = ImportUtil.importForTypeDefinition(base, importedType);
 
-        assertEquals("Import created incorrectly", String.format("%s.%s", importedType.getPackageName(), importedType.getName()), importString);
+        for(String importString : imports){
+            assertEquals("Import created incorrectly", String.format("%s.%s", importedType.getPackageName(), importedType.getName()), importString);
+        }
 
 
         //Should be null for primitives
-        assertNull("Import should be null for Primitive", ImportUtil.importForTypeDefinition(base, PrimitiveType.Int));
+        assertTrue("Import should be null for Primitive", ImportUtil.importForTypeDefinition(base, PrimitiveType.Int).isEmpty());
 
         //Should be null for unpackaged references
         ReferenceType referenceTypeWithNoPackage = new ReferenceType(null, "MyNonPackagedRefernceType");
-        assertNull("Import should be null for ReferenceType with no package", ImportUtil.importForTypeDefinition(base, referenceTypeWithNoPackage));
+        assertTrue("Import should be null for ReferenceType with no package", ImportUtil.importForTypeDefinition(base, referenceTypeWithNoPackage).isEmpty());
 
         //Should be null for reference in same package
         ReferenceType referenceTypeWithSamePackage = new ReferenceType(base.getPackageName(), "MyNonPackagedRefernceType");
-        assertNull("Import should be null for ReferenceType in same package", ImportUtil.importForTypeDefinition(base, referenceTypeWithSamePackage));
+        assertTrue("Import should be null for ReferenceType in same package", ImportUtil.importForTypeDefinition(base, referenceTypeWithSamePackage).isEmpty());
 
 
 
@@ -324,6 +326,8 @@ public class TestImportUtil {
 
         //Uniqueness
         List<ReferenceType> uniqueReferences = new ArrayList<>();
+        assertTrue(ReferenceType.class.isAssignableFrom(parameterizedType.getGenerifiable().getClass()));
+        uniqueReferences.add((ReferenceType)parameterizedType.getGenerifiable());
         for(ReferenceType parameterType : parameterizedType.getParameterTypes()){
             assertFalse("ParameterTypes should be unique", baseType.equals(parameterType));
             uniqueReferences.add(parameterType);
@@ -364,6 +368,9 @@ public class TestImportUtil {
         //Uniqueness
         List<ReferenceType> uniqueReferences = new ArrayList<>();
         for(ParameterizedType parameterizedType : parameterizedTypes){
+            assertTrue("Generifiable must be a ReferenceType", ReferenceType.class.isAssignableFrom(parameterizedType.getGenerifiable().getClass()));
+            assertFalse("Generifiable ReferenceTypes should be unique", uniqueReferences.contains(parameterizedType.getGenerifiable()));
+            uniqueReferences.add((ReferenceType)parameterizedType.getGenerifiable());
             for(ReferenceType parameterType : parameterizedType.getParameterTypes()){
                 assertFalse("ParameterTypes should be unique", baseType.equals(parameterType));
                 uniqueReferences.add(parameterType);
@@ -383,6 +390,33 @@ public class TestImportUtil {
         for(ReferenceType referenceType : uniqueReferences){
             assertTrue(String.format("Import not added or added incorrectly for parameter type(%s.%s)", referenceType.getPackageName(), referenceType.getName()), imports.contains(String.format("%s.%s", referenceType.getPackageName(), referenceType.getName())));
         }
+
+    }
+
+
+    @Test
+    public void importForTypeDefinition_Parameterized(){
+        ReferenceType baseType = TestUtil.getBasicConcreteClass();
+        ParameterizedType parameterizedType = TestUtil.getBasicParameterizedType();
+
+        List<ReferenceType> uniqueReferences = new ArrayList<>();
+
+        //uniqueness
+        assertTrue("Generifiable must be a referenceType", ReferenceType.class.isAssignableFrom(parameterizedType.getGenerifiable().getClass()));
+        uniqueReferences.add((ReferenceType)parameterizedType.getGenerifiable());
+        for(ReferenceType parameterType : parameterizedType.getParameterTypes()){
+            assertFalse("ParameterTypes should be unique", baseType.equals(parameterType));
+            uniqueReferences.add(parameterType);
+        }
+
+        List<String> imports = ImportUtil.importForTypeDefinition(baseType, parameterizedType);
+
+        assertEquals("Incorrect number of imports added", uniqueReferences.size(), imports.size());
+        for(ReferenceType referenceType : uniqueReferences){
+            assertTrue(String.format("Import not added or added incorrectly for parameter type(%s.%s)", referenceType.getPackageName(), referenceType.getName()), imports.contains(String.format("%s.%s", referenceType.getPackageName(), referenceType.getName())));
+        }
+
+
 
     }
 
