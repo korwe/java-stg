@@ -8,6 +8,7 @@ import com.korwe.javastg.definition.TypeParameter;
 import com.korwe.javastg.definition.ParameterizedConcreteClass;
 import com.korwe.javastg.definition.ParameterizedInterface;
 import com.korwe.javastg.type.*;
+import com.korwe.javastg.value.TypeValue;
 import org.stringtemplate.v4.ST;
 
 /**
@@ -235,10 +236,26 @@ public class TestUtil {
         return concreteClass;
     }
 
-    public static void main(String[] args) {
-        ST st = TemplateUtil.template("java_file");
-        st.add("javaDef", getAPECClass_CMAI());
-        st.add("imports", ImportUtil.importsForClass(getAPECClass_CMAI()));
-        System.out.println(st.render());
+    public static TypeValue typeValueFor(Type type){
+        return new TypeValue(type) {
+            @Override
+            public String getCodeString() {
+                return null;
+            }
+        };
+    }
+
+    public static Primitive getPrimitiveWithBoxable() {
+        Primitive boxablePrimitive = new Primitive("PrimitiveWithBoxable", null);
+        Boxable boxable = new Boxable("some.place", "BoxableWithPrimitive", boxablePrimitive);
+        boxablePrimitive.setBoxableType(boxable);
+        return boxablePrimitive;
+    }
+
+    public static Boxable getBoxableWithPrimitive() {
+        Primitive primitive = new Primitive("primitiveForBoxable", null);
+        Boxable boxableWithPrimitive = new Boxable("some.place", "BoxableWithoutPrimitive", primitive);
+        primitive.setBoxableType(boxableWithPrimitive);
+        return boxableWithPrimitive;
     }
 }
