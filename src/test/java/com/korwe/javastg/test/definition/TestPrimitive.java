@@ -3,6 +3,7 @@ package com.korwe.javastg.test.definition;
 import com.korwe.javastg.definition.Boxable;
 import com.korwe.javastg.definition.Primitive;
 import com.korwe.javastg.util.TestUtil;
+import com.korwe.javastg.value.TypeValue;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -21,7 +22,7 @@ public class TestPrimitive {
         assertNull("Should not have boxable type", primitive1.getBoxableType());
         assertNull("Should not have boxable type", primitive2.getBoxableType());
 
-        assertFalse("Primitive is incompatible with null", primitive1.isCompatibleWith(null));
+        assertFalse("Primitive is incompatible with null", primitive1.isCompatibleWith((TypeValue)null));
         assertTrue("Primitive is compatible with itself", primitive1.isCompatibleWith(TestUtil.typeValueFor(primitive1)));
         assertFalse("Primitive is not compatible with another primitive", primitive1.isCompatibleWith(TestUtil.typeValueFor(primitive2)));
 
