@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public class Interface extends Generifiable implements InterfaceType {
+public class Interface extends Generifiable implements InterfaceType{
     private List<AbstractMethod> methods;
     private InterfaceType superInterface;
 
@@ -19,6 +19,12 @@ public class Interface extends Generifiable implements InterfaceType {
 
     public Interface(String packageName, String name) {
         super(packageName, name);
+        init();
+    }
+
+    public Interface(String packageName, String name, InterfaceType interfaceType) {
+        super(packageName, name);
+        this.superInterface = interfaceType;
         init();
     }
 

@@ -1,5 +1,8 @@
 package com.korwe.javastg.definition;
 
+import com.korwe.javastg.type.TypeDefinition;
+import com.korwe.javastg.value.TypeValue;
+
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
@@ -29,5 +32,16 @@ public class Boxable extends ConcreteClass {
 
     public void setPrimitiveType(Primitive primitiveType) {
         this.primitiveType = primitiveType;
+    }
+
+    @Override
+    public boolean isCompatibleWith(TypeValue value){
+        if(super.isCompatibleWith(value)) return true;
+
+        if(TypeDefinition.class.isAssignableFrom(value.getType().getClass()) && ((TypeDefinition)value.getType()).isPrimitiveType()){
+            return equals(((Primitive)value.getType()).getBoxableType()); //i1s boxable and compatible
+        }
+
+        return false;
     }
 }

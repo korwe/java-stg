@@ -1,6 +1,7 @@
 package com.korwe.javastg.definition;
 
 import com.korwe.javastg.type.*;
+import com.korwe.javastg.value.TypeValue;
 
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
@@ -45,13 +46,23 @@ public class Reference extends TypeDefinition implements ReferenceType {
     }
 
     @Override
+    public boolean isCompatibleWith(TypeValue value){
+        if(value == null){
+            return true;       //Reference types support null
+        }
+        else{
+            return equals(value.getType()); //same types
+        }
+    }
+
+    @Override
     public boolean hasLiteralSupport(){
         return isBoxableType();
     }
 
     @Override
     public boolean equals(Object o){
-        if(o == null) return false;
+        if(o == null || !Reference.class.isAssignableFrom(o.getClass())) return false;
         Reference referenceType = (Reference)o;
         return packageEqual(referenceType) && getName().equals(referenceType.getName());
     }
