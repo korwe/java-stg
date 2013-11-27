@@ -4,6 +4,7 @@ import com.korwe.javastg.definition.AccessModifier;
 import com.korwe.javastg.definition.ClassAttribute;
 import com.korwe.javastg.definition.ConcreteMethod;
 import com.korwe.javastg.definition.Parameter;
+import org.stringtemplate.v4.ST;
 
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
@@ -14,7 +15,9 @@ public class MethodUtil {
         ConcreteMethod method = new ConcreteMethod(AccessModifier.Public, name);
 
         method.setReturnType(attribute.getType());
-        method.setReturnValue("this."+attribute.getName());
+        ST body = TemplateUtil.template("getter_method_body");
+        body.add("attributeName", attribute.getName());
+        method.setBody(body.render());
         return method;
     }
 
@@ -25,7 +28,9 @@ public class MethodUtil {
         Parameter parameter = new Parameter(attribute.getType(), attribute.getName());
         method.addParamater(parameter);
 
-        method.setBody("this." + attribute.getName() + " = " + attribute.getName());
+        ST body = TemplateUtil.template("setter_method_body");
+        body.add("attributeName", attribute.getName());
+        method.setBody(body.render());
 
         return method;
 

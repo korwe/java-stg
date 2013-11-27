@@ -8,6 +8,7 @@ import com.korwe.javastg.definition.TypeParameter;
 import com.korwe.javastg.definition.ParameterizedConcreteClass;
 import com.korwe.javastg.definition.ParameterizedInterface;
 import com.korwe.javastg.type.*;
+import org.stringtemplate.v4.ST;
 
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
@@ -232,5 +233,12 @@ public class TestUtil {
         concreteClass.addAttribute(new ClassAttribute(AccessModifier.Private, new ConcreteClass("classes.attributes", "ClassAttribute"),"classAttribute"));
 
         return concreteClass;
+    }
+
+    public static void main(String[] args) {
+        ST st = TemplateUtil.template("java_file");
+        st.add("javaDef", getAPECClass_CMAI());
+        st.add("imports", ImportUtil.importsForClass(getAPECClass_CMAI()));
+        System.out.println(st.render());
     }
 }

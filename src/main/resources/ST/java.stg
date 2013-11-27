@@ -54,8 +54,7 @@ constructor_method(methodDef) ::= <<
 
 concrete_method(methodDef) ::= <<
 <if(methodDef.accessModifier)><methodDef.accessModifier> <endif><if(methodDef.static)>static <endif><methodDef.typeParameters:type_parameter()><if(methodDef.returnType)><methodDef.returnType:type_definition()><else>void<endif> <methodDef.name>(<methodDef.parameters:method_parameters();separator=", ">){
-    <if(methodDef.body)><methodDef.body>;<endif>
-    <if(methodDef.returnType)>return <if(methodDef.returnValue)><methodDef.returnValue><else>null<endif>;<endif>
+    <if(methodDef.body)><methodDef.body><endif>
 }
 >>
 
@@ -101,4 +100,13 @@ new <type>(<args:{v | <v>};separator=", ">)
 
 enum_constructor_value(type, args) ::= <<
 <type>(<args:{v | <v>};separator=", ">)
+>>
+
+
+getter_method_body(attributeName) ::= <<
+return this.<attributeName>;
+>>
+
+setter_method_body(attributeName) ::= <<
+this.<attributeName> = <attributeName>;
 >>
