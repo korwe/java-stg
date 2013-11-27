@@ -1,9 +1,13 @@
-package com.korwe.javastg.type;
+package com.korwe.javastg.definition;
+
+import com.korwe.javastg.type.TypeDefinition;
+import com.korwe.javastg.type.IDDeclaration;
+import com.korwe.javastg.type.Type;
 
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public class ClassAttribute extends Attribute{
+public class ClassAttribute extends IDDeclaration {
     private AccessModifier accessModifier;
     private boolean isStatic;
     private boolean isFinal;
@@ -14,12 +18,12 @@ public class ClassAttribute extends Attribute{
         super(type, name);
     }
 
-    public ClassAttribute(AccessModifier accessModifier, TypeDefinition type, String name) {
+    public ClassAttribute(AccessModifier accessModifier, Type type, String name) {
         super(type, name);
         this.accessModifier = accessModifier;
     }
 
-    public ClassAttribute(AccessModifier accessModifier, TypeDefinition type, String name, boolean isStatic) {
+    public ClassAttribute(AccessModifier accessModifier, Type type, String name, boolean isStatic) {
         super(type, name);
         this.accessModifier = accessModifier;
         this.isStatic = isStatic;

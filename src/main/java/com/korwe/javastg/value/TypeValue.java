@@ -1,25 +1,25 @@
 package com.korwe.javastg.value;
 
-import com.korwe.javastg.type.TypeDefinition;
+import com.korwe.javastg.type.Type;
 
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public abstract class TypeDefinitionValue {
-    private TypeDefinition typeDefinition;
+public abstract class TypeValue {
+    private Type type;
 
-    public TypeDefinitionValue(){}
+    public TypeValue(){}
 
-    public TypeDefinitionValue(TypeDefinition typeDefinition){
-        this.typeDefinition = typeDefinition;
+    public TypeValue(Type type){
+        this.type = type;
     }
 
-    public TypeDefinition getTypeDefinition() {
-        return typeDefinition;
+    public Type getType() {
+        return type;
     }
 
-    public void setTypeDefinition(TypeDefinition typeDefinition) {
-        this.typeDefinition = typeDefinition;
+    public void setType(Type type) {
+        this.type = type;
     }
 
     public boolean isLiteralValue(){

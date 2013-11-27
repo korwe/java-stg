@@ -1,16 +1,19 @@
-package com.korwe.javastg.type;
+package com.korwe.javastg.definition;
+
+import com.korwe.javastg.type.IDDeclaration;
+import com.korwe.javastg.type.Type;
 
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public class Parameter extends IDDeclaration{
+public class Parameter extends IDDeclaration {
     private boolean isFinal;
 
     public Parameter(){
         super();
     }
 
-    public Parameter(TypeDefinition type, String name) {
+    public Parameter(Type type, String name) {
         super(type, name);
     }
 

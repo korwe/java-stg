@@ -1,9 +1,9 @@
 package com.korwe.javastg.util;
 
-import com.korwe.javastg.type.AccessModifier;
-import com.korwe.javastg.type.ClassAttribute;
-import com.korwe.javastg.type.ConcreteMethod;
-import com.korwe.javastg.type.Parameter;
+import com.korwe.javastg.definition.AccessModifier;
+import com.korwe.javastg.definition.ClassAttribute;
+import com.korwe.javastg.definition.ConcreteMethod;
+import com.korwe.javastg.definition.Parameter;
 
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>

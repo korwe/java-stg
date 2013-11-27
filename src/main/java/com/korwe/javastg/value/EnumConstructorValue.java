@@ -16,22 +16,22 @@ public class EnumConstructorValue extends ConstructorValue{
         super(typeDefinition);
     }
 
-    public EnumConstructorValue(TypeDefinition typeDefinition, TypeDefinitionValue... constructorArgArray) {
+    public EnumConstructorValue(TypeDefinition typeDefinition, TypeValue... constructorArgArray) {
         super(typeDefinition, constructorArgArray);
     }
 
-    public EnumConstructorValue(TypeDefinition typeDefinition, List<TypeDefinitionValue> constructorArgsList) {
+    public EnumConstructorValue(TypeDefinition typeDefinition, List<TypeValue> constructorArgsList) {
         super(typeDefinition, constructorArgsList);
     }
 
-    public EnumConstructorValue(TypeDefinition typeDefinition, Map<String, TypeDefinitionValue> constructorArgMap) {
+    public EnumConstructorValue(TypeDefinition typeDefinition, Map<String, TypeValue> constructorArgMap) {
         super(typeDefinition, constructorArgMap);
     }
 
     @Override
     public String getCodeString() {
         ST template = TemplateUtil.template("enum_constructor_value");
-        template.add("type", getTypeDefinition().getName());
+        template.add("type", getType().getName());
         template.add("args", constructorArguments());
         return template.render();
     }

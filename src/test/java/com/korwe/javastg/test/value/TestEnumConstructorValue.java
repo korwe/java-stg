@@ -1,13 +1,12 @@
 package com.korwe.javastg.test.value;
 
 import com.korwe.javastg.exception.NoConstructorFoundException;
-import com.korwe.javastg.type.*;
-import com.korwe.javastg.type.Enum;
+import com.korwe.javastg.definition.Enum;
 import com.korwe.javastg.util.TestUtil;
 import com.korwe.javastg.value.ConstructorValue;
 import com.korwe.javastg.value.EnumConstructorValue;
 import com.korwe.javastg.value.LiteralValue;
-import com.korwe.javastg.value.TypeDefinitionValue;
+import com.korwe.javastg.value.TypeValue;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -48,7 +47,7 @@ public class TestEnumConstructorValue {
         Enum enumDef = TestUtil.getEnumWithMultiArgConstructor();
         char charValue = '3';
         double doubleValue = 1.633;
-        Map<String, TypeDefinitionValue> values = new HashMap<>();
+        Map<String, TypeValue> values = new HashMap<>();
         values.put("charValue", new LiteralValue(charValue));
         values.put("doubleValue", new LiteralValue(doubleValue));
 

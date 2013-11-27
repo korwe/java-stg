@@ -1,4 +1,6 @@
-package com.korwe.javastg.type;
+package com.korwe.javastg.definition;
+
+import com.korwe.javastg.type.InterfaceType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,9 +8,9 @@ import java.util.List;
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public class Interface extends GenerifiableType {
+public class Interface extends Generifiable implements InterfaceType {
     private List<AbstractMethod> methods;
-    private Interface superInterface;
+    private InterfaceType superInterface;
 
     public Interface(String name) {
         super(null, name);
@@ -32,11 +34,11 @@ public class Interface extends GenerifiableType {
         this.methods = methods;
     }
 
-    public Interface getSuperInterface() {
+    public InterfaceType getSuperInterface() {
         return superInterface;
     }
 
-    public void setSuperInterface(Interface superInterface) {
+    public void setSuperInterface(InterfaceType superInterface) {
         this.superInterface = superInterface;
     }
 

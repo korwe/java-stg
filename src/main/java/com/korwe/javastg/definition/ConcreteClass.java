@@ -1,6 +1,8 @@
-package com.korwe.javastg.type;
+package com.korwe.javastg.definition;
 
 import com.korwe.javastg.exception.IncompatibleMethodException;
+import com.korwe.javastg.type.*;
+import com.korwe.javastg.type.Class;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +10,7 @@ import java.util.List;
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public class ConcreteClass extends Class{
+public class ConcreteClass extends Class {
 
     private List<ConcreteMethod> concreteMethods;
 
@@ -26,7 +28,7 @@ public class ConcreteClass extends Class{
         super(packageName, name);
     }
 
-    public ConcreteClass(String packageName, String name, Class superClass) {
+    public ConcreteClass(String packageName, String name, ClassType superClass) {
         super(packageName, name, superClass);
     }
 

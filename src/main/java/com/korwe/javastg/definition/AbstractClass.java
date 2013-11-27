@@ -1,5 +1,7 @@
-package com.korwe.javastg.type;
+package com.korwe.javastg.definition;
 
+
+import com.korwe.javastg.type.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +9,7 @@ import java.util.List;
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public class AbstractClass extends ConcreteClass{
+public class AbstractClass extends ConcreteClass {
 
     private List<AbstractMethod> abstractMethods;
 
@@ -25,7 +27,7 @@ public class AbstractClass extends ConcreteClass{
         super(packageName, name);
     }
 
-    public AbstractClass(String packageName, String name, Class superClass) {
+    public AbstractClass(String packageName, String name, ClassType superClass) {
         super(packageName, name, superClass);
     }
 

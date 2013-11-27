@@ -1,9 +1,11 @@
 package com.korwe.javastg.value;
 
+import com.korwe.javastg.definition.ConstructorMethod;
+import com.korwe.javastg.definition.Parameter;
+import com.korwe.javastg.type.TypeDefinition;
 import com.korwe.javastg.exception.NoConstructorFoundException;
 import com.korwe.javastg.exception.UnsupportedTypeException;
-import com.korwe.javastg.type.*;
-import com.korwe.javastg.type.Class;
+import com.korwe.javastg.type.MemberContainer;
 import com.korwe.javastg.util.TemplateUtil;
 import org.stringtemplate.v4.ST;
 
@@ -13,10 +15,10 @@ import java.util.Map;
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public class ConstructorValue extends TypeDefinitionValue{
+public class ConstructorValue extends TypeValue {
 
-    private TypeDefinitionValue[] constructorArgsArray;
-    private Map<String, TypeDefinitionValue> constructorArgMap;
+    private TypeValue[] constructorArgsArray;
+    private Map<String, TypeValue> constructorArgMap;
 
     public ConstructorValue(TypeDefinition typeDefinition) {
         super(typeDefinition);
@@ -26,33 +28,33 @@ public class ConstructorValue extends TypeDefinitionValue{
     @Override
     public String getCodeString() {
         ST template = TemplateUtil.template("constructor_value");
-        template.add("type", getTypeDefinition().getName());
+        template.add("type", getType().getName());
         template.add("args", constructorArguments());
         return template.render();
     }
 
-    public ConstructorValue(TypeDefinition typeDefinition, TypeDefinitionValue ...constructorArgArray){
+    public ConstructorValue(TypeDefinition typeDefinition, TypeValue...constructorArgArray){
         super(typeDefinition);
         checkTypeSupport();
         this.constructorArgsArray = constructorArgArray;
 
     }
 
-    public ConstructorValue(TypeDefinition typeDefinition, List<TypeDefinitionValue> constructorArgsList){
+    public ConstructorValue(TypeDefinition typeDefinition, List<TypeValue> constructorArgsList){
         super(typeDefinition);
         checkTypeSupport();
-        this.constructorArgsArray = constructorArgsList.toArray(new TypeDefinitionValue[constructorArgsList.size()]);
+        this.constructorArgsArray = constructorArgsList.toArray(new TypeValue[constructorArgsList.size()]);
     }
 
-    public ConstructorValue(TypeDefinition typeDefinition, Map<String, TypeDefinitionValue> constructorArgMap){
+    public ConstructorValue(TypeDefinition typeDefinition, Map<String, TypeValue> constructorArgMap){
         super(typeDefinition);
         checkTypeSupport();
         this.constructorArgMap = constructorArgMap;
     }
 
-    protected TypeDefinitionValue[] constructorArguments(){
+    protected TypeValue[] constructorArguments(){
 
-        Class classDef = (Class)getTypeDefinition();
+        MemberContainer classDef = (MemberContainer) getType();
         if(constructorArgsArray != null){
             ConstructorMethod constructorMethod = classDef.constructorForArguments(constructorArgsArray);
             return constructorArgsArray;
@@ -60,7 +62,7 @@ public class ConstructorValue extends TypeDefinitionValue{
         else if(constructorArgMap != null){
             ConstructorMethod constructorMethod = classDef.constructorForArguments(constructorArgMap);
             List<Parameter> parameters = constructorMethod.getParameters();
-            TypeDefinitionValue[] arguments = new TypeDefinitionValue[parameters.size()];
+            TypeValue[] arguments = new TypeValue[parameters.size()];
             for(int i = 0 ; i < parameters.size(); i++){
                 arguments[i] = constructorArgMap.get(parameters.get(i).getName());
             }
@@ -78,7 +80,7 @@ public class ConstructorValue extends TypeDefinitionValue{
     }
 
     private void checkTypeSupport(){
-        if(!com.korwe.javastg.type.Class.class.isAssignableFrom(getTypeDefinition().getClass())){
+        if(!MemberContainer.class.isAssignableFrom(getType().getClass())){
             throw new UnsupportedTypeException();
         }
     }

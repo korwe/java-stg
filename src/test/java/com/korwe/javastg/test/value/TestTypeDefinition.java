@@ -1,6 +1,6 @@
 package com.korwe.javastg.test.value;
 
-import com.korwe.javastg.type.PrimitiveType;
+import com.korwe.javastg.definition.Primitive;
 import com.korwe.javastg.util.TestUtil;
 import com.korwe.javastg.value.*;
 import org.junit.Test;
@@ -18,13 +18,13 @@ public class TestTypeDefinition {
 
     @Test
     public void isArrayValue(){
-        assertTrue((new ArrayValue(PrimitiveType.Short, 5)).isArrayValue());
+        assertTrue((new ArrayValue(Primitive.Short, 5)).isArrayValue());
         assertFalse(typeDefinitionValue().isArrayValue());
     }
 
     @Test
     public void isArrayWithValues(){
-        assertTrue((new ArrayWithValues(PrimitiveType.Char)).isArrayWithValues());
+        assertTrue((new ArrayWithValues(Primitive.Char)).isArrayWithValues());
         assertFalse(typeDefinitionValue().isArrayWithValues());
     }
 
@@ -41,8 +41,8 @@ public class TestTypeDefinition {
 
     }
 
-    private TypeDefinitionValue typeDefinitionValue(){
-        return new TypeDefinitionValue() {
+    private TypeValue typeDefinitionValue(){
+        return new TypeValue() {
             @Override
             public String getCodeString() {
                 return null;

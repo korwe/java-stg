@@ -7,7 +7,7 @@ import org.stringtemplate.v4.ST;
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public class ArrayValue extends TypeDefinitionValue{
+public class ArrayValue extends TypeValue {
     private Integer arraySize;
     //TODO: Support multi-dimensional array
 
@@ -27,7 +27,7 @@ public class ArrayValue extends TypeDefinitionValue{
     @Override
     public String getCodeString() {
         ST template = TemplateUtil.template("array_value");
-        template.add("type", getTypeDefinition());
+        template.add("type", getType());
         template.add("arraySize", arraySize);
         return template.render();
     }

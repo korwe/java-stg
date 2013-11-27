@@ -1,15 +1,14 @@
 package com.korwe.javastg.test.value;
 
+import com.korwe.javastg.definition.Boxable;
+import com.korwe.javastg.definition.ConcreteClass;
 import com.korwe.javastg.exception.NoConstructorFoundException;
-import com.korwe.javastg.type.BoxableType;
-import com.korwe.javastg.type.ConcreteClass;
-import com.korwe.javastg.type.PrimitiveType;
 import com.korwe.javastg.util.TestUtil;
 import com.korwe.javastg.value.ConstructorValue;
 import static org.junit.Assert.*;
 
 import com.korwe.javastg.value.LiteralValue;
-import com.korwe.javastg.value.TypeDefinitionValue;
+import com.korwe.javastg.value.TypeValue;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -22,7 +21,7 @@ public class TestConstructorValue {
 
     @Test
     public void testBoxableType(){
-        BoxableType boxableType = BoxableType.Float;
+        Boxable boxableType = Boxable.Float;
         ConstructorValue constructorValue = new ConstructorValue(boxableType);
         assertEquals("Incorrect codeString generated for constructor value(boxable)", String.format("new %s()", boxableType.getName()), constructorValue.getCodeString());
     }
@@ -56,7 +55,7 @@ public class TestConstructorValue {
         ConcreteClass concreteClass = TestUtil.getConcreteClassWithMultiArgConstructor();
         int intValue = 3;
         long longValue = 1;
-        Map<String, TypeDefinitionValue> values = new HashMap<>();
+        Map<String, TypeValue> values = new HashMap<>();
         values.put("intValue", new LiteralValue(intValue));
         values.put("longValue", new LiteralValue(longValue));
 
@@ -69,7 +68,7 @@ public class TestConstructorValue {
         ConcreteClass concreteClass = TestUtil.getConcreteClassWithMultiArgConstructor();
         int intValue = 100;
         long longValue = 155L;
-        Map<String, TypeDefinitionValue> values = new HashMap<>();
+        Map<String, TypeValue> values = new HashMap<>();
         values.put("intValue", new LiteralValue(intValue));
         values.put("longValue", new LiteralValue(longValue));
 
@@ -82,7 +81,7 @@ public class TestConstructorValue {
         ConcreteClass concreteClass = TestUtil.getConcreteClassWithMultiArgConstructor();
         int intValue = 67;
         long longValue = 92L;
-        Map<String, TypeDefinitionValue> values = new HashMap<>();
+        Map<String, TypeValue> values = new HashMap<>();
         values.put("intValue", new LiteralValue(intValue));
         values.put("longValueIncorrect", new LiteralValue(longValue));
 

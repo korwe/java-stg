@@ -1,4 +1,6 @@
-package com.korwe.javastg.type;
+package com.korwe.javastg.definition;
+
+import com.korwe.javastg.type.AnnotationType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +8,7 @@ import java.util.List;
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public class Annotation extends ReferenceType{
+public class Annotation extends Reference implements AnnotationType{
     private List<AnnotationAttribute> attributes;
 
     public Annotation(String packageName, String name) {

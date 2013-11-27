@@ -1,11 +1,12 @@
 package com.korwe.javastg.type;
 
-import com.korwe.javastg.value.TypeDefinitionValue;
+import com.korwe.javastg.definition.Primitive;
+import com.korwe.javastg.value.TypeValue;
 
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public abstract class TypeDefinition extends Annotatable{
+public abstract class TypeDefinition extends Annotatable implements Type {
     private final String name;
 
     public TypeDefinition(String name){
@@ -17,40 +18,32 @@ public abstract class TypeDefinition extends Annotatable{
     }
 
     public boolean isPrimitiveType(){
-        return PrimitiveType.class.isAssignableFrom(this.getClass());
-    }
-
-    public boolean isReferenceType(){
-        return ReferenceType.class.isAssignableFrom(this.getClass());
-    }
-
-    public boolean isGenerifiedType(){
-        return GenerifiableType.class.isAssignableFrom(this.getClass());
+        return Primitive.class.isAssignableFrom(this.getClass());
     }
 
     public boolean hasLiteralSupport(){
         return isPrimitiveType();
     }
 
-    public boolean isCompatibleWith(TypeDefinitionValue value){
+    public boolean isCompatibleWith(TypeValue value){
         if(this.isPrimitiveType()){
             //this is primitive so doesn't support null
             if(value == null){
                 return false;
             }
             else{
-                if(PrimitiveType.class.isAssignableFrom(value.getTypeDefinition().getClass())){
+                if(Primitive.class.isAssignableFrom(value.getType().getClass())){
                     //Check if the types are the same
-                    if(value.getTypeDefinition().equals(this)){
+                    if(value.getType().equals(this)){
                         return true;
                     }
                     else{
                         //Check boxable type is the same
-                        return ((PrimitiveType)this).getBoxableType().equals(((PrimitiveType)value.getTypeDefinition()).getBoxableType());
+                        return ((Primitive)this).getBoxableType().equals(((Primitive)value.getType()).getBoxableType());
                     }
                 }
                 else{
-                    return value.getTypeDefinition().equals(((PrimitiveType)this).getBoxableType());
+                    return value.getType().equals(((Primitive)this).getBoxableType());
                 }
             }
 
@@ -60,11 +53,11 @@ public abstract class TypeDefinition extends Annotatable{
                 return true;       //Reference types support null
             }
             else{
-                if(value.getTypeDefinition().isPrimitiveType()){
-                    return equals(((PrimitiveType)value.getTypeDefinition()).getBoxableType()); //is boxable and compatible
+                if(TypeDefinition.class.isAssignableFrom(value.getType().getClass()) && ((TypeDefinition)value.getType()).isPrimitiveType()){
+                    return equals(((Primitive)value.getType()).getBoxableType()); //i1s boxable and compatible
                 }
                 else{
-                    return equals(value.getTypeDefinition()); //same types
+                    return equals(value.getType()); //same types
                 }
             }
         }

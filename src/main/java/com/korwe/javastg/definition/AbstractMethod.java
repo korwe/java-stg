@@ -1,9 +1,15 @@
-package com.korwe.javastg.type;
+package com.korwe.javastg.definition;
+
+import com.korwe.javastg.definition.AccessModifier;
+import com.korwe.javastg.definition.ConcreteMethod;
+import com.korwe.javastg.definition.Parameter;
+import com.korwe.javastg.type.Method;
+import com.korwe.javastg.type.Type;
 
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public class AbstractMethod extends Method{
+public class AbstractMethod extends Method {
 
     public AbstractMethod() {
     }
@@ -16,15 +22,15 @@ public class AbstractMethod extends Method{
         super(accessModifier, name);
     }
 
-    public AbstractMethod(TypeDefinition returnType, String name) {
+    public AbstractMethod(Type returnType, String name) {
         super(returnType, name);
     }
 
-    public AbstractMethod(AccessModifier accessModifier, TypeDefinition returnType, String name) {
+    public AbstractMethod(AccessModifier accessModifier, Type returnType, String name) {
         super(accessModifier, returnType, name);
     }
 
-    public AbstractMethod(AccessModifier accessModifier, TypeDefinition returnType, String name, boolean isStatic) {
+    public AbstractMethod(AccessModifier accessModifier, Type returnType, String name, boolean isStatic) {
         super(accessModifier, returnType, name, isStatic);
     }
 

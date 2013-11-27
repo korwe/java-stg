@@ -1,9 +1,11 @@
-package com.korwe.javastg.type;
+package com.korwe.javastg.definition;
+
+import com.korwe.javastg.type.*;
 
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public class ConcreteMethod extends Method{
+public class ConcreteMethod extends Method {
     private String returnValue;
     private String body;
 
@@ -22,11 +24,11 @@ public class ConcreteMethod extends Method{
         super(returnType, name);
     }
 
-    public ConcreteMethod(AccessModifier accessModifier, TypeDefinition returnType, String name) {
+    public ConcreteMethod(AccessModifier accessModifier, Type returnType, String name) {
         super(accessModifier, returnType, name);
     }
 
-    public ConcreteMethod(AccessModifier accessModifier, TypeDefinition returnType, String name, boolean isStatic) {
+    public ConcreteMethod(AccessModifier accessModifier, Type returnType, String name, boolean isStatic) {
         super(accessModifier, returnType, name, isStatic);
     }
 

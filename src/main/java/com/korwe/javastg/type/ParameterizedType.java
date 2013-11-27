@@ -1,22 +1,24 @@
 package com.korwe.javastg.type;
 
+import com.korwe.javastg.definition.Reference;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public class ParameterizedType extends ReferenceType{ //Extends reference type to be of the TypeDefinition family
-    private Generifiable generifiable;
-    private List<ReferenceType> parameterTypes;
+public abstract class ParameterizedType extends Reference {
+    private GenerifiableType generifiable;
+    private List<Reference> parameterTypes;
 
     public ParameterizedType() {
-        super(null, null);
+        super(null, null); //Just a place holder type for generifiable - no package or name
         init();
     }
 
-    public ParameterizedType(GenerifiableType generifiableType) {
-        super(null, null);
+    public ParameterizedType(com.korwe.javastg.definition.Generifiable generifiableType) {
+        super(null, null); //Just a place holder type for generifiable - no package or name
         this.generifiable = generifiableType;
         init();
     }
@@ -25,23 +27,23 @@ public class ParameterizedType extends ReferenceType{ //Extends reference type t
         this.parameterTypes = new ArrayList<>();
     }
 
-    public Generifiable getGenerifiable() {
+    public GenerifiableType getGenerifiable() {
         return generifiable;
     }
 
-    public void setGenerifiable(GenerifiableType generifiable) {
+    protected void setGenerifiable(com.korwe.javastg.definition.Generifiable generifiable) {
         this.generifiable = generifiable;
     }
 
-    public List<ReferenceType> getParameterTypes() {
+    public List<Reference> getParameterTypes() {
         return parameterTypes;
     }
 
-    public void setParameterTypes(List<ReferenceType> parameterTypes) {
+    public void setParameterTypes(List<Reference> parameterTypes) {
         this.parameterTypes = parameterTypes;
     }
 
-    public void addParameterType(ReferenceType parameterType){
+    public void addParameterType(Reference parameterType){
         this.parameterTypes.add(parameterType);
     }
 }

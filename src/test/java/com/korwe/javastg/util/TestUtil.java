@@ -1,8 +1,13 @@
 package com.korwe.javastg.util;
 
+import com.korwe.javastg.definition.*;
+import com.korwe.javastg.definition.Enum;
+import com.korwe.javastg.definition.Generifiable;
+import com.korwe.javastg.definition.AnnotationInstance;
+import com.korwe.javastg.definition.TypeParameter;
+import com.korwe.javastg.definition.ParameterizedConcreteClass;
+import com.korwe.javastg.definition.ParameterizedInterface;
 import com.korwe.javastg.type.*;
-import com.korwe.javastg.type.Class;
-import com.korwe.javastg.type.Enum;
 
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
@@ -19,7 +24,7 @@ public class TestUtil {
     public static ConcreteClass getConcreteClassWithConstructor(){
         ConcreteClass concreteClass = new ConcreteClass("classes.place", "ClassWithConstructor");
         ConstructorMethod constructorMethod = new ConstructorMethod(AccessModifier.Public, concreteClass);
-        constructorMethod.addParamater(new Parameter(PrimitiveType.Int, "intValue"));
+        constructorMethod.addParamater(new Parameter(Primitive.Int, "intValue"));
         concreteClass.addConstructor(constructorMethod);
         return concreteClass;
     }
@@ -27,8 +32,8 @@ public class TestUtil {
     public static ConcreteClass getConcreteClassWithMultiArgConstructor(){
         ConcreteClass concreteClass = new ConcreteClass("classes.place", "ClassWithMultiArgConstructor");
         ConstructorMethod constructorMethod = new ConstructorMethod(AccessModifier.Public, concreteClass);
-        constructorMethod.addParamater(new Parameter(PrimitiveType.Int, "intValue"));
-        constructorMethod.addParamater(new Parameter(PrimitiveType.Long, "longValue"));
+        constructorMethod.addParamater(new Parameter(Primitive.Int, "intValue"));
+        constructorMethod.addParamater(new Parameter(Primitive.Long, "longValue"));
         concreteClass.addConstructor(constructorMethod);
         return concreteClass;
     }
@@ -40,7 +45,7 @@ public class TestUtil {
     public static Enum getEnumWithConstructor(){
         Enum enumDef = new Enum("enumeration.place", "EnumWithConstructor");
         ConstructorMethod constructorMethod = new ConstructorMethod(AccessModifier.Public, enumDef);
-        constructorMethod.addParamater(new Parameter(BoxableType.String, "stringValue"));
+        constructorMethod.addParamater(new Parameter(Boxable.String, "stringValue"));
         enumDef.addConstructor(constructorMethod);
         return enumDef;
     }
@@ -48,8 +53,8 @@ public class TestUtil {
     public static Enum getEnumWithMultiArgConstructor(){
         Enum enumDef = new Enum("enumeration.place", "EnumWithMultiArgConstructor");
         ConstructorMethod constructorMethod = new ConstructorMethod(AccessModifier.Public, enumDef);
-        constructorMethod.addParamater(new Parameter(PrimitiveType.Char, "charValue"));
-        constructorMethod.addParamater(new Parameter(PrimitiveType.Double, "doubleValue"));
+        constructorMethod.addParamater(new Parameter(Primitive.Char, "charValue"));
+        constructorMethod.addParamater(new Parameter(Primitive.Double, "doubleValue"));
         enumDef.addConstructor(constructorMethod);
         return enumDef;
     }
@@ -81,26 +86,26 @@ public class TestUtil {
         return typeParameter;
     }
 
-    public static GenerifiableType getGenerifiableType(){
-        GenerifiableType generifiableType = new ConcreteClass("generifiable.place", "GenerifiableOne");
+    public static Generifiable getGenerifiableType(){
+        Generifiable generifiableType = new ConcreteClass("generifiable.place", "GenerifiableOne");
         generifiableType.addTypeParameter(getBasicTypeParameterWithParent());
         return generifiableType;
     }
 
-    public static GenerifiableType getMultiBoundGenerifiableType(){
-        GenerifiableType generifiableType = new ConcreteClass("generifiable.place", "MultiBoundGenerifiable");
+    public static Generifiable getMultiBoundGenerifiableType(){
+        Generifiable generifiableType = new ConcreteClass("generifiable.place", "MultiBoundGenerifiable");
         generifiableType.addTypeParameter(getMultiBoundTypeParameter());
         return  generifiableType;
     }
 
     public static ParameterizedType getBasicParameterizedType(){
-        ParameterizedType parameterizedType = new ParameterizedType(getGenerifiableType());
+        ParameterizedType parameterizedType = new ParameterizedType(getGenerifiableType()){};
         parameterizedType.addParameterType(getBasicExtendedTypeParameterParentType());
         return parameterizedType;
     }
 
     public static ParameterizedType getMultiBoundParameterizedType(){
-        ParameterizedType parameterizedType = new ParameterizedType(getMultiBoundGenerifiableType());
+        ParameterizedType parameterizedType = new ParameterizedType(getMultiBoundGenerifiableType()){};
         TypeParameter typeParameter = parameterizedType.getGenerifiable().getTypeParameters().get(0);
         parameterizedType.addParameterType(new ConcreteClass("typeParameter.place", "ExtendedType2", (ConcreteClass)typeParameter.getParentTypes().get(0)));
         parameterizedType.addParameterType(new ConcreteClass("typeParameter.place", "ExtendedType3", (ConcreteClass) typeParameter.getParentTypes().get(1)));
@@ -117,7 +122,7 @@ public class TestUtil {
         parameterTypeParameter.addParentType(methodParameterType1);
         ConcreteClass parameterizedClass = new ConcreteClass("method.classes", "MethodParameterizedClass");
         parameterizedClass.addTypeParameter(parameterTypeParameter);
-        ParameterizedType parameterizedType = new ParameterizedType(parameterizedClass);
+        ParameterizedType parameterizedType = new ParameterizedType(parameterizedClass){};
         parameterizedType.addParameterType(new ConcreteClass("method.classes", "ExtendedMethodParameterType1", methodParameterType1));
 
 
@@ -143,7 +148,7 @@ public class TestUtil {
         parameterTypeParameter.addParentType(methodParameterType1);
         ConcreteClass parameterizedClass = new ConcreteClass("method.classes", "AbstractMethodParameterizedClass");
         parameterizedClass.addTypeParameter(parameterTypeParameter);
-        ParameterizedType parameterizedType = new ParameterizedType(parameterizedClass);
+        ParameterizedType parameterizedType = new ParameterizedType(parameterizedClass){};
         parameterizedType.addParameterType(new ConcreteClass("method.classes", "ExtendedAbstractMethodParameterType1", methodParameterType1));
 
 
@@ -158,4 +163,5 @@ public class TestUtil {
 
         return method;
     }
+
 }

@@ -1,7 +1,9 @@
-package com.korwe.javastg.type;
+package com.korwe.javastg.definition;
 
 import com.korwe.javastg.exception.IncompatibleMethodException;
-import com.korwe.javastg.value.TypeDefinitionValue;
+import com.korwe.javastg.type.MemberContainer;
+import com.korwe.javastg.type.Method;
+import com.korwe.javastg.value.TypeValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +11,8 @@ import java.util.List;
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public class Enum extends Class{
-    private List<TypeDefinitionValue> values;
+public class Enum extends MemberContainer {
+    private List<TypeValue> values;
     private List<ConcreteMethod> methods;
 
     public Enum(String name) {
@@ -30,11 +32,11 @@ public class Enum extends Class{
         methods = new ArrayList<>();
     }
 
-    public List<TypeDefinitionValue> getValues() {
+    public List<TypeValue> getValues() {
         return values;
     }
 
-    public void setValues(List<TypeDefinitionValue> values) {
+    public void setValues(List<TypeValue> values) {
         this.values = values;
     }
 

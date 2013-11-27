@@ -1,5 +1,7 @@
 package com.korwe.javastg.type;
 
+import com.korwe.javastg.definition.AnnotationInstance;
+
 import java.util.ArrayList;
 import java.util.List;
 

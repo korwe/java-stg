@@ -5,24 +5,24 @@ import com.sun.xml.internal.ws.util.StringUtils;
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public class IDDeclaration extends Annotatable{
-    private TypeDefinition type;
+public abstract class IDDeclaration extends Annotatable{
+    private Type type;
     private String name;
 
     public IDDeclaration(){
 
     }
 
-    public IDDeclaration(TypeDefinition type, String name) {
+    public IDDeclaration(Type type, String name) {
         setType(type);
         setName(name);
     }
 
-    public TypeDefinition getType() {
+    public Type getType() {
         return type;
     }
 
-    public void setType(TypeDefinition type) {
+    public void setType(Type type) {
         this.type = type;
     }
 

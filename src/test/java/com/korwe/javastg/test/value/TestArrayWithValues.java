@@ -1,14 +1,12 @@
 package com.korwe.javastg.test.value;
 
-import com.korwe.javastg.type.ConcreteClass;
-import com.korwe.javastg.type.PrimitiveType;
+import com.korwe.javastg.definition.ConcreteClass;
+import com.korwe.javastg.definition.Primitive;
 import com.korwe.javastg.util.TestUtil;
 import com.korwe.javastg.value.ArrayWithValues;
 import com.korwe.javastg.value.ConstructorValue;
 import com.korwe.javastg.value.LiteralValue;
 import org.junit.Test;
-
-import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
@@ -21,7 +19,7 @@ public class TestArrayWithValues {
     public void testArrayWithPrimitives(){
 
         int[] arrayValues = new int[]{1,1,2,3,5};
-        PrimitiveType primitiveType = PrimitiveType.Int;
+        Primitive primitiveType = Primitive.Int;
         ArrayWithValues arrayWithValues = new ArrayWithValues(primitiveType);
         for(int x : arrayValues){
             arrayWithValues.addArrayValue(new LiteralValue(x));

@@ -1,6 +1,8 @@
 package com.korwe.javastg.type;
 
-import com.korwe.javastg.value.TypeDefinitionValue;
+import com.korwe.javastg.definition.*;
+import com.korwe.javastg.definition.TypeParameter;
+import com.korwe.javastg.value.TypeValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +11,10 @@ import java.util.Map;
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public abstract class Method extends Annotatable implements Generifiable{
+public abstract class Method extends Annotatable implements GenerifiableType {
     private String name;
     private AccessModifier accessModifier;
-    private TypeDefinition returnType;
+    private Type returnType;
     private List<Parameter> parameters;
     private List<TypeParameter> typeParameters;
     private boolean isStatic;
@@ -32,20 +34,20 @@ public abstract class Method extends Annotatable implements Generifiable{
         init();
     }
 
-    public Method(TypeDefinition returnType, String name){
+    public Method(Type returnType, String name){
         this.returnType = returnType;
         this.name = name;
         init();
     }
 
-    public Method(AccessModifier accessModifier, TypeDefinition returnType, String name){
+    public Method(AccessModifier accessModifier, Type returnType, String name){
         this.accessModifier = accessModifier;
         this.returnType = returnType;
         this.name = name;
         init();
     }
 
-    public Method(AccessModifier accessModifier, TypeDefinition returnType, String name, boolean isStatic){
+    public Method(AccessModifier accessModifier, Type returnType, String name, boolean isStatic){
         this.accessModifier = accessModifier;
         this.returnType = returnType;
         this.name = name;
@@ -74,11 +76,11 @@ public abstract class Method extends Annotatable implements Generifiable{
         this.accessModifier = accessModifier;
     }
 
-    public TypeDefinition getReturnType() {
+    public Type getReturnType() {
         return returnType;
     }
 
-    public void setReturnType(TypeDefinition returnType) {
+    public void setReturnType(Type returnType) {
         this.returnType = returnType;
     }
 
@@ -114,7 +116,7 @@ public abstract class Method extends Annotatable implements Generifiable{
         return ConstructorMethod.class.isAssignableFrom(getClass());
     }
 
-    public boolean supportsArguments(TypeDefinitionValue[] arguments){
+    public boolean supportsArguments(TypeValue[] arguments){
         for(int i = 0; i < parameters.size(); i++){
             if(!parameters.get(i).getType().isCompatibleWith(arguments[i])){
                 return false;
@@ -123,7 +125,7 @@ public abstract class Method extends Annotatable implements Generifiable{
         return true;
     }
 
-    public boolean supportsArguments(Map<String, TypeDefinitionValue> arguments){
+    public boolean supportsArguments(Map<String, TypeValue> arguments){
         for(Parameter parameter : parameters){
             if(!arguments.containsKey(parameter.getName()) || !parameter.getType().isCompatibleWith(arguments.get(parameter.getName()))){
               return false;

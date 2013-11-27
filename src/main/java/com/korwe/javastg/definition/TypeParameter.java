@@ -1,4 +1,7 @@
-package com.korwe.javastg.type;
+package com.korwe.javastg.definition;
+
+import com.korwe.javastg.definition.Reference;
+import com.korwe.javastg.definition.TypeParameterName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +10,7 @@ import java.util.List;
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
 public class TypeParameter{
-    private List<ReferenceType> parentTypes;
+    private List<Reference> parentTypes;
     private List<TypeParameterName> names;
 
     public TypeParameter(){
@@ -23,7 +26,7 @@ public class TypeParameter{
         }
     }
 
-    public TypeParameter(List<String> names, List<ReferenceType> parentTypes) {
+    public TypeParameter(List<String> names, List<Reference> parentTypes) {
         this.names = new ArrayList<>();
         for(String name : names){
             addTypeName(name);
@@ -39,15 +42,15 @@ public class TypeParameter{
         this.names = names;
     }
 
-    public List<ReferenceType> getParentTypes() {
+    public List<Reference> getParentTypes() {
         return parentTypes;
     }
 
-    public void setParentTypes(List<ReferenceType> parentTypes) {
+    public void setParentTypes(List<Reference> parentTypes) {
         this.parentTypes = parentTypes;
     }
 
-    public void addParentType(ReferenceType parentType){
+    public void addParentType(Reference parentType){
         this.parentTypes.add(parentType);
     }
 

@@ -1,14 +1,15 @@
 package com.korwe.javastg.value;
 
+import com.korwe.javastg.definition.Boxable;
+import com.korwe.javastg.definition.Primitive;
 import com.korwe.javastg.exception.UnsupportedTypeException;
-import com.korwe.javastg.type.BoxableType;
-import com.korwe.javastg.type.PrimitiveType;
+import com.korwe.javastg.type.Type;
 import com.korwe.javastg.type.TypeDefinition;
 
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public class LiteralValue extends TypeDefinitionValue{
+public class LiteralValue extends TypeValue {
     String value;
 
     public LiteralValue(){}
@@ -65,7 +66,7 @@ public class LiteralValue extends TypeDefinitionValue{
 
     public void setValue(String s, boolean isString){
         if(isString){
-            super.setTypeDefinition(BoxableType.String);
+            super.setType(Boxable.String);
             this.value = String.format("\"%s\"",s);
         }
         else{
@@ -74,51 +75,51 @@ public class LiteralValue extends TypeDefinitionValue{
     }
 
     public void setValue(Character c){
-        super.setTypeDefinition(PrimitiveType.Char);
+        super.setType(Primitive.Char);
         this.value = "'"+String.valueOf(c)+"'";
     }
 
     public void setValue(Boolean b){
-        super.setTypeDefinition(PrimitiveType.Boolean);
+        super.setType(Primitive.Boolean);
         this.value = String.valueOf(b);
     }
 
     public void setValue(Byte b){
-        super.setTypeDefinition(PrimitiveType.Byte);
+        super.setType(Primitive.Byte);
         this.value = "0x"+Integer.toHexString(Integer.valueOf(String.valueOf(b)));
     }
 
     public void setValue(Short s){
-        super.setTypeDefinition(PrimitiveType.Short);
+        super.setType(Primitive.Short);
         this.value = String.valueOf(s);
     }
 
     public void setValue(Integer i){
-        super.setTypeDefinition(PrimitiveType.Int);
+        super.setType(Primitive.Int);
         this.value = String.valueOf(i);
     }
 
     public void setValue(Long l){
-        super.setTypeDefinition(PrimitiveType.Long);
+        super.setType(Primitive.Long);
         this.value = String.valueOf(l)+"L";
     }
 
     public void setValue(Float f){
-        super.setTypeDefinition(PrimitiveType.Float);
+        super.setType(Primitive.Float);
         this.value = String.valueOf(f)+"f";
     }
 
     public void setValue(Double d){
-        super.setTypeDefinition(PrimitiveType.Double);
+        super.setType(Primitive.Double);
         this.value = String.valueOf(d);
     }
 
     @Override
-    public void setTypeDefinition(TypeDefinition typeDefinition){
-        if(!typeDefinition.hasLiteralSupport()){
+    public void setType(Type type){
+        if(TypeDefinition.class.isAssignableFrom(type.getClass()) && !((TypeDefinition)type).hasLiteralSupport()){
             throw new UnsupportedTypeException();
         }
-        super.setTypeDefinition(typeDefinition);
+        super.setType(type);
     }
 
 

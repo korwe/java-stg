@@ -1,6 +1,7 @@
-package com.korwe.javastg.type;
+package com.korwe.javastg.definition;
 
-import com.korwe.javastg.value.TypeDefinitionValue;
+import com.korwe.javastg.definition.Annotation;
+import com.korwe.javastg.value.TypeValue;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,13 +11,13 @@ import java.util.Map;
  */
 public class AnnotationInstance {
     private Annotation annotation;
-    private Map<String, TypeDefinitionValue> values = new HashMap<>();
+    private Map<String, TypeValue> values = new HashMap<>();
 
     public AnnotationInstance(Annotation annotation){
         this.annotation = annotation;
     }
 
-    public TypeDefinitionValue setValue(String name, TypeDefinitionValue value){
+    public TypeValue setValue(String name, TypeValue value){
         return values.put(name, value);
     }
 
@@ -28,7 +29,7 @@ public class AnnotationInstance {
         this.annotation = annotation;
     }
 
-    public Map<String, TypeDefinitionValue> getValues() {
+    public Map<String, TypeValue> getValues() {
         return values;
     }
 }
