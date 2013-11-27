@@ -164,4 +164,73 @@ public class TestUtil {
         return method;
     }
 
+    //Annotated parameterized extended class with methods, constructors, attributes and interfaces
+    public static ConcreteClass getAPECClass_CMAI(){
+        ConcreteClass concreteClass = new ConcreteClass("classes.place", "APECClass_CMAI");
+
+        //TYPE PARAMETERS
+        TypeParameter classTypeParameter = new TypeParameter();
+        classTypeParameter.addParentType(new ConcreteClass("classes.typeParameter", "ClassTypeParameter"));
+        classTypeParameter.addTypeName("T");
+        concreteClass.addTypeParameter(classTypeParameter);
+
+        //ANNOTATION
+        Annotation annotation = new Annotation("classes.annotations", "ClassAnnotation");
+        concreteClass.addAnnotation(new AnnotationInstance(annotation));
+
+        //GENERIC SUPER CLASS
+        ConcreteClass superClass = new ConcreteClass("classes.superclass", "SuperClass");
+        TypeParameter superClassTypeParameter = new TypeParameter();
+        superClassTypeParameter.addTypeName("C");
+        ConcreteClass superClassTypeParameterParent = new ConcreteClass("classes.typeParameter", "SuperClassTypeParameterParent");
+        superClassTypeParameter.addParentType(superClassTypeParameterParent);
+
+        ParameterizedConcreteClass parameterizedSuperClass = new ParameterizedConcreteClass(superClass);
+        parameterizedSuperClass.addParameterType(new ConcreteClass("classes.typeParameter", "SuperClassExtendedTypeParameterParent"));
+
+        concreteClass.setSuperClass(parameterizedSuperClass);
+
+
+        //GENERIC INTERFACE
+        Interface interfaceDefinition = new Interface("classes.interfaces", "ClassInterface");
+        AbstractMethod interfaceMethod = new AbstractMethod(AccessModifier.Public, Primitive.Int, "classInterfaceMethod" );
+        interfaceDefinition.addMethod(interfaceMethod);
+
+        TypeParameter interfaceTypeParameter = new TypeParameter();
+        interfaceTypeParameter.addParentType(new ConcreteClass("classes.typeParameter", "InterfaceTypeParameter"));
+
+        ParameterizedInterface parameterizedInterface = new ParameterizedInterface(interfaceDefinition);
+        parameterizedInterface.addParameterType(new ConcreteClass("classes.typeParameter", "InterfaceExtendedTypeParameter"));
+
+        concreteClass.addInterface(parameterizedInterface);
+        concreteClass.addMethod(interfaceMethod.getConcreteCopy());
+
+        //METHOD
+        ConcreteMethod method = new ConcreteMethod(AccessModifier.Private, new ConcreteClass("classes.methods.classes","ClassMethodReturnType"), "classMethod");
+        method.addParamater(new Parameter(new ConcreteClass("classes.methods.classes", "ClassMethodParam1"), "param1"));
+
+        TypeParameter parameterTypeParameter = new TypeParameter();
+        parameterTypeParameter.addTypeName("S");
+        ConcreteClass methodParameterType1 = new ConcreteClass("classes.methods.classes", "ClassMethodParameterType1");
+        parameterTypeParameter.addParentType(methodParameterType1);
+        ConcreteClass parameterizedClass = new ConcreteClass("classes.methods.classes", "ClassMethodParameterizedClass");
+        parameterizedClass.addTypeParameter(parameterTypeParameter);
+        ParameterizedType parameterizedType = new ParameterizedType(parameterizedClass){};
+        parameterizedType.addParameterType(new ConcreteClass("classes.methods.classes", "ExtendedClassMethodParameterType1", methodParameterType1));
+
+        TypeParameter parameterType = new TypeParameter();
+        parameterType.addTypeName("X");
+        parameterType.addParentType(new ConcreteClass("classes.methods.classes", "ClassMethodParameterType2"));
+        method.addParamater(new Parameter(parameterizedType, "param2"));
+        method.addTypeParameter(parameterType);
+
+        method.addAnnotation(new AnnotationInstance(new Annotation("classes.methods.annotations", "ClassMethodAnnotation1")));
+
+        concreteClass.addMethod(method);
+
+        //ATTRIBUTES
+        concreteClass.addAttribute(new ClassAttribute(AccessModifier.Private, new ConcreteClass("classes.attributes", "ClassAttribute"),"classAttribute"));
+
+        return concreteClass;
+    }
 }
