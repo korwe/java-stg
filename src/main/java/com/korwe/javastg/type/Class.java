@@ -29,7 +29,7 @@ public abstract class Class extends MemberContainer implements ClassType{
     }
 
     @Override
-    public boolean isCompatibleWith(Type type){
+    public boolean canAssign(Type type){
         return ClassType.class.isAssignableFrom(type.getClass()) && ((ClassType)type).extendsFrom(this);
     }
 

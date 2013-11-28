@@ -20,8 +20,8 @@ public class TestClass {
         Class extendedExtendedClass = new ConcreteClass("some.weird.place", "ExtendedExtendedClass", extendedClass);
         assertThat(extendedExtendedClass.getSuperClass(), notNullValue());
 
-        assertTrue("Base class should be compatible with any descendant class", extendedExtendedClass.getSuperClass().getSuperClass().isCompatibleWith(TestUtil.typeValueFor(extendedExtendedClass)));
-        assertFalse("Decendents should not be compatible with base class", extendedExtendedClass.isCompatibleWith(TestUtil.typeValueFor(extendedExtendedClass.getSuperClass().getSuperClass())));
+        assertTrue("Base class should be compatible with any descendant class", extendedExtendedClass.getSuperClass().getSuperClass().canAssign(TestUtil.typeValueFor(extendedExtendedClass)));
+        assertFalse("Decendents should not be compatible with base class", extendedExtendedClass.canAssign(TestUtil.typeValueFor(extendedExtendedClass.getSuperClass().getSuperClass())));
 
     }
 }

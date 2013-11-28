@@ -34,7 +34,7 @@ public class Primitive extends TypeDefinition {
     }
 
     @Override
-    public boolean isCompatibleWith(Type type){
+    public boolean canAssign(Type type){
         if(type == null) return false;
 
         if(Primitive.class.isAssignableFrom(type.getClass())){

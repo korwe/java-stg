@@ -35,8 +35,8 @@ public class Boxable extends ConcreteClass {
     }
 
     @Override
-    public boolean isCompatibleWith(TypeValue value){
-        if(super.isCompatibleWith(value)) return true;
+    public boolean canAssign(TypeValue value){
+        if(super.canAssign(value)) return true;
 
         if(TypeDefinition.class.isAssignableFrom(value.getType().getClass()) && ((TypeDefinition)value.getType()).isPrimitiveType()){
             return equals(((Primitive)value.getType()).getBoxableType()); //i1s boxable and compatible

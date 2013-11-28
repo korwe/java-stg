@@ -7,7 +7,7 @@ import com.korwe.javastg.value.TypeValue;
  */
 public interface Type {
     public String getName();
-    public boolean isCompatibleWith(TypeValue value);
-    public boolean isCompatibleWith(Type type);
+    public boolean canAssign(TypeValue value);
+    public boolean canAssign(Type type);
     public boolean hasLiteralSupport();
 }

@@ -118,7 +118,7 @@ public abstract class Method extends Annotatable implements GenerifiableType {
 
     public boolean supportsArguments(TypeValue[] arguments){
         for(int i = 0; i < parameters.size(); i++){
-            if(!parameters.get(i).getType().isCompatibleWith(arguments[i])){
+            if(!parameters.get(i).getType().canAssign(arguments[i])){
                 return false;
             }
         }
@@ -127,7 +127,7 @@ public abstract class Method extends Annotatable implements GenerifiableType {
 
     public boolean supportsArguments(Map<String, TypeValue> arguments){
         for(Parameter parameter : parameters){
-            if(!arguments.containsKey(parameter.getName()) || !parameter.getType().isCompatibleWith(arguments.get(parameter.getName()))){
+            if(!arguments.containsKey(parameter.getName()) || !parameter.getType().canAssign(arguments.get(parameter.getName()))){
               return false;
             }
         }

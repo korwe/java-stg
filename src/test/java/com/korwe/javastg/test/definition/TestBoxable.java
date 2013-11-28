@@ -17,24 +17,24 @@ import static org.junit.Assert.assertTrue;
 public class TestBoxable {
 
     @Test
-    public void isCompatibleWith(){
+    public void canAssign(){
         Boxable boxableWithoutPrimitive = new Boxable("some.place", "BoxableWithoutPrimitive", null);
         Primitive primitive = new Primitive("myPrimitive",null);
 
-        assertTrue("Boxable should be compatible with null", boxableWithoutPrimitive.isCompatibleWith((TypeValue)null));
-        assertFalse("Boxable with null primitive should not fail Primitive comparison", boxableWithoutPrimitive.isCompatibleWith(TestUtil.typeValueFor(primitive)));
+        assertTrue("Boxable should be compatible with null", boxableWithoutPrimitive.canAssign((TypeValue) null));
+        assertFalse("Boxable with null primitive should not fail Primitive comparison", boxableWithoutPrimitive.canAssign(TestUtil.typeValueFor(primitive)));
     }
 
     @Test
-    public void isCompatibleWith_BoxableWithoutPrimitive(){
+    public void canAssign_BoxableWithoutPrimitive(){
         Boxable boxableWithPrimitive = TestUtil.getBoxableWithPrimitive();
         assertThat(boxableWithPrimitive.getPrimitiveType(), notNullValue());
 
-        assertTrue("Boxable should be compatible with null", boxableWithPrimitive.isCompatibleWith((TypeValue)null));
-        assertTrue("Boxable should be compatible with its primitive", boxableWithPrimitive.isCompatibleWith(TestUtil.typeValueFor(boxableWithPrimitive.getPrimitiveType())));
+        assertTrue("Boxable should be compatible with null", boxableWithPrimitive.canAssign((TypeValue) null));
+        assertTrue("Boxable should be compatible with its primitive", boxableWithPrimitive.canAssign(TestUtil.typeValueFor(boxableWithPrimitive.getPrimitiveType())));
         Primitive wrongPrimitive = new Primitive("testPrimitive", null);
         assertThat(wrongPrimitive, not(equalTo( boxableWithPrimitive.getPrimitiveType())));
-        assertFalse("Boxable should only be compatible with its primitive", boxableWithPrimitive.isCompatibleWith(TestUtil.typeValueFor(wrongPrimitive)));
+        assertFalse("Boxable should only be compatible with its primitive", boxableWithPrimitive.canAssign(TestUtil.typeValueFor(wrongPrimitive)));
     }
 
 

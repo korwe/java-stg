@@ -59,15 +59,15 @@ public class TypeParameter implements Type {
     }
 
     @Override
-    public boolean isCompatibleWith(TypeValue value) {
-        return value == null || isCompatibleWith(value.getType());
+    public boolean canAssign(TypeValue value) {
+        return value == null || canAssign(value.getType());
     }
 
     @Override
-    public boolean isCompatibleWith(Type type) {
+    public boolean canAssign(Type type) {
         //type should be compatible with all parentTypes
         for (Reference parentType : parentTypes) {
-            if(!parentType.isCompatibleWith(type)) return false;
+            if(!parentType.canAssign(type)) return false;
         }
         return true;
     }

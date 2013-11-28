@@ -14,10 +14,10 @@ import static org.junit.Assert.assertTrue;
 public class TestReference {
 
     @Test
-    public void isCompatibleWith(){
+    public void canAssign(){
         Reference reference = new Reference("some.place", "SomeReference");
-        assertTrue("Reference should be compatible with null", reference.isCompatibleWith((TypeValue)null));
-        assertTrue("Reference should be compatible with itself", reference.isCompatibleWith(TestUtil.typeValueFor(reference)));
+        assertTrue("Reference should be compatible with null", reference.canAssign((TypeValue) null));
+        assertTrue("Reference should be compatible with itself", reference.canAssign(TestUtil.typeValueFor(reference)));
     }
 
     @Test

@@ -26,7 +26,7 @@ public abstract class ParameterizedClass extends ParameterizedType implements Cl
 
 
     @Override
-    public boolean isCompatibleWith(Type type){
+    public boolean canAssign(Type type){
         return ClassType.class.isAssignableFrom(type.getClass()) && ((ClassType)type).extendsFrom(this);
     }
 
@@ -37,7 +37,7 @@ public abstract class ParameterizedClass extends ParameterizedType implements Cl
         if(this.getGenerifiable().equals(classType)){
             List<TypeParameter> typeParameters = getGenerifiable().getTypeParameters();
             for (int i = 0; i < typeParameters.size(); i++) {
-                if(!typeParameters.get(i).isCompatibleWith(getParameterTypes().get(i))) return false;
+                if(!typeParameters.get(i).canAssign(getParameterTypes().get(i))) return false;
             }
             return true;
         }

@@ -1,6 +1,5 @@
 package com.korwe.javastg.test.definition;
 
-import com.korwe.javastg.definition.Boxable;
 import com.korwe.javastg.definition.Primitive;
 import com.korwe.javastg.util.TestUtil;
 import com.korwe.javastg.value.TypeValue;
@@ -15,26 +14,26 @@ import static org.junit.Assert.*;
 public class TestPrimitive {
 
     @Test
-    public void isCompatibleWith_UnboxablePrimitive(){
+    public void canAssign_UnboxablePrimitive(){
         Primitive primitive1 = new Primitive("somePrimitive", null);
         Primitive primitive2 = new Primitive("anotherPrimitive", null);
 
         assertNull("Should not have boxable type", primitive1.getBoxableType());
         assertNull("Should not have boxable type", primitive2.getBoxableType());
 
-        assertFalse("Primitive is incompatible with null", primitive1.isCompatibleWith((TypeValue)null));
-        assertTrue("Primitive is compatible with itself", primitive1.isCompatibleWith(TestUtil.typeValueFor(primitive1)));
-        assertFalse("Primitive is not compatible with another primitive", primitive1.isCompatibleWith(TestUtil.typeValueFor(primitive2)));
+        assertFalse("Primitive is incompatible with null", primitive1.canAssign((TypeValue) null));
+        assertTrue("Primitive is compatible with itself", primitive1.canAssign(TestUtil.typeValueFor(primitive1)));
+        assertFalse("Primitive is not compatible with another primitive", primitive1.canAssign(TestUtil.typeValueFor(primitive2)));
 
     }
 
 
     @Test
-    public void isCompatibleWith_BoxablePrimitive(){
+    public void canAssign_BoxablePrimitive(){
         Primitive primitiveWithBoxable = TestUtil.getPrimitiveWithBoxable();
 
         assertThat(primitiveWithBoxable.getBoxableType(), notNullValue());
-        assertTrue("Primitive should be compatible with its boxable", primitiveWithBoxable.isCompatibleWith(TestUtil.typeValueFor(primitiveWithBoxable.getBoxableType())));
+        assertTrue("Primitive should be compatible with its boxable", primitiveWithBoxable.canAssign(TestUtil.typeValueFor(primitiveWithBoxable.getBoxableType())));
     }
 
 }

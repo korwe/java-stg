@@ -46,12 +46,12 @@ public class Reference extends TypeDefinition implements ReferenceType {
     }
 
     @Override
-    public boolean isCompatibleWith(TypeValue value){
-        return value == null || isCompatibleWith(value.getType());
+    public boolean canAssign(TypeValue value){
+        return value == null || canAssign(value.getType());
     }
 
     @Override
-    public boolean isCompatibleWith(Type type){
+    public boolean canAssign(Type type){
         return equals(type); //same types
     }
 

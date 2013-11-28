@@ -26,8 +26,8 @@ public abstract class TypeDefinition extends Annotatable implements Type {
     }
 
     @Override
-    public boolean isCompatibleWith(TypeValue value){
-        return value != null && isCompatibleWith(value.getType());
+    public boolean canAssign(TypeValue value){
+        return value != null && canAssign(value.getType());
     }
 
 }
