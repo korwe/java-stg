@@ -60,7 +60,11 @@ public class TypeParameter implements Type {
 
     @Override
     public boolean isCompatibleWith(TypeValue value) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        //value should be compatible with all parentTypes
+        for (Reference reference : parentTypes) {
+            if(!reference.isCompatibleWith(value)) return false;
+        }
+        return true;
     }
 
     @Override

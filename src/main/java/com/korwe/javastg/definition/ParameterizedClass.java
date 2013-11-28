@@ -30,18 +30,12 @@ public abstract class ParameterizedClass extends ParameterizedType implements Cl
         if(this.equals(classType)){
             List<TypeParameter> typeParameters = getGenerifiable().getTypeParameters();
             for (int i = 0; i < typeParameters.size(); i++) {
-                TypeParameter typeParameter = typeParameters.get(i);
-                for(Reference param : getParameterTypes()){
-                    for (Reference reference : typeParameter.getParentTypes()) {
-                        if(!reference.isCompatibleWith(new TypeValue(param) {
-                            @Override
-                            public String getCodeString() {
-                                return null;
-                            }
-                        })) return false;
+                if(!typeParameters.get(i).isCompatibleWith(new TypeValue(getParameterTypes().get(i)) {
+                    @Override
+                    public String getCodeString() {
+                        return null;
                     }
-
-                }
+                }))return false;
             }
 
             return true;
