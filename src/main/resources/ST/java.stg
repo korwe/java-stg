@@ -30,7 +30,7 @@ interface_file(interfaceDef) ::= <<
 >>
 
 type_parameter(typeParameter) ::= <<
-\<<typeParameter.names:{tpn | <tpn.name>};separator=","><if(typeParameter.parentTypes)> extends <typeParameter.parentTypes:{td | <td.name>};separator=" & "><endif>\>
+\<<typeParameter.name><if(typeParameter.parentTypes)> extends <typeParameter.parentTypes:{td | <td.name>};separator=" & "><endif>\>
 >>
 
 attribute(attrDef) ::= <<

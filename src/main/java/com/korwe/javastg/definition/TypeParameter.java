@@ -1,14 +1,17 @@
 package com.korwe.javastg.definition;
 
+import com.korwe.javastg.type.Type;
+import com.korwe.javastg.value.TypeValue;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public class TypeParameter{
+public class TypeParameter implements Type {
     private List<Reference> parentTypes;
-    private TypeParameterName name;
+    private String name;
 
     public TypeParameter(){
         this.parentTypes = new ArrayList<>();
@@ -16,19 +19,19 @@ public class TypeParameter{
 
     public TypeParameter(String name){
         this.parentTypes = new ArrayList<>();
-        setName(new TypeParameterName(name));
+        setName(name);
     }
 
     public TypeParameter(String name, List<Reference> parentTypes) {
-        setName(new TypeParameterName(name));
+        setName(name);
         this.parentTypes = parentTypes;
     }
 
-    public TypeParameterName getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(TypeParameterName name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -55,4 +58,13 @@ public class TypeParameter{
         return copy;
     }
 
+    @Override
+    public boolean isCompatibleWith(TypeValue value) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean hasLiteralSupport() {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

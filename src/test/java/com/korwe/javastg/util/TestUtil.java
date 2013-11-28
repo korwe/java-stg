@@ -248,4 +248,9 @@ public class TestUtil {
         primitive.setBoxableType(boxableWithPrimitive);
         return boxableWithPrimitive;
     }
+
+    public static void main(String[] args) {
+        System.out.println(TemplateUtil.template("java_file").add("javaDef", getAPECClass_CMAI()).add("imports", ImportUtil.importsForClass(getAPECClass_CMAI())).render());
+    }
 }
+
