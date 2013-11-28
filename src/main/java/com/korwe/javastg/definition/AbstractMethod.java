@@ -1,8 +1,5 @@
 package com.korwe.javastg.definition;
 
-import com.korwe.javastg.definition.AccessModifier;
-import com.korwe.javastg.definition.ConcreteMethod;
-import com.korwe.javastg.definition.Parameter;
 import com.korwe.javastg.type.Method;
 import com.korwe.javastg.type.Type;
 
@@ -35,7 +32,7 @@ public class AbstractMethod extends Method {
     }
 
     public ConcreteMethod getConcreteCopy(){
-        ConcreteMethod concreteMethod = new ConcreteMethod(this.getAccessModifier(), this.getReturnType(), this.getName());
+        ConcreteMethod concreteMethod = new ConcreteMethod(this.getAccessModifier(), this.getReturnType(), this.getName(), this.isStatic());
         for(Parameter paramater : this.getParameters()){
             concreteMethod.addParamater(new Parameter(paramater.getType(), paramater.getName()));
         }

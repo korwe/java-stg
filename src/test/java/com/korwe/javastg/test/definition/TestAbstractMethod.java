@@ -6,12 +6,13 @@ import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
  */
-public class TestAbstractClass {
+public class TestAbstractMethod {
     @Test
     public void getConcreteCopy(){
         AbstractMethod abstractMethod = new AbstractMethod(AccessModifier.Private, TestUtil.getBasicConcreteClass(), "myMethod");
@@ -50,6 +51,13 @@ public class TestAbstractClass {
             }
         }
 
+
+        //Make sure static is copied correctly
+        assertEquals("Static type should be the equal", abstractMethod.isStatic(), concreteMethod.isStatic());
+        abstractMethod.setStatic(!abstractMethod.isStatic());
+
+        ConcreteMethod anotherCopiedMethod = abstractMethod.getConcreteCopy();
+        assertEquals("Static type should be the equal", abstractMethod.isStatic(), anotherCopiedMethod.isStatic());
 
     }
 }
