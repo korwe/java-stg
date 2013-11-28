@@ -66,14 +66,14 @@ public class TypeParameter implements Type {
     @Override
     public boolean isCompatibleWith(Type type) {
         //type should be compatible with all parentTypes
-        for (Reference reference : parentTypes) {
-            if(!reference.isCompatibleWith(type)) return false;
+        for (Reference parentType : parentTypes) {
+            if(!parentType.isCompatibleWith(type)) return false;
         }
         return true;
     }
 
     @Override
     public boolean hasLiteralSupport() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        return false;
     }
 }

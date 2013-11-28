@@ -30,21 +30,15 @@ public abstract class Class extends MemberContainer implements ClassType{
 
     @Override
     public boolean isCompatibleWith(Type type){
-        if(ClassType.class.isAssignableFrom(type.getClass())){
-            if(((ClassType)type).extendsFrom(this)){
-                return true;
-            }
-        }
-
-        return super.isCompatibleWith(type);
+        return ClassType.class.isAssignableFrom(type.getClass()) && ((ClassType)type).extendsFrom(this);
     }
 
     @Override
     public boolean extendsFrom(ClassType classType){
         if(this.equals(classType))return true;
 
-        if(classType.getSuperClass() != null){
-            return extendsFrom(classType.getSuperClass());
+        if(this.getSuperClass() != null){
+            return classType.extendsFrom(this.getSuperClass());
         }
 
         return false;
