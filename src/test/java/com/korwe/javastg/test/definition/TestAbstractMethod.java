@@ -19,8 +19,7 @@ public class TestAbstractMethod {
         abstractMethod.addParamater(new Parameter(new ConcreteClass("some.place", "SomeClass"), "someParameter"));
         abstractMethod.addParamater(new Parameter(new ConcreteClass("some.place", "AnotherClass"), "anotherParameter"));
 
-        TypeParameter typeParameter = new TypeParameter();
-        typeParameter.addTypeName("X");
+        TypeParameter typeParameter = new TypeParameter("X");
         typeParameter.addParentType(new ConcreteClass("some.place","TypeParamClass"));
         abstractMethod.addTypeParameter(typeParameter);
 

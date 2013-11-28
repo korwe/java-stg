@@ -20,8 +20,7 @@ public class TestConcreteMethod {
         concreteMethod.addParamater(new Parameter(new ConcreteClass("some.place", "ParameterClass"), "myParam"));
         concreteMethod.addParamater(new Parameter(new ConcreteClass("some.place", "AnotherParameter"), "anotherParam"));
 
-        TypeParameter typeParameter = new TypeParameter();
-        typeParameter.addTypeName("J");
+        TypeParameter typeParameter = new TypeParameter("J");
         typeParameter.addParentType(new ConcreteClass("some.place", "ParentTypeClass"));
         concreteMethod.addTypeParameter(typeParameter);
 
@@ -69,8 +68,7 @@ public class TestConcreteMethod {
         originalMethod.addParamater(new Parameter(new ConcreteClass("some.place", "ParameterClass"), "myParam"));
         originalMethod.addParamater(new Parameter(new ConcreteClass("some.place", "AnotherParameter"), "anotherParam"));
 
-        TypeParameter typeParameter = new TypeParameter();
-        typeParameter.addTypeName("J");
+        TypeParameter typeParameter = new TypeParameter("K");
         typeParameter.addParentType(new ConcreteClass("some.place", "ParentTypeClass"));
         originalMethod.addTypeParameter(typeParameter);
 
@@ -98,7 +96,7 @@ public class TestConcreteMethod {
         assertEquals("Incorrect number of type parameters were copied", originalMethod.getTypeParameters().size(), copiedMethod.getTypeParameters().size());
         for(TypeParameter typeParam : originalMethod.getTypeParameters()){
             for(TypeParameter concreteMethodTypeParam : copiedMethod.getTypeParameters()){
-                assertTrue("Type parameters should be same instance as abstract method", typeParam == concreteMethodTypeParam);
+                assertFalse("Type parameters should be same instance as copy method", typeParam == concreteMethodTypeParam);
             }
         }
 

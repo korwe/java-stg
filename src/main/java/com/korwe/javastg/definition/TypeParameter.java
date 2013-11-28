@@ -1,8 +1,5 @@
 package com.korwe.javastg.definition;
 
-import com.korwe.javastg.definition.Reference;
-import com.korwe.javastg.definition.TypeParameterName;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,35 +8,28 @@ import java.util.List;
  */
 public class TypeParameter{
     private List<Reference> parentTypes;
-    private List<TypeParameterName> names;
+    private TypeParameterName name;
 
     public TypeParameter(){
-        this.names = new ArrayList<>();
         this.parentTypes = new ArrayList<>();
     }
 
-    public TypeParameter(List<String> names){
+    public TypeParameter(String name){
         this.parentTypes = new ArrayList<>();
-        this.names = new ArrayList<>();
-        for(String name : names){
-            addTypeName(name);
-        }
+        setName(new TypeParameterName(name));
     }
 
-    public TypeParameter(List<String> names, List<Reference> parentTypes) {
-        this.names = new ArrayList<>();
-        for(String name : names){
-            addTypeName(name);
-        }
+    public TypeParameter(String name, List<Reference> parentTypes) {
+        setName(new TypeParameterName(name));
         this.parentTypes = parentTypes;
     }
 
-    public List<TypeParameterName> getNames() {
-        return names;
+    public TypeParameterName getName() {
+        return name;
     }
 
-    public void setNames(List<TypeParameterName> names) {
-        this.names = names;
+    public void setName(TypeParameterName name) {
+        this.name = name;
     }
 
     public List<Reference> getParentTypes() {
@@ -54,21 +44,15 @@ public class TypeParameter{
         this.parentTypes.add(parentType);
     }
 
-    public void addTypeName(String name){
-        if(getTypeForName(name)==null){
-            this.names.add(new TypeParameterName(name));
-        }
-    }
+    public TypeParameter getCopy(){
+        TypeParameter copy = new TypeParameter();
+        copy.setName(getName());
 
-    public void addTypeName(TypeParameterName name){
-        this.names.add(name);
-    }
-
-    public TypeParameterName getTypeForName(String name){
-        for(TypeParameterName tpn : names){
-            if(tpn.getName().equals(name)) return tpn;
+        for(Reference parentType : getParentTypes()){
+            copy.addParentType(parentType);
         }
-        return null;
+
+        return copy;
     }
 
 }

@@ -74,15 +74,13 @@ public class TestUtil {
     }
 
     public static TypeParameter getBasicTypeParameterWithParent(){
-        TypeParameter typeParameter = new TypeParameter();
-        typeParameter.addTypeName("T");
+        TypeParameter typeParameter = new TypeParameter("T");
         typeParameter.addParentType(getBasicTypeParameterParentType());
         return typeParameter;
     }
 
     public static TypeParameter getMultiBoundTypeParameter(){
-        TypeParameter typeParameter = new TypeParameter();
-        typeParameter.addTypeName("X");
+        TypeParameter typeParameter = new TypeParameter("X");
         typeParameter.addParentType(new ConcreteClass("typeParameter.place", "Type2"));
         typeParameter.addParentType(new ConcreteClass("typeParameter.place", "Type3"));
         return typeParameter;
@@ -118,8 +116,7 @@ public class TestUtil {
         ConcreteMethod method = new ConcreteMethod(AccessModifier.Private, new ConcreteClass("method.classes","MethodReturnType"), "testPrivateMethod");
         method.addParamater(new Parameter(new ConcreteClass("method.classes", "MethodParam1"), "param1"));
 
-        TypeParameter parameterTypeParameter = new TypeParameter();
-        parameterTypeParameter.addTypeName("S");
+        TypeParameter parameterTypeParameter = new TypeParameter("S");
         ConcreteClass methodParameterType1 = new ConcreteClass("method.classes", "MethodParameterType1");
         parameterTypeParameter.addParentType(methodParameterType1);
         ConcreteClass parameterizedClass = new ConcreteClass("method.classes", "MethodParameterizedClass");
@@ -128,8 +125,7 @@ public class TestUtil {
         parameterizedType.addParameterType(new ConcreteClass("method.classes", "ExtendedMethodParameterType1", methodParameterType1));
 
 
-        TypeParameter parameterType = new TypeParameter();
-        parameterType.addTypeName("X");
+        TypeParameter parameterType = new TypeParameter("X");
         parameterType.addParentType(new ConcreteClass("method.classes", "MethodParameterType2"));
         method.addParamater(new Parameter(parameterizedType, "param2"));
         method.addTypeParameter(parameterType);
@@ -144,8 +140,7 @@ public class TestUtil {
         AbstractMethod method = new AbstractMethod(AccessModifier.Private, new ConcreteClass("method.classes","MethodReturnType2"), "testPublicMethod");
         method.addParamater(new Parameter(new ConcreteClass("method.classes", "AbstractMethodParam1"), "param1"));
 
-        TypeParameter parameterTypeParameter = new TypeParameter();
-        parameterTypeParameter.addTypeName("S");
+        TypeParameter parameterTypeParameter = new TypeParameter("S");
         ConcreteClass methodParameterType1 = new ConcreteClass("method.classes", "AbstractMethodParameterType1");
         parameterTypeParameter.addParentType(methodParameterType1);
         ConcreteClass parameterizedClass = new ConcreteClass("method.classes", "AbstractMethodParameterizedClass");
@@ -154,8 +149,7 @@ public class TestUtil {
         parameterizedType.addParameterType(new ConcreteClass("method.classes", "ExtendedAbstractMethodParameterType1", methodParameterType1));
 
 
-        TypeParameter parameterType = new TypeParameter();
-        parameterType.addTypeName("X");
+        TypeParameter parameterType = new TypeParameter("X");
         parameterType.addParentType(new ConcreteClass("method.classes", "AbstractMethodParameterType2"));
         method.addParamater(new Parameter(parameterizedType, "param2"));
         method.addTypeParameter(parameterType);
@@ -171,9 +165,8 @@ public class TestUtil {
         ConcreteClass concreteClass = new ConcreteClass("classes.place", "APECClass_CMAI");
 
         //TYPE PARAMETERS
-        TypeParameter classTypeParameter = new TypeParameter();
+        TypeParameter classTypeParameter = new TypeParameter("X");
         classTypeParameter.addParentType(new ConcreteClass("classes.typeParameter", "ClassTypeParameter"));
-        classTypeParameter.addTypeName("T");
         concreteClass.addTypeParameter(classTypeParameter);
 
         //ANNOTATION
@@ -182,8 +175,7 @@ public class TestUtil {
 
         //GENERIC SUPER CLASS
         ConcreteClass superClass = new ConcreteClass("classes.superclass", "SuperClass");
-        TypeParameter superClassTypeParameter = new TypeParameter();
-        superClassTypeParameter.addTypeName("C");
+        TypeParameter superClassTypeParameter = new TypeParameter("C");
         ConcreteClass superClassTypeParameterParent = new ConcreteClass("classes.typeParameter", "SuperClassTypeParameterParent");
         superClassTypeParameter.addParentType(superClassTypeParameterParent);
 
@@ -211,8 +203,7 @@ public class TestUtil {
         ConcreteMethod method = new ConcreteMethod(AccessModifier.Private, new ConcreteClass("classes.methods.classes","ClassMethodReturnType"), "classMethod");
         method.addParamater(new Parameter(new ConcreteClass("classes.methods.classes", "ClassMethodParam1"), "param1"));
 
-        TypeParameter parameterTypeParameter = new TypeParameter();
-        parameterTypeParameter.addTypeName("S");
+        TypeParameter parameterTypeParameter = new TypeParameter("S");
         ConcreteClass methodParameterType1 = new ConcreteClass("classes.methods.classes", "ClassMethodParameterType1");
         parameterTypeParameter.addParentType(methodParameterType1);
         ConcreteClass parameterizedClass = new ConcreteClass("classes.methods.classes", "ClassMethodParameterizedClass");
@@ -220,8 +211,7 @@ public class TestUtil {
         ParameterizedType parameterizedType = new ParameterizedType(parameterizedClass){};
         parameterizedType.addParameterType(new ConcreteClass("classes.methods.classes", "ExtendedClassMethodParameterType1", methodParameterType1));
 
-        TypeParameter parameterType = new TypeParameter();
-        parameterType.addTypeName("X");
+        TypeParameter parameterType = new TypeParameter("X");
         parameterType.addParentType(new ConcreteClass("classes.methods.classes", "ClassMethodParameterType2"));
         method.addParamater(new Parameter(parameterizedType, "param2"));
         method.addTypeParameter(parameterType);
