@@ -39,6 +39,11 @@ public class AbstractMethod extends Method {
         for(Parameter paramater : this.getParameters()){
             concreteMethod.addParamater(new Parameter(paramater.getType(), paramater.getName()));
         }
+
+        for(TypeParameter typeParameter: getTypeParameters()){
+            concreteMethod.addTypeParameter(typeParameter);
+        }
+
         return concreteMethod;
     }
 

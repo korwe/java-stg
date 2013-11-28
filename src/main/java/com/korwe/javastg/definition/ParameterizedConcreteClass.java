@@ -12,5 +12,4 @@ public class ParameterizedConcreteClass extends ParameterizedClass{
     public ParameterizedConcreteClass(ConcreteClass concreteClass) {
         super(concreteClass);
     }
-
 }
