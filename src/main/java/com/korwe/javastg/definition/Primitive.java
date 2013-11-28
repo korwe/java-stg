@@ -1,7 +1,7 @@
 package com.korwe.javastg.definition;
 
+import com.korwe.javastg.type.Type;
 import com.korwe.javastg.type.TypeDefinition;
-import com.korwe.javastg.value.TypeValue;
 
 /**
  * @author <a href="mailto:tjad.clark@korwe.com>Tjad Clark</a>
@@ -34,25 +34,21 @@ public class Primitive extends TypeDefinition {
     }
 
     @Override
-    public boolean isCompatibleWith(TypeValue value){
-        //this is primitive so doesn't support null
-        if(value == null){
-            return false;
-        }
-        else{
-            if(Primitive.class.isAssignableFrom(value.getType().getClass())){
-                //Check if the types are the same
-                if(value.getType().equals(this)){
-                    return true;
-                }
-                else{
-                    //Check boxable type is the same
-                    return this.getBoxableType() != null && this.getBoxableType().equals(((Primitive)value.getType()).getBoxableType());
-                }
+    public boolean isCompatibleWith(Type type){
+        if(type == null) return false;
+
+        if(Primitive.class.isAssignableFrom(type.getClass())){
+            //Check if the types are the same
+            if(type.equals(this)){
+                return true;
             }
             else{
-                return value.getType().equals(this.getBoxableType());
+                //Check boxable type is the same
+                return this.getBoxableType() != null && this.getBoxableType().equals(((Primitive)type).getBoxableType());
             }
+        }
+        else{
+            return type.equals(this.getBoxableType());
         }
     }
 }

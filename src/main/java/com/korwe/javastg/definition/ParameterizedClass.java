@@ -2,7 +2,6 @@ package com.korwe.javastg.definition;
 
 import com.korwe.javastg.type.*;
 import com.korwe.javastg.type.Class;
-import com.korwe.javastg.value.TypeValue;
 
 import java.util.List;
 
@@ -25,26 +24,27 @@ public abstract class ParameterizedClass extends ParameterizedType implements Cl
         ((Class)getGenerifiable()).setSuperClass(superClass);
     }
 
+
+    @Override
+    public boolean isCompatibleWith(Type type){
+        return super.isCompatibleWith(type) || extendsFrom((ClassType)type);
+    }
+
     @Override
     public boolean extendsFrom(ClassType classType){
+        if(classType == null) return false;
+
         if(this.equals(classType)){
             List<TypeParameter> typeParameters = getGenerifiable().getTypeParameters();
             for (int i = 0; i < typeParameters.size(); i++) {
-                if(!typeParameters.get(i).isCompatibleWith(new TypeValue(getParameterTypes().get(i)) {
-                    @Override
-                    public String getCodeString() {
-                        return null;
-                    }
-                }))return false;
+                if(!typeParameters.get(i).isCompatibleWith(getParameterTypes().get(i))) return false;
             }
-
             return true;
         }
 
         if(classType.getSuperClass() != null){
             return extendsFrom(classType.getSuperClass());
         }
-
         return false;
     }
 }

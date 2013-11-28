@@ -47,12 +47,12 @@ public class Reference extends TypeDefinition implements ReferenceType {
 
     @Override
     public boolean isCompatibleWith(TypeValue value){
-        if(value == null){
-            return true;       //Reference types support null
-        }
-        else{
-            return equals(value.getType()); //same types
-        }
+        return value == null || isCompatibleWith(value.getType());
+    }
+
+    @Override
+    public boolean isCompatibleWith(Type type){
+        return equals(type); //same types
     }
 
     @Override

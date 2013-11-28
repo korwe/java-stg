@@ -25,4 +25,9 @@ public abstract class TypeDefinition extends Annotatable implements Type {
         return isPrimitiveType();
     }
 
+    @Override
+    public boolean isCompatibleWith(TypeValue value){
+        return value != null && isCompatibleWith(value.getType());
+    }
+
 }
